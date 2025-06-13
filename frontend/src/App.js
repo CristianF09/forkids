@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import Home from './pages/Home';
 import DespreNoi from './pages/DespreNoi';
 import Produse from './pages/Produse';
@@ -14,9 +15,9 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="min-h-screen bg-gray-100">
+        <div className="min-h-screen flex flex-col">
           <Navbar />
-          <main className="container mx-auto px-4 py-8">
+          <main className="flex-grow">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/despre-noi" element={<DespreNoi />} />
@@ -27,6 +28,7 @@ function App() {
               <Route path="/contul-meu" element={<ContulMeu />} />
             </Routes>
           </main>
+          <Footer />
         </div>
       </Router>
     </AuthProvider>
