@@ -1,5 +1,5 @@
 import React from 'react';
-import { Lightbulb, MessageSquare, Running, Heart } from 'lucide-react';
+import { Lightbulb, MessageSquare, Activity, Heart } from 'lucide-react';
 
 const ForParents = () => {
   const pillars = [
@@ -14,7 +14,7 @@ const ForParents = () => {
       description: "Îmbunătățirea comunicării și a vocabularului"
     },
     {
-      icon: <Running className="w-8 h-8 text-green-500" />,
+      icon: <Activity className="w-8 h-8 text-green-500" />,
       title: "Motricitate și sănătate",
       description: "Dezvoltarea abilităților fizice și a coordonării"
     },
