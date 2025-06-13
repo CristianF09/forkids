@@ -9,7 +9,7 @@ import Contact from './pages/Contact';
 import Autentificare from './pages/Autentificare';
 import Inregistrare from './pages/Inregistrare';
 import ContulMeu from './pages/ContulMeu';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider } from './contexts/AuthContext';
 
 function App() {
   return (
