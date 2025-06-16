@@ -1,109 +1,177 @@
 import React from 'react';
-import { BookOpen, Users, Lightbulb, Heart } from 'lucide-react';
+import { Heart, Star, Sparkles, BookOpen, Users, Target, Award } from 'lucide-react';
 
 const About = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        {/* Hero Section */}
-        <div className="text-center mb-20">
-          <h1 className="text-5xl font-bold text-blue-900 mb-6">
-            Despre Corcodușa
-          </h1>
-          <p className="text-2xl text-blue-700 max-w-3xl mx-auto">
-            Află povestea noastră și de ce suntem pasionați să facem educația distractivă pentru copiii tăi
-          </p>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-[#20BF55] to-[#01BAEF]">
+      {/* Decorative Elements */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-10 left-10 w-20 h-20 bg-white/10 rounded-full animate-float"></div>
+        <div className="absolute top-40 right-20 w-16 h-16 bg-white/10 rounded-full animate-float-delayed"></div>
+        <div className="absolute bottom-20 left-1/4 w-24 h-24 bg-white/10 rounded-full animate-float"></div>
+      </div>
 
-        {/* Character Section */}
-        <div className="bg-white rounded-2xl shadow-xl p-10 mb-16 border border-blue-100">
-          <h2 className="text-4xl font-bold text-blue-900 mb-8 text-center">
-            Corcodușa - Personajul nostru prietenos
-          </h2>
+      {/* Hero Section */}
+      <section className="relative pt-20 pb-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
-              <p className="text-xl text-blue-800 mb-8 leading-relaxed">
-                Corcodușa s-a născut din pasiunea pentru educație și din dorința de a oferi copiilor materiale de calitate care să îmbine învățarea cu distracția.
-              </p>
-              <p className="text-xl text-blue-800 leading-relaxed">
-                Totul a început în 2022, când am observat că există o nevoie crescută pentru materiale educative de calitate în format digital, care să fie accesibile tuturor părinților și educatorilor.
-              </p>
-            </div>
-            <div className="flex justify-center">
               <img
-                src="/images/img1.png"
-                alt="Corcodușa"
-                className="w-80 h-80 object-contain transform hover:scale-105 transition-transform duration-300"
+                src="/images/logo.png"
+                alt="Corcodușa Logo"
+                className="w-48 h-48 object-contain mb-8"
               />
             </div>
+            <div>
+              <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-lg">
+                Despre Corcodușa
+              </h1>
+              <p className="text-xl text-white/90 mb-8">
+                Suntem o echipă de educatori și părinți pasionați, dedicați să facem educația distractivă și accesibilă pentru toți copiii.
+              </p>
+            </div>
           </div>
         </div>
+      </section>
 
-        {/* Story Section */}
-        <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-2xl shadow-xl p-10 mb-16 text-white">
-          <h2 className="text-4xl font-bold mb-8 text-center">
-            Povestea noastră
-          </h2>
-          <p className="text-xl mb-6 leading-relaxed text-center max-w-4xl mx-auto">
-            Echipa noastră este formată din specialiști în educație timpurie, ilustratori pasionați și părinți dedicați, toți uniți de misiunea de a crea cele mai bune resurse educaționale pentru copiii între 3 și 7 ani.
-          </p>
+      {/* Character Section */}
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 md:p-12 shadow-lg">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+              <div>
+                <img
+                  src="/images/corcodusa.png"
+                  alt="Corcodușa"
+                  className="w-full h-auto rounded-xl shadow-lg"
+                />
+              </div>
+              <div>
+                <h2 className="text-3xl font-bold text-gray-800 mb-6">Povestea Noastră</h2>
+                <p className="text-gray-600 mb-6">
+                  Corcodușa a luat naștere din dorința noastră de a transforma educația într-o experiență plăcută și eficientă. Echipa noastră, formată din educatori cu experiență și părinți dedicați, lucrează împreună pentru a crea materiale educaționale de calitate care să inspire și să încurajeze învățarea.
+                </p>
+                <p className="text-gray-600">
+                  Fiecare material pe care îl creăm este gândit cu atenție pentru a se potrivi nevoilor copiilor de azi, combinând metode tradiționale cu abordări moderne și tehnologii interactive.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
+      </section>
 
-        {/* Mission Section */}
-        <div className="bg-white rounded-2xl shadow-xl p-10 mb-16 border border-blue-100">
-          <h2 className="text-4xl font-bold text-blue-900 mb-8 text-center">
-            Misiunea noastră
-          </h2>
-          <p className="text-2xl text-blue-700 italic mb-12 text-center max-w-4xl mx-auto">
-            "Credem că fiecare copil are dreptul la o educație de calitate, prezentată într-un mod care să îi stârnească curiozitatea și pasiunea pentru învățare."
-          </p>
+      {/* Mission Section */}
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-white mb-6">Misiunea Noastră</h2>
+            <p className="text-xl text-white/90 max-w-3xl mx-auto">
+              "Fiecare copil are dreptul la o educație de calitate, adaptată stilului său de învățare și nevoilor sale specifice."
+            </p>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="bg-blue-50 rounded-xl p-6 transform hover:scale-105 transition-transform duration-300">
-              <BookOpen className="w-12 h-12 text-blue-600 mb-4" />
-              <p className="text-lg text-blue-800">Dezvoltăm gândirea critică și creativitatea copiilor</p>
+            <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
+              <div className="bg-[#20BF55]/20 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                <BookOpen className="w-8 h-8 text-[#20BF55]" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-4">Educație de Calitate</h3>
+              <p className="text-gray-600">
+                Creăm materiale educaționale de înaltă calitate, verificate de experți în domeniu.
+              </p>
             </div>
-            <div className="bg-blue-50 rounded-xl p-6 transform hover:scale-105 transition-transform duration-300">
-              <Users className="w-12 h-12 text-blue-600 mb-4" />
-              <p className="text-lg text-blue-800">Oferim activități educative adaptate nevoilor fiecărui copil</p>
-            </div>
-            <div className="bg-blue-50 rounded-xl p-6 transform hover:scale-105 transition-transform duration-300">
-              <Lightbulb className="w-12 h-12 text-blue-600 mb-4" />
-              <p className="text-lg text-blue-800">Facilităm procesul de învățare prin joc și distracție</p>
-            </div>
-            <div className="bg-blue-50 rounded-xl p-6 transform hover:scale-105 transition-transform duration-300">
-              <Heart className="w-12 h-12 text-blue-600 mb-4" />
-              <p className="text-lg text-blue-800">Sprijinim părinții și educatorii cu resurse practice și eficiente</p>
-            </div>
-          </div>
-        </div>
 
-        {/* Values Section */}
-        <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-2xl shadow-xl p-10 text-white">
-          <h2 className="text-4xl font-bold mb-12 text-center">
-            Valorile noastre
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 transform hover:scale-105 transition-transform duration-300">
-              <h3 className="text-2xl font-semibold mb-4 text-center">Calitate</h3>
-              <p className="text-lg text-center">
-                Toate materialele noastre sunt create împreună cu specialiști în educație și sunt testate cu copii înainte de a fi publicate.
+            <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
+              <div className="bg-[#01BAEF]/20 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                <Target className="w-8 h-8 text-[#01BAEF]" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-4">Accesibilitate</h3>
+              <p className="text-gray-600">
+                Ne străduim să facem educația accesibilă pentru toți copiii, indiferent de locație sau resurse.
               </p>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 transform hover:scale-105 transition-transform duration-300">
-              <h3 className="text-2xl font-semibold mb-4 text-center">Accesibilitate</h3>
-              <p className="text-lg text-center">
-                Credem că educația de calitate trebuie să fie accesibilă tuturor, indiferent de locație sau statut financiar.
+
+            <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
+              <div className="bg-[#20BF55]/20 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                <Sparkles className="w-8 h-8 text-[#20BF55]" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-4">Inovație</h3>
+              <p className="text-gray-600">
+                Implementăm metode inovatoare de învățare care să capteze atenția și interesul copiilor.
               </p>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-8 transform hover:scale-105 transition-transform duration-300">
-              <h3 className="text-2xl font-semibold mb-4 text-center">Inovație</h3>
-              <p className="text-lg text-center">
-                Ne adaptăm constant metodele și conținutul pentru a ține pasul cu nevoile în continuă schimbare ale copiilor din lumea modernă.
+
+            <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
+              <div className="bg-[#01BAEF]/20 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                <Users className="w-8 h-8 text-[#01BAEF]" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-4">Comunitate</h3>
+              <p className="text-gray-600">
+                Construim o comunitate de părinți și educatori dedicați dezvoltării copiilor.
               </p>
             </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* Values Section */}
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-white mb-6">Valorile Noastre</h2>
+            <p className="text-xl text-white/90 max-w-3xl mx-auto">
+              Aceste valori ne ghidează în tot ce facem și ne ajută să oferim cea mai bună experiență de învățare.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
+              <div className="bg-[#20BF55]/20 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                <Award className="w-8 h-8 text-[#20BF55]" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-4">Calitate</h3>
+              <p className="text-gray-600">
+                Ne angajăm să oferim materiale educaționale de cea mai înaltă calitate, verificate și testate.
+              </p>
+            </div>
+
+            <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
+              <div className="bg-[#01BAEF]/20 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                <Heart className="w-8 h-8 text-[#01BAEF]" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-4">Pasiune</h3>
+              <p className="text-gray-600">
+                Suntem pasionați de educație și ne dedicăm cu entuziasm dezvoltării materialelor noastre.
+              </p>
+            </div>
+
+            <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
+              <div className="bg-[#20BF55]/20 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-6">
+                <Star className="w-8 h-8 text-[#20BF55]" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-4">Excelență</h3>
+              <p className="text-gray-600">
+                Ne străduim să atingem excelența în tot ce facem, de la conținut până la experiența utilizatorului.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-20px); }
+        }
+        @keyframes float-delayed {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-15px); }
+        }
+        .animate-float {
+          animation: float 6s ease-in-out infinite;
+        }
+        .animate-float-delayed {
+          animation: float-delayed 8s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
 };
