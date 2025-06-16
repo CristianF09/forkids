@@ -5,6 +5,7 @@ import { Menu, X, ShoppingCart, User, ChevronDown, Gift } from 'lucide-react';
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState('home');
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -28,16 +29,48 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="font-bold hover:text-[#FF6B00] transition-colors">
+            <Link 
+              to="/" 
+              className={`font-bold transition-colors ${
+                activeCategory === 'home' 
+                  ? 'text-[#FF6B00]' 
+                  : 'text-white hover:text-[#FF6B00]'
+              }`}
+              onClick={() => setActiveCategory('home')}
+            >
               Acasă
             </Link>
-            <Link to="/catalog" className="font-bold hover:text-[#FF6B00] transition-colors">
+            <Link 
+              to="/catalog" 
+              className={`font-bold transition-colors ${
+                activeCategory === 'catalog' 
+                  ? 'text-[#FF6B00]' 
+                  : 'text-white hover:text-[#FF6B00]'
+              }`}
+              onClick={() => setActiveCategory('catalog')}
+            >
               Catalog
             </Link>
-            <Link to="/about" className="font-bold hover:text-[#FF6B00] transition-colors">
+            <Link 
+              to="/about" 
+              className={`font-bold transition-colors ${
+                activeCategory === 'about' 
+                  ? 'text-[#FF6B00]' 
+                  : 'text-white hover:text-[#FF6B00]'
+              }`}
+              onClick={() => setActiveCategory('about')}
+            >
               Despre Noi
             </Link>
-            <Link to="/contact" className="font-bold hover:text-[#FF6B00] transition-colors">
+            <Link 
+              to="/contact" 
+              className={`font-bold transition-colors ${
+                activeCategory === 'contact' 
+                  ? 'text-[#FF6B00]' 
+                  : 'text-white hover:text-[#FF6B00]'
+              }`}
+              onClick={() => setActiveCategory('contact')}
+            >
               Contact
             </Link>
             {/* Promo Pack Indicator */}
@@ -109,25 +142,45 @@ const Header = () => {
           <div className="px-2 pt-2 pb-3 space-y-1">
             <Link
               to="/"
-              className="block px-3 py-2 text-gray-800 font-bold hover:bg-gray-100 rounded-md"
+              className={`block px-3 py-2 font-bold rounded-md ${
+                activeCategory === 'home'
+                  ? 'text-[#FF6B00] bg-gray-100'
+                  : 'text-gray-800 hover:bg-gray-100'
+              }`}
+              onClick={() => setActiveCategory('home')}
             >
               Acasă
             </Link>
             <Link
               to="/catalog"
-              className="block px-3 py-2 text-gray-800 font-bold hover:bg-gray-100 rounded-md"
+              className={`block px-3 py-2 font-bold rounded-md ${
+                activeCategory === 'catalog'
+                  ? 'text-[#FF6B00] bg-gray-100'
+                  : 'text-gray-800 hover:bg-gray-100'
+              }`}
+              onClick={() => setActiveCategory('catalog')}
             >
               Catalog
             </Link>
             <Link
               to="/about"
-              className="block px-3 py-2 text-gray-800 font-bold hover:bg-gray-100 rounded-md"
+              className={`block px-3 py-2 font-bold rounded-md ${
+                activeCategory === 'about'
+                  ? 'text-[#FF6B00] bg-gray-100'
+                  : 'text-gray-800 hover:bg-gray-100'
+              }`}
+              onClick={() => setActiveCategory('about')}
             >
               Despre Noi
             </Link>
             <Link
               to="/contact"
-              className="block px-3 py-2 text-gray-800 font-bold hover:bg-gray-100 rounded-md"
+              className={`block px-3 py-2 font-bold rounded-md ${
+                activeCategory === 'contact'
+                  ? 'text-[#FF6B00] bg-gray-100'
+                  : 'text-gray-800 hover:bg-gray-100'
+              }`}
+              onClick={() => setActiveCategory('contact')}
             >
               Contact
             </Link>
