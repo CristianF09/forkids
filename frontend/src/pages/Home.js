@@ -255,7 +255,7 @@ const Home = () => {
                 </ul>
               </div>
               <Link
-                to="/catalog"
+                to="/produse"
                 className="w-full bg-[#FF6B00] text-white py-3 rounded-md text-lg font-semibold hover:bg-[#E05C00] transition-colors shadow-lg"
               >
                 Alege o carte
@@ -269,8 +269,10 @@ const Home = () => {
               </div>
               <div>
                 <h3 className="text-2xl font-bold mb-4">Pachet Complet</h3>
-                <p className="text-5xl font-bold text-[#20BF55] mb-2">89 <span className="text-xl">Lei</span></p>
-                <p className="text-lg line-through text-gray-500 mb-6">117 Lei</p>
+                <div className="flex justify-center items-center mb-6 space-x-4">
+                  <span className="text-5xl font-bold text-[#20BF55]">89 Lei</span>
+                  <span className="text-2xl line-through text-gray-500">117 Lei</span>
+                </div>
                 <ul className="space-y-3 text-left mb-8">
                   <li className="flex items-center text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> Toate cele 3 cărți</li>
                   <li className="flex items-center text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> Peste 150 de pagini de activități</li>
@@ -280,16 +282,16 @@ const Home = () => {
                 </ul>
               </div>
               <Link
-                to="/catalog"
-                className="w-full bg-[#FF6B00] text-white py-3 rounded-md text-lg font-semibold hover:bg-[#E05C00] transition-colors shadow-lg"
+                to="/checkout"
+                className="w-full bg-[#FF6B00] text-white py-3 rounded-md text-lg font-semibold hover:bg-[#E05C00] transition-colors shadow-lg inline-block mb-4"
               >
                 Cumpără pachetul complet
               </Link>
+              <p className="text-gray-800 text-center text-sm flex items-center justify-center">
+                Plată securizată prin
+                <i className="fab fa-cc-stripe text-gray-800 text-xl ml-2"></i>
+              </p>
             </div>
-          </div>
-          <div className="mt-8 text-center text-gray-700 flex flex-col items-center">
-            <p className="text-base font-semibold text-white mb-2">Plată securizată prin</p>
-            <img src="/images/stripe-logo.png" alt="Stripe" className="h-8 w-auto filter grayscale invert opacity-70" />
           </div>
         </div>
       </section>

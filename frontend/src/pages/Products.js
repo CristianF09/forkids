@@ -168,10 +168,14 @@ const Products = () => {
               </div>
               <Link
                 to="/checkout"
-                className="w-full bg-[#FF6B00] text-white py-3 rounded-md text-lg font-semibold hover:bg-[#E05C00] transition-colors shadow-lg inline-block"
+                className="w-full bg-[#FF6B00] text-white py-3 rounded-md text-lg font-semibold hover:bg-[#E05C00] transition-colors shadow-lg inline-block mb-4"
               >
                 Cumpără pachetul complet
               </Link>
+              <p className="text-gray-700 text-center text-sm flex items-center justify-center">
+                Plată securizată prin
+                <i className="fab fa-cc-stripe text-gray-700 text-xl ml-2"></i>
+              </p>
             </div>
           </div>
         </section>

@@ -1,9 +1,9 @@
 import React from 'react';
-import { Heart, Star, Sparkles, BookOpen, Users, Target, Award, Check } from 'lucide-react';
+import { Heart, Award, Sparkles, Check } from 'lucide-react';
 
 const About = () => {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-100">
       {/* Hero Section */}
       <section className="relative pt-16 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -19,7 +19,7 @@ const About = () => {
       </section>
 
       {/* Story Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
@@ -46,7 +46,7 @@ const About = () => {
       </section>
 
       {/* Mission Section */}
-      <section className="py-16">
+      <section className="py-16 bg-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-6">Misiunea noastră</h2>
@@ -79,13 +79,13 @@ const About = () => {
       </section>
 
       {/* Values Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-6">Valorile noastre</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-2xl p-8 shadow-lg text-center">
+            <div className="bg-gray-50 rounded-2xl p-8 shadow-lg text-center">
               <div className="bg-[#20BF55]/20 p-4 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
                 <Award className="w-8 h-8 text-[#20BF55]" />
               </div>
@@ -95,7 +95,7 @@ const About = () => {
               </p>
             </div>
 
-            <div className="bg-white rounded-2xl p-8 shadow-lg text-center">
+            <div className="bg-gray-50 rounded-2xl p-8 shadow-lg text-center">
               <div className="bg-[#FF6B00]/20 p-4 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
                 <Heart className="w-8 h-8 text-[#FF6B00]" />
               </div>
@@ -105,7 +105,7 @@ const About = () => {
               </p>
             </div>
 
-            <div className="bg-white rounded-2xl p-8 shadow-lg text-center">
+            <div className="bg-gray-50 rounded-2xl p-8 shadow-lg text-center">
               <div className="bg-[#20BF55]/20 p-4 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
                 <Sparkles className="w-8 h-8 text-[#20BF55]" />
               </div>
@@ -121,4 +121,4 @@ const About = () => {
   );
 };
 
-export default About; 
+export default About;

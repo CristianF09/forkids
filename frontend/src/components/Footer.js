@@ -67,7 +67,7 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Informații</h3>
             <ul className="space-y-2">
               <li><Link to="/despre-noi" className="text-gray-400 hover:text-white transition-colors">Despre Noi</Link></li>
-              <li><Link to="/intrebari-frecvente" className="text-gray-400 hover:text-white transition-colors">Întrebări Frecvente</Link></li>
+              <li><Link to="/#intrebari-frecvente" className="text-gray-400 hover:text-white transition-colors">Întrebări Frecvente</Link></li>
               <li><Link to="/contact" className="text-gray-400 hover:text-white transition-colors">Contact</Link></li>
             </ul>
           </div>
@@ -78,7 +78,8 @@ const Footer = () => {
             <ul className="space-y-2">
               <li><Link to="/termeni-si-conditii" className="text-gray-400 hover:text-white transition-colors">Termeni și Condiții</Link></li>
               <li><Link to="/politica-de-confidentialitate" className="text-gray-400 hover:text-white transition-colors">Politica de Confidențialitate</Link></li>
-              <li><Link to="/politica-de-cookie-uri" className="text-gray-400 hover:text-white transition-colors">Politica de Cookie-uri</Link></li>
+              <li><Link to="/metode-de-plata" className="text-gray-400 hover:text-white transition-colors">Metode de Plată</Link></li>
+              <li><Link to="/politica-de-retur" className="text-gray-400 hover:text-white transition-colors">Politica de Retur</Link></li>
               <li><a href="https://anpc.ro" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">ANPC</a></li>
             </ul>
           </div>
@@ -91,7 +92,7 @@ const Footer = () => {
           </p>
           <div className="flex items-center space-x-2">
             <p className="text-gray-500">Plată securizată prin</p>
-            <img src="/images/stripe-logo.png" alt="Stripe" className="h-6 w-auto filter brightness-0 invert" />
+            <i className="fab fa-cc-stripe text-gray-400 text-2xl"></i>
           </div>
         </div>
       </div>
