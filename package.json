@@ -5,7 +5,7 @@
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "server": "cd backend && npm run dev",
-    "client": "cd frontend && npm start",
+    "client": "npm --prefix frontend start",
     "install-all": "npm install && cd frontend && npm install && cd ../backend && npm install"
   },
   "keywords": ["pdf", "store", "education", "kids"],

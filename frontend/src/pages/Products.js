@@ -1,154 +1,180 @@
-import React from 'react';
-import { Download } from 'lucide-react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Check, Download, Heart } from 'lucide-react';
+
+const productsData = [
+  {
+    id: 1,
+    category: 'Alfabet',
+    title: 'Alfabetul în Joacă',
+    age: '3-5 ani',
+    description: 'Această carte educativă îi ajută pe cei mici să descopere literele alfabetului printr-o serie de activități captivante și jocuri distractive.',
+    features: [
+      'Învățarea literelor mari și mici de tipar',
+      'Recunoașterea sunetelor și asocierea cu literele',
+      'Exerciții de scris pentru dezvoltarea abilităților motorii fine',
+      'Activități de colorat pentru fiecare literă',
+      'Peste 50 de pagini de activități',
+    ],
+    price: 39,
+    image: '/images/Products1_Alfabetul.png',
+  },
+  {
+    id: 2,
+    category: 'Matematică',
+    title: 'Matematică Distractivă',
+    age: '4-6 ani',
+    description: 'Această carte ajută copiii să dezvolte abilități matematice de bază într-un mod distractiv și accesibil, prin jocuri și activități interactive.',
+    features: [
+      'Recunoașterea și scrierea numerelor de la 1 la 20',
+      'Învățarea conceptelor de adunare și scădere',
+      'Jocuri de numărare și asociere',
+      'Activități de rezolvare a problemelor simple',
+      'Peste 50 de pagini de activități',
+    ],
+    price: 39,
+    image: '/images/Products2_Numere.png',
+  },
+  {
+    id: 3,
+    category: 'Forme și Culori',
+    title: 'Aventuri în Culori',
+    age: '3-7 ani',
+    description: 'O colecție de planșe de colorat și activități creative care stimulează imaginația și dezvoltă abilitățile artistice ale copiilor.',
+    features: [
+      'Planșe de colorat tematice (animale, anotimpuri, povești)',
+      'Activități de desen ghidate pas cu pas',
+      'Jocuri de potrivire a culorilor',
+      'Labirinturi și activități de coordonare',
+      'Peste 50 de pagini de activități',
+    ],
+    price: 39,
+    image: '/images/Products3_FormesiCulori.png',
+  },
+];
 
 const Products = () => {
+  const [selectedCategory, setSelectedCategory] = useState('Toate produsele');
+
+  const filteredProducts = selectedCategory === 'Toate produsele'
+    ? productsData
+    : productsData.filter(product => product.category === selectedCategory);
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-12 md:py-16 lg:py-20">
+    <div className="min-h-screen bg-gray-100 py-12 md:py-16 lg:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12 md:mb-16">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-blue-900 mb-4 md:mb-6">
-            Cărțile Noastre
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-4 md:mb-6">
+            Produsele Noastre
           </h1>
-          <p className="text-lg md:text-xl text-blue-700 max-w-3xl mx-auto">
-            Descoperă colecția noastră de cărți educaționale, create special pentru dezvoltarea copiilor între 3 și 7 ani.
+          <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+            Descoperă cărțile noastre educative care transformă învățarea în joacă și dezvoltă abilitățile copilului tău
           </p>
         </div>
 
+        {/* Category Filter (Basic implementation, can be enhanced) */}
+        <div className="flex justify-center space-x-4 mb-12">
+          <button
+            onClick={() => setSelectedCategory('Toate produsele')}
+            className={`px-6 py-2 rounded-full font-semibold transition-colors ${selectedCategory === 'Toate produse' ? 'bg-[#FF6B00] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+          >
+            Toate produsele
+          </button>
+          <button
+            onClick={() => setSelectedCategory('Alfabet')}
+            className={`px-6 py-2 rounded-full font-semibold transition-colors ${selectedCategory === 'Alfabet' ? 'bg-[#FF6B00] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+          >
+            Alfabet
+          </button>
+          <button
+            onClick={() => setSelectedCategory('Matematică')}
+            className={`px-6 py-2 rounded-full font-semibold transition-colors ${selectedCategory === 'Matematică' ? 'bg-[#FF6B00] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+          >
+            Matematică
+          </button>
+          <button
+            onClick={() => setSelectedCategory('Forme și Culori')}
+            className={`px-6 py-2 rounded-full font-semibold transition-colors ${selectedCategory === 'Forme și Culori' ? 'bg-[#FF6B00] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+          >
+            Forme și Culori
+          </button>
+        </div>
+
         {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* Product Card 1 */}
-          <div className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
-            <img
-              src="/images/alfabetul.jpg"
-              alt="Alfabetul"
-              className="w-full h-48 object-cover"
-            />
-            <div className="p-6">
-              <h3 className="text-xl font-semibold text-blue-900 mb-2">Alfabetul</h3>
-              <p className="text-blue-800 mb-4">
-                Învață literele alfabetului într-un mod distractiv și interactiv.
-              </p>
-              <div className="flex justify-between items-center">
-                <span className="text-2xl font-bold text-blue-600">29.99 RON</span>
-                <a
-                  href="/pdfs/alfabetul.pdf"
-                  className="inline-flex items-center bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Download className="w-5 h-5 mr-2" />
-                  Descarcă
-                </a>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+          {filteredProducts.map((product) => (
+            <div key={product.id} className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 flex flex-col">
+              <img
+                src={product.image}
+                alt={product.title}
+                className="w-full h-48 object-cover"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = '/images/placeholder.jpg'; // Fallback image
+                }}
+              />
+              <div className="p-6 flex flex-col flex-grow">
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">{product.title}</h3>
+                <p className="text-sm text-gray-500 mb-3">({product.age})</p>
+                <p className="text-gray-600 mb-4 flex-grow">{product.description}</p>
+                <ul className="text-gray-700 text-sm mb-6 space-y-2">
+                  {product.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-start">
+                      <Check className="w-4 h-4 text-[#20BF55] mr-2 flex-shrink-0" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-auto flex justify-between items-center">
+                  <span className="text-2xl font-bold text-[#20BF55]">{product.price} Lei</span>
+                  <Link
+                    to="/checkout"
+                    className="inline-flex items-center bg-[#FF6B00] text-white px-6 py-2 rounded-md hover:bg-[#E05C00] transition-colors shadow"
+                  >
+                    Cumpără
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
-
-          {/* Product Card 2 */}
-          <div className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
-            <img
-              src="/images/numere.jpg"
-              alt="Numerele"
-              className="w-full h-48 object-cover"
-            />
-            <div className="p-6">
-              <h3 className="text-xl font-semibold text-blue-900 mb-2">Numerele</h3>
-              <p className="text-blue-800 mb-4">
-                Explorează lumea numerelor prin exerciții și activități distractive.
-              </p>
-              <div className="flex justify-between items-center">
-                <span className="text-2xl font-bold text-blue-600">29.99 RON</span>
-                <a
-                  href="/pdfs/numere.pdf"
-                  className="inline-flex items-center bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Download className="w-5 h-5 mr-2" />
-                  Descarcă
-                </a>
-              </div>
-            </div>
-          </div>
-
-          {/* Product Card 3 */}
-          <div className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
-            <img
-              src="/images/formesiculori.jpg"
-              alt="Forme și Culori"
-              className="w-full h-48 object-cover"
-            />
-            <div className="p-6">
-              <h3 className="text-xl font-semibold text-blue-900 mb-2">Forme și Culori</h3>
-              <p className="text-blue-800 mb-4">
-                Descoperă formele geometrice și culorile prin activități interactive.
-              </p>
-              <div className="flex justify-between items-center">
-                <span className="text-2xl font-bold text-blue-600">29.99 RON</span>
-                <a
-                  href="/pdfs/formesiculori.pdf"
-                  className="inline-flex items-center bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Download className="w-5 h-5 mr-2" />
-                  Descarcă
-                </a>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
 
-        {/* Info Section */}
-        <div className="mt-16 md:mt-20 bg-white rounded-xl shadow-lg p-8 md:p-10">
-          <h2 className="text-2xl md:text-3xl font-bold text-blue-900 mb-6 text-center">
-            Despre Cărțile Noastre
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
-              <h3 className="text-xl font-semibold text-blue-900 mb-4">Caracteristici</h3>
-              <ul className="space-y-3 text-blue-800">
-                <li className="flex items-start">
-                  <span className="text-blue-600 mr-2">•</span>
-                  Materiale create de specialiști în educație timpurie
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-600 mr-2">•</span>
-                  Activități interactive și distractive
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-600 mr-2">•</span>
-                  Imagini colorate și atractive
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-600 mr-2">•</span>
-                  Exerciții practice și adaptate vârstei
-                </li>
+        {/* Special Offer Section (Pachet Complet) */}
+        <section className="bg-gradient-to-r from-[#20BF55] to-[#FF6B00] text-white py-16 rounded-xl shadow-lg">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-8">
+              Oferta Specială: Pachet Complet
+            </h2>
+            <div className="bg-white text-gray-800 rounded-xl shadow-xl p-8 relative border-4 border-[#FF6B00] transform transition-transform duration-300 hover:scale-105">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#FF6B00] text-white text-sm font-bold px-4 py-1 rounded-full shadow-md">
+                Cea mai bună ofertă
+              </div>
+              <h3 className="text-2xl font-bold mb-4">Pachet Complet - Toate cărțile</h3>
+              <p className="text-sm text-gray-500 mb-3">3-7 ani</p>
+              <p className="text-gray-600 mb-4">
+                Obține toate cele 3 cărți la un preț special, cu peste 150 de pagini de activități educative și distractive pentru copilul tău.
+              </p>
+              <ul className="space-y-3 text-left mb-8 inline-block">
+                <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> Alfabetul în Joacă - activități de alfabetizare</li>
+                <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> Matematică Distractivă - activități matematice</li>
+                <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> Aventuri în Culori - activități artistice</li>
+                <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> BONUS: 20 de pagini de colorant foarte interactive și distractive pentru copii</li>
+                <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> BONUS: Diplome personalizate pentru fiecare secțiune completată (3 diplome)</li>
               </ul>
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold text-blue-900 mb-4">Cum Funcționează</h3>
-              <ul className="space-y-3 text-blue-800">
-                <li className="flex items-start">
-                  <span className="text-blue-600 mr-2">•</span>
-                  Alege cărțile dorite
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-600 mr-2">•</span>
-                  Plătește în siguranță
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-600 mr-2">•</span>
-                  Descarcă instant după achiziție
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-600 mr-2">•</span>
-                  Printează sau folosește pe dispozitiv
-                </li>
-              </ul>
+              <div className="flex justify-center items-center mb-6 space-x-4">
+                <span className="text-5xl font-bold text-[#20BF55]">89 Lei</span>
+                <span className="text-2xl line-through text-gray-500">117 Lei</span>
+              </div>
+              <Link
+                to="/checkout"
+                className="w-full bg-[#FF6B00] text-white py-3 rounded-md text-lg font-semibold hover:bg-[#E05C00] transition-colors shadow-lg inline-block"
+              >
+                Cumpără pachetul complet
+              </Link>
             </div>
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );
