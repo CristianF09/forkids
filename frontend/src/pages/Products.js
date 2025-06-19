@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Check, Download, Heart } from 'lucide-react';
 
 const productsData = [
@@ -54,7 +54,33 @@ const productsData = [
 ];
 
 const Products = () => {
+  const location = useLocation();
   const [selectedCategory, setSelectedCategory] = useState('Toate produsele');
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const category = params.get('category');
+    if (category === 'alfabet') {
+      setSelectedCategory('Alfabet');
+    } else if (category === 'matematica') {
+      setSelectedCategory('Matematică');
+    } else if (category === 'formesiculori') {
+      setSelectedCategory('Forme și Culori');
+    } else {
+      setSelectedCategory('Toate produsele');
+    }
+    // Scroll to special offer if hash is present
+    if (location.hash === '#pachet-complet') {
+      setTimeout(() => {
+        const section = document.querySelector('section');
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [location]);
 
   const filteredProducts = selectedCategory === 'Toate produsele'
     ? productsData

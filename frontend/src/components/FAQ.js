@@ -49,7 +49,7 @@ const FAQ = () => {
           <details key={index} className="group border rounded-xl p-4">
             <summary className="flex justify-between items-center cursor-pointer text-lg font-medium text-gray-800">
               {item.question}
-              <svg className="w-5 h-5 transform group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 ml-2 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
               </svg>
             </summary>

@@ -30,7 +30,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
           {/* Company Info */}
           <div className="space-y-4">
-            <Link to="/" className="flex items-center space-x-2">
+            <Link to="/" className="flex items-center space-x-2" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
               <img src="/images/logo.png" alt="Corcodușa Logo" className="h-8 w-auto" />
               <span className="text-2xl font-bold">
                 <span className="text-[#20BF55]">Corcodusa</span>
@@ -54,11 +54,11 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Produse</h3>
             <ul className="space-y-2">
-              <li><Link to="/produse" className="text-gray-400 hover:text-white transition-colors">Toate produsele</Link></li>
-              <li><Link to="/produse?category=alfabet" className="text-gray-400 hover:text-white transition-colors">Alfabetul în Joacă</Link></li>
-              <li><Link to="/produse?category=matematica" className="text-gray-400 hover:text-white transition-colors">Matematică Distractivă</Link></li>
-              <li><Link to="/produse?category=formesiculori" className="text-gray-400 hover:text-white transition-colors">Aventuri în Culori</Link></li>
-              <li><Link to="/produse#pachet-complet" className="text-gray-400 hover:text-white transition-colors">Pachet Complet</Link></li>
+              <li><Link to="/produse" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Toate produsele</Link></li>
+              <li><Link to="/produse?category=alfabet" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Alfabetul în Joacă</Link></li>
+              <li><Link to="/produse?category=matematica" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Matematică Distractivă</Link></li>
+              <li><Link to="/produse?category=formesiculori" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Aventuri în Culori</Link></li>
+              <li><Link to="/produse#pachet-complet" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Pachet Complet</Link></li>
             </ul>
           </div>
 
@@ -66,9 +66,9 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Informații</h3>
             <ul className="space-y-2">
-              <li><Link to="/despre-noi" className="text-gray-400 hover:text-white transition-colors">Despre Noi</Link></li>
-              <li><Link to="/#intrebari-frecvente" className="text-gray-400 hover:text-white transition-colors">Întrebări Frecvente</Link></li>
-              <li><Link to="/contact" className="text-gray-400 hover:text-white transition-colors">Contact</Link></li>
+              <li><Link to="/despre-noi" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Despre Noi</Link></li>
+              <li><Link to="/intrebari-frecvente" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Întrebări Frecvente</Link></li>
+              <li><Link to="/contact" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Contact</Link></li>
             </ul>
           </div>
 
@@ -76,10 +76,10 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Legal</h3>
             <ul className="space-y-2">
-              <li><Link to="/termeni-si-conditii" className="text-gray-400 hover:text-white transition-colors">Termeni și Condiții</Link></li>
-              <li><Link to="/politica-de-confidentialitate" className="text-gray-400 hover:text-white transition-colors">Politica de Confidențialitate</Link></li>
-              <li><Link to="/metode-de-plata" className="text-gray-400 hover:text-white transition-colors">Metode de Plată</Link></li>
-              <li><Link to="/politica-de-retur" className="text-gray-400 hover:text-white transition-colors">Politica de Retur</Link></li>
+              <li><Link to="/termeni-si-conditii" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Termeni și Condiții</Link></li>
+              <li><Link to="/politica-de-confidentialitate" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Politica de Confidențialitate</Link></li>
+              <li><Link to="/metode-de-plata" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Metode de Plată</Link></li>
+              <li><Link to="/politica-de-retur" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Politica de Retur</Link></li>
               <li><a href="https://anpc.ro" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">ANPC</a></li>
             </ul>
           </div>

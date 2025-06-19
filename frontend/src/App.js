@@ -10,6 +10,7 @@ import TermeniSiConditii from './pages/TermeniSiConditii';
 import PoliticaDeConfidentialitate from './pages/PoliticaDeConfidentialitate';
 import PoliticaDeRetur from './pages/PoliticaDeRetur';
 import MetodeDePlata from './pages/MetodeDePlata';
+import FAQ from './components/FAQ';
 
 function App() {
   return (
@@ -18,13 +19,14 @@ function App() {
       <main className="flex-grow">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/despre" element={<About />} />
+          <Route path="/despre-noi" element={<About />} />
           <Route path="/produse" element={<Products />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/termeni-si-conditii" element={<TermeniSiConditii />} />
           <Route path="/politica-de-confidentialitate" element={<PoliticaDeConfidentialitate />} />
           <Route path="/politica-de-retur" element={<PoliticaDeRetur />} />
           <Route path="/metode-de-plata" element={<MetodeDePlata />} />
+          <Route path="/intrebari-frecvente" element={<FAQ />} />
         </Routes>
       </main>
       <Footer />
