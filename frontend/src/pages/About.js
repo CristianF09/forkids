@@ -1,122 +1,121 @@
 import React from 'react';
-import { Heart, Award, Sparkles, Check } from 'lucide-react';
+import { BookOpen, Heart, Users, Award } from 'lucide-react';
 
 const About = () => {
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Hero Section */}
-      <section className="relative pt-16 pb-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
-              Despre Corcodușa
-            </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Află povestea noastră și de ce suntem pasionați să facem educația distractivă pentru copiii tăi
-            </p>
+    <div className="min-h-screen bg-gray-100 py-12 md:py-16 lg:py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="text-center mb-12 md:mb-16">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+            Despre Noi
+          </h1>
+          <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+            Suntem dedicați dezvoltării educaționale a copiilor prin materiale interactive și distractive
+          </p>
+        </div>
+
+        {/* Mission Section */}
+        <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 mb-8 md:mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">Misiunea Noastră</h2>
+          <p className="text-gray-600 mb-8 text-lg">
+            La Corcodusa.ro, credem că învățarea ar trebui să fie o experiență plăcută și captivantă pentru copii. 
+            Misiunea noastră este să creăm materiale educaționale de înaltă calitate care să inspire și să motiveze 
+            copiii să învețe într-un mod distractiv și interactiv.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="flex flex-col items-center text-center p-6 bg-gray-50 rounded-xl hover:shadow-md transition-shadow">
+              <BookOpen className="w-10 h-10 text-[#20BF55] mb-4" />
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">Educație Calitativă</h3>
+              <p className="text-gray-600">
+                Materiale create de specialiști în educație timpurie
+              </p>
+            </div>
+            <div className="flex flex-col items-center text-center p-6 bg-gray-50 rounded-xl hover:shadow-md transition-shadow">
+              <Heart className="w-10 h-10 text-[#FF6B00] mb-4" />
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">Pasiune</h3>
+              <p className="text-gray-600">
+                Dedicați dezvoltării copiilor prin învățare distractivă
+              </p>
+            </div>
+            <div className="flex flex-col items-center text-center p-6 bg-gray-50 rounded-xl hover:shadow-md transition-shadow">
+              <Users className="w-10 h-10 text-[#20BF55] mb-4" />
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">Comunitate</h3>
+              <p className="text-gray-600">
+                Sprijinim părinții și educatorii în procesul educațional
+              </p>
+            </div>
+            <div className="flex flex-col items-center text-center p-6 bg-gray-50 rounded-xl hover:shadow-md transition-shadow">
+              <Award className="w-10 h-10 text-[#FF6B00] mb-4" />
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">Excelență</h3>
+              <p className="text-gray-600">
+                Materiale testate și aprobate de experți în educație
+              </p>
+            </div>
           </div>
         </div>
-      </section>
 
-      {/* Story Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div>
+        {/* Story Section */}
+        <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 mb-8 md:mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">Povestea Noastră</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="space-y-6">
+              <p className="text-gray-600 text-lg">
+                Corcodusa.ro a început din pasiunea noastră pentru educație și dezvoltarea copiilor. 
+                Am observat că există o nevoie reală pentru materiale educaționale interactive și distractive 
+                care să ajute copiii să învețe într-un mod plăcut.
+              </p>
+              <p className="text-gray-600 text-lg">
+                Echipa noastră este formată din educatori, psihologi și specialiști în dezvoltarea copiilor, 
+                care lucrează împreună pentru a crea materiale educaționale de înaltă calitate.
+              </p>
+              <p className="text-gray-600 text-lg">
+                Astăzi, suntem mândri să ajutăm mii de copii să învețe și să se dezvolte prin materialele 
+                noastre interactive și distractive.
+              </p>
+            </div>
+            <div className="relative h-[300px] md:h-[400px]">
               <img
-                src="/images/corcodusa_character.png"
-                alt="Corcodușa Character"
-                className="w-full h-auto rounded-xl shadow-lg"
+                src="/images/homepage.png"
+                alt="Copii învățând cu Corcodusa"
+                className="w-full h-full object-cover rounded-xl"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = '/images/logo.png';
+                }}
               />
             </div>
-            <div>
-              <h2 className="text-3xl font-bold text-gray-800 mb-6">Povestea noastră</h2>
-              <p className="text-gray-700 mb-4">
-                Corcodușa s-a născut din pasiunea pentru educație și din dorința de a oferi copiilor materiale de calitate care să îmbine învățarea cu distracția.
+          </div>
+        </div>
+
+        {/* Values Section */}
+        <div className="bg-white rounded-xl shadow-lg p-6 md:p-8">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">Valorile Noastre</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="p-6 bg-gray-50 rounded-xl hover:shadow-md transition-shadow">
+              <h3 className="text-xl font-semibold text-gray-800 mb-3">Calitate</h3>
+              <p className="text-gray-600 text-lg">
+                Ne asigurăm că toate materialele noastre sunt create cu atenție la detalii și respectă 
+                cele mai înalte standarde educaționale.
               </p>
-              <p className="text-gray-700 mb-4">
-                Totul a început în 2022, când am observat că există o nevoie crescută pentru materiale educative de calitate în format digital, care să fie accesibile tuturor părinților și educatorilor.
+            </div>
+            <div className="p-6 bg-gray-50 rounded-xl hover:shadow-md transition-shadow">
+              <h3 className="text-xl font-semibold text-gray-800 mb-3">Inovație</h3>
+              <p className="text-gray-600 text-lg">
+                Continuăm să dezvoltăm și să îmbunătățim materialele noastre pentru a oferi cea mai bună 
+                experiență de învățare.
               </p>
-              <p className="text-gray-700">
-                Echipa noastră este formată din specialiști în educație timpurie, ilustratori pasionați și părinți dedicați, toți uniți de misiunea de a crea cele mai bune resurse educaționale pentru copiii între 3 și 7 ani.
+            </div>
+            <div className="p-6 bg-gray-50 rounded-xl hover:shadow-md transition-shadow">
+              <h3 className="text-xl font-semibold text-gray-800 mb-3">Accesibilitate</h3>
+              <p className="text-gray-600 text-lg">
+                Ne străduim să facem educația de calitate accesibilă tuturor copiilor, indiferent de 
+                circumstanțe.
               </p>
             </div>
           </div>
         </div>
-      </section>
-
-      {/* Mission Section */}
-      <section className="py-16 bg-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-6">Misiunea noastră</h2>
-            <div className="bg-green-100 border-l-4 border-[#20BF55] text-green-800 p-4 mb-8 text-left italic max-w-3xl mx-auto">
-              "Credem că fiecare copil are dreptul la o educație de calitate, prezentată într-un mod care să îi stârnească curiozitatea și pasiunea pentru învățare."
-            </div>
-            <p className="text-lg text-gray-700 mb-6">
-              Prin materialele noastre, ne propunem să:
-            </p>
-            <ul className="list-none space-y-2 text-left inline-block">
-              <li className="flex items-start text-gray-700">
-                <Check className="w-5 h-5 text-[#20BF55] mr-2 flex-shrink-0 mt-1" />
-                Dezvoltăm gândirea critică și creativitatea copiilor
-              </li>
-              <li className="flex items-start text-gray-700">
-                <Check className="w-5 h-5 text-[#20BF55] mr-2 flex-shrink-0 mt-1" />
-                Oferim activități educative adaptate nevoilor fiecărui copil
-              </li>
-              <li className="flex items-start text-gray-700">
-                <Check className="w-5 h-5 text-[#20BF55] mr-2 flex-shrink-0 mt-1" />
-                Facilităm procesul de învățare prin joc și distracție
-              </li>
-              <li className="flex items-start text-gray-700">
-                <Check className="w-5 h-5 text-[#20BF55] mr-2 flex-shrink-0 mt-1" />
-                Sprijinim părinții și educatorii cu resurse practice și eficiente
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* Values Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-6">Valorile noastre</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-gray-50 rounded-2xl p-8 shadow-lg text-center">
-              <div className="bg-[#20BF55]/20 p-4 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
-                <Award className="w-8 h-8 text-[#20BF55]" />
-              </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-4">Calitate</h3>
-              <p className="text-gray-600">
-                Toate materialele noastre sunt create împreună cu specialiști în educație și sunt testate cu copii înainte de a fi publicate.
-              </p>
-            </div>
-
-            <div className="bg-gray-50 rounded-2xl p-8 shadow-lg text-center">
-              <div className="bg-[#FF6B00]/20 p-4 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
-                <Heart className="w-8 h-8 text-[#FF6B00]" />
-              </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-4">Accesibilitate</h3>
-              <p className="text-gray-600">
-                Credem că educația de calitate trebuie să fie accesibilă tuturor, indiferent de locație sau statut financiar.
-              </p>
-            </div>
-
-            <div className="bg-gray-50 rounded-2xl p-8 shadow-lg text-center">
-              <div className="bg-[#20BF55]/20 p-4 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
-                <Sparkles className="w-8 h-8 text-[#20BF55]" />
-              </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-4">Inovație</h3>
-              <p className="text-gray-600">
-                Ne adaptăm constant metodele și conținutul pentru a ține pasul cu nevoile în continuă schimbare ale copiilor din lumea modernă.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
     </div>
   );
 };

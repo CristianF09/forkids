@@ -8,10 +8,19 @@
     "client": "npm --prefix frontend start",
     "install-all": "npm install && cd frontend && npm install && cd ../backend && npm install"
   },
-  "keywords": ["pdf", "store", "education", "kids"],
+  "keywords": [
+    "pdf",
+    "store",
+    "education",
+    "kids"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "mongodb": "^6.17.0",
+    "react-router-dom": "^6.30.1"
   }
-} 
+}
