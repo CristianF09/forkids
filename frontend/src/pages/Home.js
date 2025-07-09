@@ -143,22 +143,22 @@ const Home = () => {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col items-center">
-              <img src="/public/products/Alfabetul.png" alt="Alfabetul Ilustrat" className="w-full h-40 object-cover rounded-md mb-4" />
+              <img src="/images/Alfabetul .png" alt="Alfabetul Ilustrat" className="max-w-xs w-full h-56 object-contain rounded-md mb-4 bg-white" />
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Alfabetul Ilustrat</h3>
               <p className="text-gray-600 text-center">Învățarea alfabetului în scriere de tipar și de mână.</p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col items-center">
-              <img src="/public/products/Numere.png" alt="Învățarea Numerelor" className="w-full h-40 object-cover rounded-md mb-4" />
+              <img src="/images/Numere.png" alt="Învățarea Numerelor" className="max-w-xs w-full h-56 object-contain rounded-md mb-4 bg-white" />
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Învățarea Numerelor</h3>
               <p className="text-gray-600 text-center">Exerciții interactive pentru recunoașterea și scrierea numerelor.</p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col items-center">
-              <img src="/public/products/Forme si Culori.png" alt="Activități de Coordonare" className="w-full h-40 object-cover rounded-md mb-4" />
+              <img src="/images/Forme si culori.png" alt="Activități de Coordonare" className="max-w-xs w-full h-56 object-contain rounded-md mb-4 bg-white" />
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Activități de Coordonare</h3>
               <p className="text-gray-600 text-center">Dezvoltarea atenției și coordonării mână-ochi.</p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col items-center">
-              <img src="/public/images/Products3_FormesiCulori.png" alt="Planșe de Colorat" className="w-full h-40 object-cover rounded-md mb-4" />
+              <img src="/images/Bonus - Fise de colorat.png" alt="Planșe de Colorat" className="max-w-xs w-full h-56 object-contain rounded-md mb-4 bg-white" />
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Planșe de Colorat</h3>
               <p className="text-gray-600 text-center">Zeci de planșe haioase ce așteaptă să fie colorate.</p>
             </div>

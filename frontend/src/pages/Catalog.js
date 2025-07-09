@@ -8,7 +8,7 @@ const products = [
     ageRangeDisplay: '3-5 ani',
     description: 'Învață literele și scrisul de mână prin activități captivante și jocuri interactive.',
     price: 39,
-    image: '/products/alfabet.jpg',
+    image: '/images/Alfabetul .png',
     category: 'alfabet',
     stripeLink: 'https://buy.stripe.com/your-link-here',
     imageBgColor: 'bg-[#2680EB]' // Blue for Alfabetul în Joacă
@@ -19,7 +19,7 @@ const products = [
     ageRangeDisplay: '4-6 ani',
     description: 'Descoperă cifrele, număratul și operații matematice simple prin jocuri și activități interactive.',
     price: 39,
-    image: '/products/matematica.jpg',
+    image: '/images/Numere.png',
     category: 'numere',
     stripeLink: 'https://buy.stripe.com/your-link-here',
     imageBgColor: 'bg-[#20BF55]' // Green for Matematică Distractivă
@@ -30,14 +30,14 @@ const products = [
     ageRangeDisplay: '3-7 ani',
     description: 'Planșe de colorat, activități de desen și jocuri care dezvoltă creativitatea și motricitatea fină.',
     price: 39,
-    image: '/products/culori.jpg',
+    image: '/images/Forme si culori.png',
     category: 'culori',
     stripeLink: 'https://buy.stripe.com/your-link-here',
     imageBgColor: 'bg-[#FFD100]' // Yellow for Aventuri în Culori
   }
 ];
 
-const promoPackageBannerImage = '/products/promo-package-banner.jpg'; // Ensure this image exists in public/products/
+const promoPackageBannerImage = '/images/Pachet Promo.png'; // Ensure this image exists in public/images/
 const promoPackagePdf = '/pdfs/pachet-complet.pdf'; // Path for the promo package PDF
 
 const Catalog = () => {
@@ -123,7 +123,7 @@ const Catalog = () => {
                 <img
                   src={product.image}
                   alt={product.title}
-                  className="max-w-[70%] max-h-[90%] object-contain" // Adjusted size for better fit in solid background
+                  className="max-w-xs w-full h-56 object-contain rounded-md bg-white mx-auto"
                 />
                 <div className="absolute top-3 left-3 bg-white text-gray-700 px-3 py-1 rounded-full text-xs font-semibold">
                   {product.ageRangeDisplay}
@@ -157,7 +157,7 @@ const Catalog = () => {
               <img
                 src={promoPackageBannerImage}
                 alt="Pachet complet"
-                className="w-full h-full object-cover"
+                className="max-w-xs w-full h-56 object-contain rounded-md bg-white mx-auto"
               />
             </div>
             <div className="product-info flex-1 bg-white p-6 rounded-xl shadow-md"> {/* White inner content area */}

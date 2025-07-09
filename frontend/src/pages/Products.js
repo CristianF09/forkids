@@ -17,14 +17,14 @@ const productsData = [
       'Peste 50 de pagini de activități',
     ],
     price: 39,
-    image: '/images/Products1_Alfabetul.png',
+    image: '/images/Alfabetul .png',
   },
   {
     id: 2,
     category: 'Matematică',
     title: 'Matematică Distractivă',
     age: '4-6 ani',
-    description: 'Această carte ajută copiii să dezvolte abilități matematice de bază într-un mod distractiv și accesibil, prin jocuri și activități interactive.',
+    description: 'Această carte ajută copiii să dezvolde abilități matematice de bază într-un mod distractiv și accesibil, prin jocuri și activități interactive.',
     features: [
       'Recunoașterea și scrierea numerelor de la 1 la 20',
       'Învățarea conceptelor de adunare și scădere',
@@ -33,7 +33,7 @@ const productsData = [
       'Peste 50 de pagini de activități',
     ],
     price: 39,
-    image: '/images/Products2_Numere.png',
+    image: '/images/Numere.png',
   },
   {
     id: 3,
@@ -49,7 +49,24 @@ const productsData = [
       'Peste 50 de pagini de activități',
     ],
     price: 39,
-    image: '/images/Products3_FormesiCulori.png',
+    image: '/images/Forme si culori.png',
+  },
+  {
+    id: 4,
+    category: 'Pachet Complet',
+    title: 'Pachet Complet',
+    age: '3-7 ani',
+    description: 'Obține toate cele 3 cărți la un preț special, cu peste 150 de pagini de activități educative și distractive pentru copilul tău. Include 40 de pagini de colorat bonus!',
+    features: [
+      'Alfabetul în Joacă - activități de alfabetizare',
+      'Matematică Distractivă - activități matematice',
+      'Aventuri în Culori - activități artistice',
+      'BONUS: 40 de pagini de colorat foarte interactive și distractive pentru copii',
+      'BONUS: Diplome personalizate pentru fiecare secțiune completată (3 diplome)',
+      'BONUS: Certificate de Absolvire',
+    ],
+    price: 89,
+    image: '/images/Pachet Promo.png',
   },
 ];
 
@@ -125,16 +142,22 @@ const Products = () => {
           >
             Forme și Culori
           </button>
+          <button
+            onClick={() => setSelectedCategory('Pachet Complet')}
+            className={`px-6 py-2 rounded-full font-semibold transition-colors ${selectedCategory === 'Pachet Complet' ? 'bg-[#FF6B00] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+          >
+            Pachet Complet
+          </button>
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
           {filteredProducts.map((product) => (
             <div key={product.id} className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 flex flex-col">
               <img
                 src={product.image}
                 alt={product.title}
-                className="w-full h-48 object-cover"
+                className="max-w-xs w-full h-56 object-contain rounded-md bg-white mx-auto"
                 onError={(e) => {
                   e.target.onerror = null;
                   e.target.src = '/images/placeholder.jpg'; // Fallback image
@@ -185,7 +208,7 @@ const Products = () => {
                 <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> Alfabetul în Joacă - activități de alfabetizare</li>
                 <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> Matematică Distractivă - activități matematice</li>
                 <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> Aventuri în Culori - activități artistice</li>
-                <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> BONUS: 20 de pagini de colorant foarte interactive și distractive pentru copii</li>
+                <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> BONUS: 40 de pagini de colorat foarte interactive și distractive pentru copii</li>
                 <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> BONUS: Diplome personalizate pentru fiecare secțiune completată (3 diplome)</li>
               </ul>
               <div className="flex justify-center items-center mb-6 space-x-4">
