@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Check, Download, Heart } from 'lucide-react';
+import PurchaseSteps from '../components/PurchaseSteps';
 
 const productsData = [
   {
@@ -115,6 +116,9 @@ const Products = () => {
             Descoperă cărțile noastre educative care transformă învățarea în joacă și dezvoltă abilitățile copilului tău
           </p>
         </div>
+
+        {/* Purchase Steps */}
+        <PurchaseSteps />
 
         {/* Category Filter (Basic implementation, can be enhanced) */}
         <div className="flex justify-center space-x-4 mb-12">

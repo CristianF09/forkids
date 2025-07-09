@@ -9,6 +9,7 @@ const authRoutes = require('./routes/auth');
 const pdfRoutes = require('./routes/pdfs');
 const paymentRoutes = require('./routes/payments');
 const contactRoutes = require('./routes/contact');
+const checkoutRoutes = require('./routes/checkout');
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/pdfs', pdfRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/checkout', checkoutRoutes);
 
 // Serve static files in production
 if (process.env.NODE_ENV === 'production') {
