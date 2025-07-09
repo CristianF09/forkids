@@ -8,6 +8,7 @@ const path = require('path');
 const authRoutes = require('./routes/auth');
 const pdfRoutes = require('./routes/pdfs');
 const paymentRoutes = require('./routes/payments');
+const contactRoutes = require('./routes/contact');
 
 const app = express();
 
@@ -25,6 +26,7 @@ mongoose.connect(process.env.MONGODB_URI)
 app.use('/api/auth', authRoutes);
 app.use('/api/pdfs', pdfRoutes);
 app.use('/api/payments', paymentRoutes);
+app.use('/api/contact', contactRoutes);
 
 // Serve static files in production
 if (process.env.NODE_ENV === 'production') {
