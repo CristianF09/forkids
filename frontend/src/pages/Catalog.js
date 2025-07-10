@@ -135,7 +135,13 @@ const Catalog = () => {
                 <div className="flex items-center justify-between">
                   <span className="text-2xl font-bold text-[#20BF55]">{product.price} Lei</span>
                   <button
-                    onClick={() => console.log('Add to cart:', product.id)}
+                    onClick={() => {
+                      if (product.stripeLink && product.stripeLink !== 'https://buy.stripe.com/your-link-here') {
+                        window.location.href = product.stripeLink;
+                      } else {
+                        alert('Linkul de plată nu este configurat încă. Vă rugăm să reveniți mai târziu.');
+                      }
+                    }}
                     className="inline-flex items-center gap-2 bg-[#FF6B00] text-white px-4 py-2 rounded-xl font-bold hover:bg-[#FF6B00]/90 transition-colors"
                   >
                     <ShoppingCart className="w-5 h-5" />
