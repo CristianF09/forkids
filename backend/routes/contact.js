@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 const nodemailer = require('nodemailer');
 
-router.post('/', async (req, res) => {
-  const { name, email, message } = req.body;
+router.post('/create-checkout-session', async (req, res) => {
+  const { productId } = req.body;
 
-  if (!name || !email || !message) {
-    return res.status(400).json({ error: 'Toate câmpurile sunt obligatorii.' });
+  if (!productId) {
+    return res.status(400).json({ error: 'Product ID is required.' });
   }
 
   try {
