@@ -3,19 +3,21 @@ const router = express.Router();
 const Stripe = require('stripe');
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
-router.post('/sessions', async (req, res) => {
-  const { items } = req.body;
+router.post('/create-checkout-session', async (req, res) => {
+  const { productId } = req.body;
 
   try {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
-      line_items: items.map(item => ({
-        price: item.priceId,
-        quantity: item.quantity,
-      })),
+      line_items: [
+        {
+          price: productId, // acesta e ID-ul prețului din Stripe (ex: price_1OnPziHdK... )
+          quantity: 1,
+        },
+      ],
       mode: 'payment',
-      success_url: 'https://example.com/success',
-      cancel_url: 'https://example.com/cancel',
+      success_url: 'https://corcodusa.ro/success',
+      cancel_url: 'https://corcodusa.ro/cancel',
     });
 
     res.json({ url: session.url });
