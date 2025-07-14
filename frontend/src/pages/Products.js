@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Check, Download, Heart } from 'lucide-react';
 import PurchaseSteps from '../components/PurchaseSteps';
 
@@ -19,6 +19,7 @@ const productsData = [
     ],
     price: 39,
     image: '/images/Alfabetul .png',
+    priceId: 'price_1RiBRR2c4OeQrchOtK2eOVra',
   },
   {
     id: 2,
@@ -35,6 +36,7 @@ const productsData = [
     ],
     price: 39,
     image: '/images/Numere.png',
+    priceId: 'price_1RiBPO2c4OeQrchOsizd12wR',
   },
   {
     id: 3,
@@ -51,6 +53,7 @@ const productsData = [
     ],
     price: 39,
     image: '/images/Forme si culori.png',
+    priceId: 'price_1RiBM12c4OeQrchOGrwdUbD2',
   },
   {
     id: 4,
@@ -68,12 +71,18 @@ const productsData = [
     ],
     price: 89,
     image: '/images/Pachet Promo.png',
+    priceId: 'price_1RiC232c4OeQrchOX05BvSdj',
   },
 ];
 
 const Products = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState('Toate produsele');
+
+  const handleCheckout = (priceId) => {
+    navigate('/checkout', { state: { priceId } });
+  };
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -181,12 +190,12 @@ const Products = () => {
                 </ul>
                 <div className="mt-auto flex justify-between items-center">
                   <span className="text-2xl font-bold text-[#20BF55]">{product.price} Lei</span>
-                  <Link
-                    to="/checkout"
+                  <button
+                    onClick={() => handleCheckout(product.priceId)}
                     className="inline-flex items-center bg-[#FF6B00] text-white px-6 py-2 rounded-md hover:bg-[#E05C00] transition-colors shadow"
                   >
                     Cumpără
-                  </Link>
+                  </button>
                 </div>
               </div>
             </div>
@@ -219,12 +228,12 @@ const Products = () => {
                 <span className="text-5xl font-bold text-[#20BF55]">89 Lei</span>
                 <span className="text-2xl line-through text-gray-500">117 Lei</span>
               </div>
-              <Link
-                to="/checkout"
+              <button
+                onClick={() => handleCheckout('price_1RiC232c4OeQrchOX05BvSdj')}
                 className="w-full bg-[#FF6B00] text-white py-3 rounded-md text-lg font-semibold hover:bg-[#E05C00] transition-colors shadow-lg inline-block mb-4"
               >
                 Cumpără pachetul complet
-              </Link>
+              </button>
               <p className="text-gray-700 text-center text-sm flex items-center justify-center">
                 Plată securizată prin
                 <i className="fab fa-cc-stripe text-gray-700 text-xl ml-2"></i>

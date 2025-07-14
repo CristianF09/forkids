@@ -13,6 +13,7 @@ import MetodeDePlata from './pages/MetodeDePlata';
 import FAQ from './components/FAQ';
 import Success from './pages/Success';
 import Cancel from './pages/Cancel';
+import Checkout from './pages/Checkout';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/intrebari-frecvente" element={<FAQ />} />
           <Route path="/success" element={<Success />} />
           <Route path="/cancel" element={<Cancel />} />
+            <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </main>
       <Footer />
