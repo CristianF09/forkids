@@ -19,6 +19,7 @@ const productsData = [
     ],
     price: 39,
     image: '/images/Alfabetul .png',
+    stripeLink: 'https://buy.stripe.com/test_5kQaEQ2c5chO5qGfJSbbG01',
   },
   {
     id: 2,
@@ -35,6 +36,7 @@ const productsData = [
     ],
     price: 39,
     image: '/images/Numere.png',
+    stripeLink: 'https://buy.stripe.com/test_8x25kw6slepWf1g2X6bbG02',
   },
   {
     id: 3,
@@ -51,6 +53,7 @@ const productsData = [
     ],
     price: 39,
     image: '/images/Forme si culori.png',
+    stripeLink: 'https://buy.stripe.com/test_4gMbIU8Atfu0dXc0OYbbG03',
   },
   {
     id: 4,
@@ -68,6 +71,7 @@ const productsData = [
     ],
     price: 89,
     image: '/images/Pachet Promo.png',
+    stripeLink: 'https://buy.stripe.com/test_aFaaEQ9Ex4Pm8CS1T2bbG00',
   },
 ];
 
@@ -228,12 +232,14 @@ const Products = () => {
                 <span className="text-5xl font-bold text-[#20BF55]">89 Lei</span>
                 <span className="text-2xl line-through text-gray-500">117 Lei</span>
               </div>
-              <Link
-                to="/checkout"
+              <a
+                href="https://buy.stripe.com/test_aFaaEQ9Ex4Pm8CS1T2bbG00"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-full bg-[#FF6B00] text-white py-3 rounded-md text-lg font-semibold hover:bg-[#E05C00] transition-colors shadow-lg inline-block mb-4"
               >
                 Cumpără pachetul complet
-              </Link>
+              </a>
               <p className="text-gray-700 text-center text-sm flex items-center justify-center">
                 Plată securizată prin
                 <i className="fab fa-cc-stripe text-gray-700 text-xl ml-2"></i>
