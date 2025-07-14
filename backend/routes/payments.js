@@ -34,13 +34,12 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
 
 // Create payment intent
 router.post('/create-payment-intent', async (req, res) => {
-  const { priceId } = req.body;
-
   try {
-    const price = await stripe.prices.retrieve(priceId);
+    const { amount } = req.body;
+
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: price.unit_amount,
-      currency: price.currency,
+      amount: amount * 100, // Convert to cents
+      currency: 'usd',
       automatic_payment_methods: {
         enabled: true,
       },
@@ -54,6 +53,31 @@ router.post('/create-payment-intent', async (req, res) => {
   }
 });
 
+// Create Stripe Checkout session
+router.post('/create-checkout-session', async (req, res) => {
+  const { priceId } = req.body;
+  if (!priceId) {
+    return res.status(400).json({ error: 'Price ID is required.' });
+  }
+  try {
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [
+        {
+          price: priceId,
+          quantity: 1,
+        },
+      ],
+      mode: 'payment',
+      success_url: `${process.env.CLIENT_URL}/success`,
+      cancel_url: `${process.env.CLIENT_URL}/cancel`,
+    });
+    res.json({ url: session.url });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Eroare la crearea sesiunii de plată.' });
+  }
+});
 
 // Handle successful payment
 router.post('/success', async (req, res) => {
