@@ -134,19 +134,22 @@ const Catalog = () => {
                 <p className="text-gray-600 mb-4 text-sm">{product.description}</p>
                 <div className="flex items-center justify-between">
                   <span className="text-2xl font-bold text-[#20BF55]">{product.price} Lei</span>
-                  <button
-                    onClick={() => {
-                      if (product.stripeLink && product.stripeLink !== 'https://buy.stripe.com/your-link-here') {
-                        window.location.href = product.stripeLink;
-                      } else {
+                  <a
+                    href={product.stripeLink && product.stripeLink !== 'https://buy.stripe.com/your-link-here' ? product.stripeLink : '#'}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-[#FF6B00] text-white px-4 py-2 rounded-xl font-bold hover:bg-[#FF6B00]/90 transition-colors"
+                    onClick={e => {
+                      if (!product.stripeLink || product.stripeLink === 'https://buy.stripe.com/your-link-here') {
+                        e.preventDefault();
                         alert('Linkul de plată nu este configurat încă. Vă rugăm să reveniți mai târziu.');
                       }
                     }}
-                    className="inline-flex items-center gap-2 bg-[#FF6B00] text-white px-4 py-2 rounded-xl font-bold hover:bg-[#FF6B00]/90 transition-colors"
+                    aria-label={`Cumpără ${product.title}`}
                   >
                     <ShoppingCart className="w-5 h-5" />
-                    Adaugă în coș
-                  </button>
+                    Cumpără
+                  </a>
                 </div>
               </div>
             </div>

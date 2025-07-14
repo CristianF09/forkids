@@ -39,8 +39,10 @@ const Navbar = () => {
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center">
             <button
+              type="button"
               onClick={() => setIsOpen(!isOpen)}
               className="text-gray-700 hover:text-blue-600 focus:outline-none"
+              aria-label="Deschide meniul"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>

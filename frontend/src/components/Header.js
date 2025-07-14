@@ -41,8 +41,10 @@ const Header = () => {
           {/* Mobile Menu Button */}
           <div className="md:hidden">
             <button
+              type="button"
               onClick={toggleMenu}
               className="text-gray-800 hover:text-[#FF6B00] focus:outline-none"
+              aria-label="Deschide meniul"
             >
               {isMenuOpen ? (
                 <X className="h-6 w-6" />

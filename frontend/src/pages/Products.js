@@ -181,12 +181,21 @@ const Products = () => {
                 </ul>
                 <div className="mt-auto flex justify-between items-center">
                   <span className="text-2xl font-bold text-[#20BF55]">{product.price} Lei</span>
-                  <Link
-                    to="/checkout"
+                  <a
+                    href={product.stripeLink && product.stripeLink !== 'https://buy.stripe.com/your-link-here' ? product.stripeLink : '#'}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center bg-[#FF6B00] text-white px-6 py-2 rounded-md hover:bg-[#E05C00] transition-colors shadow"
+                    onClick={e => {
+                      if (!product.stripeLink || product.stripeLink === 'https://buy.stripe.com/your-link-here') {
+                        e.preventDefault();
+                        alert('Linkul de plată nu este configurat încă. Vă rugăm să reveniți mai târziu.');
+                      }
+                    }}
+                    aria-label={`Cumpără ${product.title}`}
                   >
                     Cumpără
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>
