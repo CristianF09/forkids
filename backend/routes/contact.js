@@ -1,12 +1,14 @@
+// backend/routes/contact.js
+
 const express = require('express');
 const router = express.Router();
 const nodemailer = require('nodemailer');
 
-router.post('/create-checkout-session', async (req, res) => {
-  const { productId } = req.body;
+router.post('/', async (req, res) => {
+  const { name, email, message } = req.body;
 
-  if (!productId) {
-    return res.status(400).json({ error: 'Product ID is required.' });
+  if (!email || !message || !name) {
+    return res.status(400).json({ error: 'Toate câmpurile sunt necesare.' });
   }
 
   try {
@@ -20,7 +22,7 @@ router.post('/create-checkout-session', async (req, res) => {
       },
     });
 
-    // 1. Trimite email către tine (admin)
+    // 1. Trimite email către admin
     await transporter.sendMail({
       from: process.env.ZOHO_USER,
       to: process.env.ZOHO_USER,
@@ -28,7 +30,7 @@ router.post('/create-checkout-session', async (req, res) => {
       text: `Email: ${email}\n\nMesaj: ${message}`,
     });
 
-    // 2. Trimite email de confirmare către client
+    // 2. Confirmare către client
     await transporter.sendMail({
       from: process.env.ZOHO_USER,
       to: email,
@@ -43,4 +45,4 @@ router.post('/create-checkout-session', async (req, res) => {
   }
 });
 
-module.exports = router; 
+module.exports = router;
