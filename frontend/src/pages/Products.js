@@ -18,8 +18,10 @@ const productsData = [
       'Peste 50 de pagini de activități',
     ],
     price: 39,
-    image: '/images/Alfabetul .png',
-    stripeLink: 'https://buy.stripe.com/test_5kQaEQ2c5chO5qGfJSbbG01',
+    image: '/images/Alfabetul .jpg',
+    priceId: 'price_1Rkl17K6Qc2WK3kdsulZ1UxS',
+    productId: 'prod_Sg7FB1xJVJc2MV',
+    stripeLink: 'https://buy.stripe.com/28E3cwc3ceav0OD5hWeZ203',
   },
   {
     id: 2,
@@ -35,8 +37,10 @@ const productsData = [
       'Peste 50 de pagini de activități',
     ],
     price: 39,
-    image: '/images/Numere.png',
-    stripeLink: 'https://buy.stripe.com/test_8x25kw6slepWf1g2X6bbG02',
+    image: '/images/Numere.jpg',
+    priceId: 'price_1Rkl17K6Qc2WK3kdesB8V3Hm',
+    productId: 'prod_Sg7FSlYGXYLqIx',
+    stripeLink: 'https://buy.stripe.com/14AaEY8R02rNfJxh0EeZ202',
   },
   {
     id: 3,
@@ -52,8 +56,10 @@ const productsData = [
       'Peste 50 de pagini de activități',
     ],
     price: 39,
-    image: '/images/Forme si culori.png',
-    stripeLink: 'https://buy.stripe.com/test_4gMbIU8Atfu0dXc0OYbbG03',
+    image: '/images/Forme si culori.jpg',
+    priceId: 'price_1Rkl16K6Qc2WK3kdu5bsOWqZ',
+    productId: 'prod_Sg7Fm0E2S5Hm1k',
+    stripeLink: 'https://buy.stripe.com/fZu8wQ8R0c2n2WLh0EeZ201',
   },
   {
     id: 4,
@@ -70,8 +76,10 @@ const productsData = [
       'BONUS: Certificate de Absolvire',
     ],
     price: 89,
-    image: '/images/Pachet Promo.png',
-    stripeLink: 'https://buy.stripe.com/test_aFaaEQ9Ex4Pm8CS1T2bbG00',
+    image: '/images/Pachet Promo.jpg',
+    priceId: 'price_1Rkl16K6Qc2WK3kdr90F7xZM',
+    productId: 'prod_Sg7FLP5uIieb7r',
+    stripeLink: 'https://buy.stripe.com/eVqdRaffo2rNfJxbGkeZ200',
   },
 ];
 
@@ -233,7 +241,7 @@ const Products = () => {
                 <span className="text-2xl line-through text-gray-500">117 Lei</span>
               </div>
               <a
-                href="https://buy.stripe.com/test_aFaaEQ9Ex4Pm8CS1T2bbG00"
+                href="https://buy.stripe.com/eVqdRaffo2rNfJxbGkeZ200"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full bg-[#FF6B00] text-white py-3 rounded-md text-lg font-semibold hover:bg-[#E05C00] transition-colors shadow-lg inline-block mb-4"
