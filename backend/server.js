@@ -4,8 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
 
-// Import rute
-const authRoutes = require('./routes/auth');
+// Import doar rutele necesare
 const pdfRoutes = require('./routes/pdfs');
 const paymentRoutes = require('./routes/payments');
 const contactRoutes = require('./routes/contact');
@@ -27,8 +26,7 @@ mongoose.connect(process.env.MONGODB_URI, {
   .then(() => console.log('Conectat la MongoDB'))
   .catch((err) => console.error('Eroare conectare MongoDB:', err));
 
-// Rute API
-app.use('/api/auth', authRoutes);
+// Rute API (fără /auth)
 app.use('/api/pdfs', pdfRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/contact', contactRoutes);
