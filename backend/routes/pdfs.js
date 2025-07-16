@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-// Placeholder for future PDF-related endpoints
+// Exemplu de route
+router.get('/', (req, res) => {
+  res.json({ message: 'PDFs route works' });
+});
 
-module.exports = router; 
+module.exports = router;
