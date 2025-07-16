@@ -5,18 +5,19 @@ const fs = require('fs');
 /**
  * Sends a PDF as an email attachment to the specified email address.
  * @param {string} toEmail - Recipient's email address
- * @param {string} product - PDF file name (should match a file in backend/public/pdfs/)
+ * @param {string} productId - ID-ul produsului (ex: price_1RiBRR2c4OeQrchOtK2eOVra)
  */
-async function sendPDF(toEmail, product) {
-  // Build the PDF file path
-  const pdfPath = path.join(__dirname, 'public', 'pdfs', product + '.pdf');
+async function sendPDF(toEmail, productId) {
+  const pdfDir = path.join(__dirname, 'public', 'pdfs');
+  const pdfFilename = `${productId}.pdf`;
+  const pdfPath = path.join(pdfDir, pdfFilename);
 
-  // Check if the file exists
+  // Verificăm dacă fișierul există
   if (!fs.existsSync(pdfPath)) {
-    throw new Error(`PDF file not found: ${pdfPath}`);
+    throw new Error(`Fișierul PDF nu a fost găsit: ${pdfPath}`);
   }
 
-  // Create transporter
+  // Configurare transport SMTP
   const transporter = nodemailer.createTransport({
     host: 'smtp.zoho.eu',
     port: 465,
@@ -27,19 +28,22 @@ async function sendPDF(toEmail, product) {
     },
   });
 
-  // Send the email with PDF attachment
-  await transporter.sendMail({
-    from: `"ForKids" <${process.env.ZOHO_USER}>`,
+  // Trimitem emailul cu PDF-ul atașat
+  const mailOptions = {
+    from: `"CorcoDușa" <${process.env.ZOHO_USER}>`,
     to: toEmail,
-    subject: 'PDF-ul tau de la ForKids',
-    text: 'Multumim pentru achizitie! Gasesti PDF-ul atasat acestui email.',
+    subject: 'Fișele tale educative - CorcoDușa',
+    text: 'Mulțumim pentru achiziție! Găsești fișierele tău educațional atașat acestui email.\n\nPentru întrebări sau suport, nu ezita să ne contactezi la contact@corcodusa.ro.',
     attachments: [
       {
-        filename: product + '.pdf',
+        filename: pdfFilename,
         path: pdfPath,
       },
     ],
-  });
+  };
+
+  await transporter.sendMail(mailOptions);
+  console.log(`PDF trimis către: ${toEmail}`);
 }
 
-module.exports = { sendPDF }; 
+module.exports = { sendPDF };

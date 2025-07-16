@@ -4,12 +4,13 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
 
-// Import routes
+// Import rute
 const authRoutes = require('./routes/auth');
 const pdfRoutes = require('./routes/pdfs');
 const paymentRoutes = require('./routes/payments');
 const contactRoutes = require('./routes/contact');
 const checkoutRoutes = require('./routes/checkout');
+const webhookRoutes = require('./routes/webhook');
 
 const app = express();
 
@@ -18,46 +19,51 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.error('MongoDB connection error:', err));
+// Conectare la MongoDB
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+  .then(() => console.log('Conectat la MongoDB'))
+  .catch((err) => console.error('Eroare conectare MongoDB:', err));
 
-// Routes
+// Rute API
 app.use('/api/auth', authRoutes);
 app.use('/api/pdfs', pdfRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/checkout', checkoutRoutes);
+app.use('/api/webhook', webhookRoutes);
 
-// Serve static files in production
+// Servire frontend în producție
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../frontend/build')));
+  app.use(express.static(path.join(__dirname, '../build')));
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
+    res.sendFile(path.resolve(__dirname, '../build', 'index.html'));
   });
 }
 
-// Error handling middleware
+// Middleware de tratare erori
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ message: 'Something went wrong!' });
+  console.error('Eroare server:', err.stack);
+  res.status(500).json({ message: 'A apărut o eroare pe server!' });
 });
 
-// Change default port to 10000
+// Port din variabila de mediu
 const PORT = process.env.PORT || 10000;
 
-// Handle port conflicts
+// Tratarea conflictelor de port
 const server = app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-}).on('error', (err) => {
+  console.log(`Server rulează pe portul ${PORT}`);
+});
+
+server.on('error', (err) => {
   if (err.code === 'EADDRINUSE') {
-    console.log(`Port ${PORT} is busy, trying ${PORT + 1}`);
-    server.close();
+    console.log(`Portul ${PORT} este ocupat, încerc portul ${PORT + 1}`);
     app.listen(PORT + 1, () => {
-      console.log(`Server running on port ${PORT + 1}`);
+      console.log(`Server rulează acum pe portul ${PORT + 1}`);
     });
   } else {
-    console.error('Server error:', err);
+    console.error('Eroare la pornirea serverului:', err);
   }
-}); 
+});
