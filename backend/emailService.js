@@ -1,6 +1,8 @@
 const nodemailer = require('nodemailer');
 const path = require('path');
 const fs = require('fs');
+const express = require('express');
+const app = express();
 
 /**
  * Sends a PDF as an email attachment to the specified email address.
@@ -44,6 +46,13 @@ async function sendPDF(toEmail, productId) {
 
   await transporter.sendMail(mailOptions);
   console.log(`PDF trimis către: ${toEmail}`);
+}
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../frontend/build')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
+  });
 }
 
 module.exports = { sendPDF };
