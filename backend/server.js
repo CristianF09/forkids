@@ -20,10 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Conectare la MongoDB
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('Conectat la MongoDB'))
   .catch((err) => console.error('Eroare conectare MongoDB:', err));
 
