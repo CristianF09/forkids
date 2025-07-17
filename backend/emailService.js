@@ -48,6 +48,36 @@ async function sendPDF(toEmail, productId) {
   console.log(`PDF trimis către: ${toEmail}`);
 }
 
+/**
+ * Trimite un email de contact către contact@corcodusa.ro cu detaliile din formular.
+ * @param {Object} param0
+ * @param {string} param0.name - Numele expeditorului
+ * @param {string} param0.email - Emailul expeditorului
+ * @param {string} param0.message - Mesajul expeditorului
+ */
+async function sendContactEmail({ name, email, message }) {
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.zoho.eu',
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.ZOHO_USER,
+      pass: process.env.ZOHO_PASS,
+    },
+  });
+
+  const mailOptions = {
+    from: `"${name}" <${process.env.ZOHO_USER}>`,
+    to: 'contact@corcodusa.ro',
+    subject: 'Formular de contact - CorcoDușa',
+    text: `Ai primit un mesaj nou de la formularul de contact:\n\nNume: ${name}\nEmail: ${email}\nMesaj: ${message}`,
+    replyTo: email,
+  };
+
+  await transporter.sendMail(mailOptions);
+  console.log(`Email de contact primit de la: ${name} <${email}>`);
+}
+
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../frontend/build')));
   app.get('*', (req, res) => {
@@ -55,4 +85,4 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-module.exports = { sendPDF };
+module.exports = { sendPDF, sendContactEmail };
