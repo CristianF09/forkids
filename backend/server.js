@@ -13,8 +13,8 @@ const webhookRoutes = require('./routes/webhook');
 
 const app = express();
 
-const emailTestRoute = require('./routes/emailTest');
-app.use('/api/test-email', emailTestRoute);
+/*const emailTestRoute = require('./routes/emailTest');
+app.use('/api/test-email', emailTestRoute);*/
 
 
 // Middleware
