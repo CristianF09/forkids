@@ -1,10 +1,8 @@
-require('dotenv').config();
-const express = require('express');
 const nodemailer = require('nodemailer');
 const path = require('path');
 const fs = require('fs');
-
-
+const express = require('express');
+require('dotenv').config();
 
 /**
  * Sends a PDF as an email attachment to the specified email address.
