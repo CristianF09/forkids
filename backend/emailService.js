@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 const path = require('path');
 const fs = require('fs');
 const express = require('express');
-const app = express();
+require('dotenv').config();
 
 /**
  * Sends a PDF as an email attachment to the specified email address.
@@ -25,14 +25,14 @@ async function sendPDF(toEmail, productId) {
     port: 465,
     secure: true,
     auth: {
-      user: process.env.ZOHO_USER,
-      pass: process.env.ZOHO_PASS,
+      user: process.env.ZMAIL_USER,
+      pass: process.env.ZMAIL_PASS,
     },
   });
 
   // Trimitem emailul cu PDF-ul atașat
   const mailOptions = {
-    from: `"CorcoDușa" <${process.env.ZOHO_USER}>`,
+    from: `"CorcoDușa" <${process.env.ZMAIL_USER}>`,
     to: toEmail,
     subject: 'Fișele tale educative - CorcoDușa',
     text: 'Mulțumim pentru achiziție! Găsești fișierele tău educațional atașat acestui email.\n\nPentru întrebări sau suport, nu ezita să ne contactezi la contact@corcodusa.ro.',
@@ -61,13 +61,13 @@ async function sendContactEmail({ name, email, message }) {
     port: 465,
     secure: true,
     auth: {
-      user: process.env.ZOHO_USER,
-      pass: process.env.ZOHO_PASS,
+      user: process.env.ZMAIL_USER,
+      pass: process.env.ZMAIL_PASS,
     },
   });
 
   const mailOptions = {
-    from: `"${name}" <${process.env.ZOHO_USER}>`,
+    from: `"${name}" <${process.env.ZMAIL_USER}>`,
     to: 'contact@corcodusa.ro',
     subject: 'Formular de contact - CorcoDușa',
     text: `Ai primit un mesaj nou de la formularul de contact:\n\nNume: ${name}\nEmail: ${email}\nMesaj: ${message}`,
@@ -76,13 +76,6 @@ async function sendContactEmail({ name, email, message }) {
 
   await transporter.sendMail(mailOptions);
   console.log(`Email de contact primit de la: ${name} <${email}>`);
-}
-
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../frontend/build')));
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
-  });
 }
 
 module.exports = { sendPDF, sendContactEmail };

@@ -11,8 +11,11 @@ const contactRoutes = require('./routes/contact');
 const checkoutRoutes = require('./routes/checkout');
 const webhookRoutes = require('./routes/webhook');
 
-
 const app = express();
+
+const emailTestRoute = require('./routes/emailTest');
+app.use('/api/test-email', emailTestRoute);
+
 
 // Middleware
 app.use(cors());
