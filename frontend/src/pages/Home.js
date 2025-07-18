@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MessageSquare, Zap, Smile, Check, User, DollarSign, Download, CreditCard, HelpCircle, Star, BookOpen } from 'lucide-react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
 
 const Home = () => {
   const testimonials = [
@@ -68,30 +70,64 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-[#20BF55] to-[#FF6B00] text-white py-20 md:py-28 lg:py-36 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-            Învățare distractivă pentru copii de 3-7 ani
-          </h1>
-          <p className="text-lg md:text-xl lg:text-2xl mb-10 max-w-4xl mx-auto opacity-90">
-            Descoperă cărțile noastre interactive în format PDF care transformă educația în joacă și dezvoltă abilitățile copilului tău într-un mod creativ și captivant!
-          </p>
-          <Link
-            to="/produse"
-            className="bg-white text-[#FF6B00] hover:bg-gray-100 px-8 py-3 rounded-full text-lg font-semibold transition-colors shadow-lg inline-flex items-center group"
-          >
-            Vezi produsele
-            <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
-          </Link>
+      {/* Hero Section - Split Layout */}
+      <section className="relative bg-gradient-to-r from-[#20BF55] to-[#FF6B00] text-white py-12 sm:py-16 md:py-20 lg:py-28 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-0">
+            {/* Left Side: Text and Button */}
+            <div className="flex-1 text-center md:text-left mt-8 md:mt-0">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
+                Învățare distractivă pentru copii de 3-7 ani
+              </h1>
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 sm:mb-10 max-w-xl md:max-w-lg opacity-90 mx-auto md:mx-0">
+                Descoperă cărțile noastre interactive în format PDF care transformă educația în joacă și dezvoltă abilitățile copilului tău într-un mod creativ și captivant!
+              </p>
+              <Link
+                to="/produse"
+                className="bg-white text-[#FF6B00] hover:bg-gray-100 px-6 sm:px-8 py-2 sm:py-3 rounded-full text-base sm:text-lg font-semibold transition-colors shadow-lg inline-flex items-center group"
+              >
+                Vezi produsele
+                <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
+              </Link>
+            </div>
+            {/* Right Side: Swiper Carousel */}
+            <div className="flex-1 flex justify-center w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg">
+              <Swiper
+                spaceBetween={16}
+                slidesPerView={1}
+                loop={true}
+                className="w-full h-52 sm:h-64 md:h-72 lg:h-80 rounded-xl shadow-lg bg-white/20"
+              >
+                <SwiperSlide>
+                  <img src="/images/Alfabetul .jpg" alt="Alfabetul" className="w-full h-full object-contain rounded-xl" />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <img src="/images/Numere.jpg" alt="Numere" className="w-full h-full object-contain rounded-xl" />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <img src="/images/Forme si culori.jpg" alt="Forme si culori" className="w-full h-full object-contain rounded-xl" />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <img src="/images/Bonus - Fise de colorat.jpg" alt="Fise de colorat" className="w-full h-full object-contain rounded-xl" />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <img src="/images/Pachet Promo.jpg" alt="Pachet Promo" className="w-full h-full object-contain rounded-xl" />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <img src="/images/homepage.png" alt="Homepage" className="w-full h-full object-contain rounded-xl" />
+                </SwiperSlide>
+              </Swiper>
+            </div>
+          </div>
         </div>
-        <div className="absolute inset-0 z-0">
+        {/* Optional: Remove or keep the background image overlay if desired */}
+        {/* <div className="absolute inset-0 z-0">
           <img
             src="/images/homepage.png"
             alt="Children learning with Corcodusa"
             className="w-full h-full object-cover opacity-30"
           />
-        </div>
+        </div> */}
       </section>
 
       {/* Why Choose Corcodusa Section */}

@@ -137,7 +137,7 @@ const Products = () => {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-row gap-4 md:gap-6 lg:gap-8 justify-center md:justify-center">
             <button
               onClick={() => setSelectedCategory('Toate produsele')}
-              className={`px-8 py-3 rounded-full font-semibold transition-colors text-base md:text-lg lg:text-xl ${selectedCategory === 'Toate produsele' ? 'bg-[#FF6B00] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+              className={`col-span-2 px-8 py-3 rounded-full font-semibold transition-colors text-base md:text-lg lg:text-xl ${selectedCategory === 'Toate produsele' ? 'bg-[#FF6B00] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
             >
               Toate produsele
             </button>
