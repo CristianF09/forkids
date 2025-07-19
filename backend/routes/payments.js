@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const { sendPDF } = require('../emailService'); // Adjust path as needed
+const Stripe = require('stripe');
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+const { sendPDF } = require('../services/emailService'); // Calea către serviciul de email
 
-// Stripe webhook endpoint
+// Stripe webhook endpoint - primește notificări de la Stripe
 router.post('/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
   const sig = req.headers['stripe-signature'];
   let event;
@@ -15,84 +16,75 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
-  // Handle the event
+  // Procesăm evenimentul la finalizarea plății
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object;
     const emailClient = session.customer_details.email;
-    const product = session.metadata.product; // You must set this metadata when creating the session
+    const product = session.metadata.product; // trebuie să setezi metadata.product când creezi sesiunea
 
     try {
       await sendPDF(emailClient, product);
-      console.log('PDF sent to', emailClient);
+      console.log(`PDF trimis către: ${emailClient}`);
     } catch (err) {
-      console.error('Error sending PDF:', err);
+      console.error('Eroare la trimiterea PDF-ului:', err);
     }
   }
 
   res.json({ received: true });
 });
 
-// Create payment intent
+// Creează Payment Intent pentru plăți directe
 router.post('/create-payment-intent', async (req, res) => {
   try {
     const { amount } = req.body;
 
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: amount * 100, // Convert to cents
+      amount: amount * 100, // convertim la cenți
       currency: 'usd',
-      automatic_payment_methods: {
-        enabled: true,
-      },
+      automatic_payment_methods: { enabled: true },
     });
 
-    res.json({
-      clientSecret: paymentIntent.client_secret,
-    });
+    res.json({ clientSecret: paymentIntent.client_secret });
   } catch (error) {
-    res.status(500).json({ message: 'Error creating payment intent' });
+    console.error('Eroare la crearea Payment Intent:', error);
+    res.status(500).json({ message: 'Eroare la crearea Payment Intent' });
   }
 });
 
-// Create Stripe Checkout session
+// Creează sesiunea Checkout (pentru checkout-ul Stripe)
 router.post('/create-checkout-session', async (req, res) => {
-  const { priceId } = req.body;
-  if (!priceId) {
-    return res.status(400).json({ error: 'Price ID is required.' });
+  const { priceId, productId } = req.body;
+
+  if (!priceId || !productId) {
+    return res.status(400).json({ error: 'Price ID și Product ID sunt necesare.' });
   }
+
   try {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
-      line_items: [
-        {
-          price: priceId,
-          quantity: 1,
-        },
-      ],
+      line_items: [{ price: priceId, quantity: 1 }],
       mode: 'payment',
       success_url: `${process.env.CLIENT_URL}/success`,
       cancel_url: `${process.env.CLIENT_URL}/cancel`,
+      metadata: { product: productId }, // aici trimitem productId ca metadata
     });
+
     res.json({ url: session.url });
   } catch (err) {
-    console.error(err);
+    console.error('Eroare la crearea sesiunii Checkout:', err);
     res.status(500).json({ error: 'Eroare la crearea sesiunii de plată.' });
   }
 });
 
-// Handle successful payment
+// Endpoint dummy pentru success (poate fi extins)
 router.post('/success', async (req, res) => {
   try {
-    const { paymentIntentId, pdfId } = req.body;
-    
-    // Here you would typically:
-    // 1. Verify the payment with Stripe
-    // 2. Record the purchase in your database
-    // 3. Generate a download link for the PDF
-    
-    res.json({ message: 'Payment successful' });
+    // aici poți verifica plata, salva în DB, etc.
+    res.json({ message: 'Plată realizată cu succes' });
   } catch (error) {
-    res.status(500).json({ message: 'Error processing payment' });
+    console.error('Eroare la procesarea plății:', error);
+    res.status(500).json({ message: 'Eroare la procesarea plății' });
   }
 });
 
-module.exports = router; 
+module.exports = router;

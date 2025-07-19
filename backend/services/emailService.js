@@ -1,12 +1,11 @@
 const nodemailer = require('nodemailer');
 const path = require('path');
 const fs = require('fs');
-const express = require('express');
 require('dotenv').config();
 
 /**
- * Sends a PDF as an email attachment to the specified email address.
- * @param {string} toEmail - Recipient's email address
+ * Trimite un PDF ca atașament email-ului către adresa specificată.
+ * @param {string} toEmail - Adresa de email a destinatarului
  * @param {string} productId - ID-ul produsului (ex: price_1RiBRR2c4OeQrchOtK2eOVra)
  */
 async function sendPDF(toEmail, productId) {
@@ -14,12 +13,10 @@ async function sendPDF(toEmail, productId) {
   const pdfFilename = `${productId}.pdf`;
   const pdfPath = path.join(pdfDir, pdfFilename);
 
-  // Verificăm dacă fișierul există
   if (!fs.existsSync(pdfPath)) {
     throw new Error(`Fișierul PDF nu a fost găsit: ${pdfPath}`);
   }
 
-  // Configurare transport SMTP
   const transporter = nodemailer.createTransport({
     host: 'smtp.zoho.eu',
     port: 465,
@@ -30,12 +27,13 @@ async function sendPDF(toEmail, productId) {
     },
   });
 
-  // Trimitem emailul cu PDF-ul atașat
   const mailOptions = {
     from: `"CorcoDușa" <${process.env.ZMAIL_USER}>`,
     to: toEmail,
     subject: 'Fișele tale educative - CorcoDușa',
-    text: 'Mulțumim pentru achiziție! Găsești fișierele tău educațional atașat acestui email.\n\nPentru întrebări sau suport, nu ezita să ne contactezi la contact@corcodusa.ro.',
+    text:
+      'Mulțumim pentru achiziție! Găsești fișierul educațional atașat acestui email.\n\n' +
+      'Pentru întrebări sau suport, nu ezita să ne contactezi la contact@corcodusa.ro.',
     attachments: [
       {
         filename: pdfFilename,
@@ -49,7 +47,7 @@ async function sendPDF(toEmail, productId) {
 }
 
 /**
- * Trimite un email de contact către contact@corcodusa.ro cu detaliile din formular.
+ * Trimite un email de contact către contact@corcodusa.ro cu detaliile primite din formular.
  * @param {Object} param0
  * @param {string} param0.name - Numele expeditorului
  * @param {string} param0.email - Emailul expeditorului
