@@ -2,7 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { MessageSquare, Zap, Smile, Check, User, DollarSign, Download, CreditCard, HelpCircle, Star, BookOpen } from 'lucide-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 const Home = () => {
   const testimonials = [
@@ -68,66 +71,68 @@ const Home = () => {
     },
   ];
 
+  // Carousel images
+  const carouselImages = [
+    'AL1.png', 'AL2.png', 'AL3.png', 'AL4.png', 'AL5.png', 'AL6.png', 'AL7.png',
+    'FC1.png', 'FC2.png', 'FC3.png', 'FC4.png', 'FC5.png', 'FC6.png', 'FC7.png', 'FC8.png',
+    'NR1.png', 'NR2.png', 'NR3.png', 'NR4.png', 'NR5.png', 'NR6.png', 'NR7.png', 'NR8.png',
+  ];
+  // Split images into groups of 4 for each slide
+  const slides = [];
+  for (let i = 0; i < carouselImages.length; i += 4) {
+    slides.push(carouselImages.slice(i, i + 4));
+  }
+
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Hero Section - Split Layout */}
+      {/* Hero Section - Now Split Vertically */}
       <section className="relative bg-gradient-to-r from-[#20BF55] to-[#FF6B00] text-white py-12 sm:py-16 md:py-20 lg:py-28 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-0">
-            {/* Left Side: Text and Button */}
-            <div className="flex-1 text-center md:text-left mt-8 md:mt-0">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
-                Învățare distractivă pentru copii de 3-7 ani
-              </h1>
-              <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 sm:mb-10 max-w-xl md:max-w-lg opacity-90 mx-auto md:mx-0">
-                Descoperă cărțile noastre interactive în format PDF care transformă educația în joacă și dezvoltă abilitățile copilului tău într-un mod creativ și captivant!
-              </p>
-              <Link
-                to="/produse"
-                className="bg-white text-[#FF6B00] hover:bg-gray-100 px-6 sm:px-8 py-2 sm:py-3 rounded-full text-base sm:text-lg font-semibold transition-colors shadow-lg inline-flex items-center group"
-              >
-                Vezi produsele
-                <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
-              </Link>
-            </div>
-            {/* Right Side: Swiper Carousel */}
-            <div className="flex-1 flex justify-center w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg">
-              <Swiper
-                spaceBetween={16}
-                slidesPerView={1}
-                loop={true}
-                className="w-full h-52 sm:h-64 md:h-72 lg:h-80 rounded-xl shadow-lg bg-white/20"
-              >
-                <SwiperSlide>
-                  <img src="/images/Alfabetul .jpg" alt="Alfabetul" className="w-full h-full object-contain rounded-xl" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col gap-12">
+          {/* Top: Text and Button */}
+          <div className="flex-1 flex flex-col items-center justify-center text-center mt-8 md:mt-0">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
+              Învățare distractivă pentru copii de 3-7 ani
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 sm:mb-10 max-w-xl md:max-w-lg opacity-90 mx-auto md:mx-0">
+              Descoperă cărțile noastre interactive în format PDF care transformă educația în joacă și dezvoltă abilitățile copilului tău într-un mod creativ și captivant!
+            </p>
+            <Link
+              to="/produse"
+              className="bg-white text-[#FF6B00] hover:bg-gray-100 px-6 sm:px-8 py-2 sm:py-3 rounded-full text-base sm:text-lg font-semibold transition-colors shadow-lg inline-flex items-center group"
+            >
+              Vezi produsele
+              <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
+            </Link>
+          </div>
+          {/* Bottom: Galerie Carousel */}
+          <div className="w-full">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 text-center drop-shadow-lg">Activități și materiale</h2>
+            <Swiper
+              modules={[Navigation, Pagination]}
+              navigation
+              pagination={{ clickable: true }}
+              spaceBetween={30}
+              slidesPerView={1}
+              className="w-full max-w-4xl mx-auto"
+            >
+              {slides.map((group, idx) => (
+                <SwiperSlide key={idx}>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    {group.map((img, i) => (
+                      <div key={i} className="bg-white p-6 rounded-xl shadow-lg flex flex-col items-center">
+                        <img
+                          src={`/images/carousel/${img}`}
+                          alt={`Carousel ${idx * 4 + i + 1}`}
+                          className="max-w-xs w-full h-56 object-contain rounded-md mb-4 bg-white"
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </SwiperSlide>
-                <SwiperSlide>
-                  <img src="/images/Numere.jpg" alt="Numere" className="w-full h-full object-contain rounded-xl" />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img src="/images/Forme si culori.jpg" alt="Forme si culori" className="w-full h-full object-contain rounded-xl" />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img src="/images/Bonus - Fise de colorat.jpg" alt="Fise de colorat" className="w-full h-full object-contain rounded-xl" />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img src="/images/Pachet Promo.jpg" alt="Pachet Promo" className="w-full h-full object-contain rounded-xl" />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <img src="/images/homepage.png" alt="Homepage" className="w-full h-full object-contain rounded-xl" />
-                </SwiperSlide>
-              </Swiper>
-            </div>
+              ))}
+            </Swiper>
           </div>
         </div>
-        {/* Optional: Remove or keep the background image overlay if desired */}
-        {/* <div className="absolute inset-0 z-0">
-          <img
-            src="/images/homepage.png"
-            alt="Children learning with Corcodusa"
-            className="w-full h-full object-cover opacity-30"
-          />
-        </div> */}
       </section>
 
       {/* Why Choose Corcodusa Section */}
