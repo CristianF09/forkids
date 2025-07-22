@@ -1,16 +1,32 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import axios from 'axios';
 
-const Success = () => (
-  <div className="min-h-screen flex flex-col items-center justify-center bg-green-50 px-4 text-center">
-    <h1 className="text-3xl md:text-4xl font-bold text-green-600 mb-4">🎉 Mulțumim pentru comandă!</h1>
-    <p className="text-lg text-gray-700 mb-6">
-      Plata a fost procesată cu succes.<br />
-      📩 Vei primi un e-mail cu linkul de descărcare al materialelor digitale.<br />
-      📁 Dacă nu îl găsești în Inbox, verifică și folderul Spam / Promoții.<br />
-      🖨️ Toate materialele sunt în format A4, gata de imprimat.
-    </p>
-    <a href="/" className="text-blue-600 hover:underline">Înapoi la homepage</a>
-  </div>
-);
+const Success = () => {
+  const [searchParams] = useSearchParams();
+  const sessionId = searchParams.get('session_id');
+  const [status, setStatus] = useState('Verificăm plata...');
+
+  useEffect(() => {
+    if (sessionId) {
+      axios
+        .get(`/api/checkout/confirm?session_id=${sessionId}`)
+        .then((res) => {
+          setStatus('Plata a fost confirmată! Am trimis materialul prin email.');
+        })
+        .catch((err) => {
+          console.error(err);
+          setStatus('A apărut o eroare la confirmarea plății.');
+        });
+    }
+  }, [sessionId]);
+
+  return (
+    <div style={{ padding: 20 }}>
+      <h1>Mulțumim!</h1>
+      <p>{status}</p>
+    </div>
+  );
+};
 
 export default Success; 
