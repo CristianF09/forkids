@@ -64,15 +64,16 @@ async function sendContactEmail({ name, email, message }) {
     },
   });
 
-  const mailOptions = {
+  await transporter.sendMail({
     from: `"${name}" <${process.env.ZMAIL_USER}>`,
-    to: 'contact@corcodusa.ro',
-    subject: 'Formular de contact - CorcoDușa',
-    text: `Ai primit un mesaj nou de la formularul de contact:\n\nNume: ${name}\nEmail: ${email}\nMesaj: ${message}`,
+    to: process.env.ZMAIL_USER,
+    subject: 'Mesaj nou din formularul de contact',
+    html: `
+      <h3>Ai primit un mesaj nou de la ${name} (${email})</h3>
+      <p>${message}</p>
+    `,
     replyTo: email,
-  };
-
-  await transporter.sendMail(mailOptions);
+  });
   console.log(`Email de contact primit de la: ${name} <${email}>`);
 }
 

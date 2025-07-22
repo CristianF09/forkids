@@ -14,7 +14,9 @@ const webhookRoutes = require('./routes/webhook');
 const app = express();
 
 // Middleware generale
-app.use(cors());
+app.use(cors({
+  origin: process.env.CLIENT_URL || 'http://localhost:3000',
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -34,6 +36,9 @@ app.use('/api/contact', contactRoutes);
 app.use('/api/checkout', checkoutRoutes);
 app.use('/api/webhook', webhookRoutes);
 
+// Health check route
+app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
+
 // Servește frontendul în producție (din folderul build)
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'frontend', 'build')));
@@ -46,7 +51,7 @@ if (process.env.NODE_ENV === 'production') {
 
 // Middleware pentru prinderea erorilor
 app.use((err, req, res, next) => {
-  console.error('❌ Eroare server:', err.stack);
+  console.error(err.stack);
   res.status(500).json({ message: 'A apărut o eroare pe server!' });
 });
 
@@ -68,3 +73,5 @@ server.on('error', (err) => {
     console.error('❌ Eroare la pornirea serverului:', err);
   }
 });
+
+console.log('🔍 mongoUri final:', mongoUri);

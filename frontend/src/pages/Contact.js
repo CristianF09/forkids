@@ -15,15 +15,30 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    setFormData({
-      name: '',
-      email: '',
-      message: ''
-    });
-    alert('Mulțumim pentru mesaj! Vă vom contacta în curând.');
+
+    try {
+      const response = await fetch('https://corcodusa.onrender.com/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('Mulțumim pentru mesaj! Vă vom contacta în curând.');
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        alert(data.error || 'A apărut o eroare. Încearcă din nou.');
+      }
+    } catch (error) {
+      console.error('Eroare:', error);
+      alert('Nu s-a putut trimite mesajul.');
+    }
   };
 
   return (
@@ -254,7 +269,7 @@ const Contact = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-20px); }
