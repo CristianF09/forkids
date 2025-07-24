@@ -9,6 +9,7 @@ const pdfRoutes = require('./routes/pdfs');
 const paymentRoutes = require('./routes/payments');
 const contactRoutes = require('./routes/contact');
 const checkoutRoutes = require('./routes/checkout');
+const successRoutes = require('./routes/success');
 const webhookRoutes = require('./routes/webhook');
 
 const app = express();
@@ -34,6 +35,7 @@ app.use('/api/pdfs', pdfRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/checkout', checkoutRoutes);
+app.use('/api', successRoutes); // <-- aici
 app.use('/api/webhook', webhookRoutes);
 
 // Health check route

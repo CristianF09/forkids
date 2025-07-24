@@ -77,4 +77,40 @@ async function sendContactEmail({ name, email, message }) {
   console.log(`Email de contact primit de la: ${name} <${email}>`);
 }
 
-module.exports = { sendPDF, sendContactEmail };
+/**
+ * Trimite un PDF ca atașament după numele produsului (productName) din folderul ../pdf
+ * @param {string} to - Adresa de email a destinatarului
+ * @param {string} productName - Numele produsului (fără extensie)
+ */
+async function sendEmailWithAttachment(to, productName) {
+  const filePath = path.join(__dirname, '../pdf', `${productName}.pdf`);
+  if (!fs.existsSync(filePath)) {
+    throw new Error(`Fișierul PDF nu a fost găsit: ${filePath}`);
+  }
+  const fileBuffer = fs.readFileSync(filePath);
+
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.zoho.eu',
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.ZMAIL_USER,
+      pass: process.env.ZMAIL_PASS,
+    },
+  });
+
+  await transporter.sendMail({
+    from: `"Corcodușa" <${process.env.ZMAIL_USER}>`,
+    to,
+    subject: `Mulțumim pentru achiziția ${productName}`,
+    text: 'Găsești atașat materialul digital cumpărat. Îți mulțumim!',
+    attachments: [
+      {
+        filename: `${productName}.pdf`,
+        content: fileBuffer,
+      },
+    ],
+  });
+}
+
+module.exports = { sendPDF, sendContactEmail, sendEmailWithAttachment };
