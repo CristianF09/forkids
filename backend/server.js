@@ -18,6 +18,11 @@ const app = express();
 app.use(cors({
   origin: process.env.CLIENT_URL || 'http://localhost:3000',
 }));
+
+// Stripe webhook must be mounted BEFORE express.json(), with express.raw()
+app.use('/api/webhook', express.raw({ type: 'application/json' }), webhookRoutes);
+
+// Now parse JSON for all other routes
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -36,7 +41,6 @@ app.use('/api/payments', paymentRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/checkout', checkoutRoutes);
 app.use('/api', successRoutes); // <-- aici
-app.use('/api/webhook', webhookRoutes);
 
 // Health check route
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));

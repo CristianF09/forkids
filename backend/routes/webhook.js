@@ -4,7 +4,7 @@ const Stripe = require('stripe');
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 const { sendEmailWithAttachment } = require('../services/emailService');
 
-router.post('/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
+router.post('/', async (req, res) => {
   const sig = req.headers['stripe-signature'];
 
   let event;
@@ -19,9 +19,13 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
     const session = event.data.object;
     const customerEmail = session.customer_email;
     const productName = session.metadata?.productName || 'Produs digital';
-    
-    // Trimite emailul cu fișierul PDF
-    await sendEmailWithAttachment(customerEmail, productName);
+    try {
+      await sendEmailWithAttachment(customerEmail, productName);
+      console.log('✅ Email trimis către:', customerEmail);
+    } catch (error) {
+      console.error('❌ Eroare trimitere email:', error);
+      return res.status(500).end();
+    }
   }
 
   res.status(200).json({ received: true });
