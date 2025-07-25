@@ -14,7 +14,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.10.0",
+    "axios": "^1.11.0",
     "lucide-react": "^0.515.0",
     "mongodb": "^6.17.0",
     "path-to-regexp": "^8.2.0",
@@ -54,6 +54,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.21",
+    "nodemon": "^3.1.10",
     "postcss": "^8.5.5"
   }
 }
