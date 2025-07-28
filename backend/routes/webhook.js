@@ -3,7 +3,6 @@ const router = express.Router();
 const Stripe = require('stripe');
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 const { sendEmailWithAttachment } = require('../services/emailService');
-const axios = require('axios'); // for downloading invoice PDF
 
 router.post('/', async (req, res) => {
   const sig = req.headers['stripe-signature'];
@@ -26,45 +25,6 @@ router.post('/', async (req, res) => {
     } catch (error) {
       console.error('❌ Eroare trimitere email:', error);
       return res.status(500).end();
-    }
-
-    // Send invoice if available
-    if (session.invoice) {
-      try {
-        const invoice = await stripe.invoices.retrieve(session.invoice);
-        if (invoice && invoice.invoice_pdf) {
-          const response = await axios.get(invoice.invoice_pdf, { responseType: 'arraybuffer' });
-          const invoiceBuffer = Buffer.from(response.data, 'binary');
-
-          // Use nodemailer directly for invoice
-          const nodemailer = require('nodemailer');
-          const transporter = nodemailer.createTransport({
-            host: 'smtp.zoho.eu',
-            port: 465,
-            secure: true,
-            auth: {
-              user: process.env.ZMAIL_USER,
-              pass: process.env.ZMAIL_PASS,
-            },
-          });
-
-          await transporter.sendMail({
-            from: `"Corcodușa" <${process.env.ZMAIL_USER}>`,
-            to: customerEmail,
-            subject: 'Factura ta de la Corcodușa',
-            text: 'Atașat găsești factura pentru achiziția ta. Mulțumim!',
-            attachments: [
-              {
-                filename: 'Factura-Corcodusa.pdf',
-                content: invoiceBuffer,
-              },
-            ],
-          });
-          console.log('✅ Factura trimisă către:', customerEmail);
-        }
-      } catch (error) {
-        console.error('❌ Eroare trimitere factură:', error);
-      }
     }
   }
 
