@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Stripe = require('stripe');
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
-const { sendPDF, generateAndSendInvoice } = require('../services/emailService'); // Calea către serviciul de email
+const { sendPDF } = require('../services/emailService'); // Calea către serviciul de email
 
 // Stripe webhook endpoint - primește notificări de la Stripe
 router.post('/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
@@ -20,30 +20,13 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object;
     const emailClient = session.customer_details.email;
-    const productId = session.metadata.product; // trebuie să setezi metadata.product când creezi sesiunea
-
-    // Product info mapping
-    const productInfoMap = {
-      'prod_Sg7FSlYGXYLqIx': { name: 'Alfabetul în Joacă', price: 39 },
-      'prod_Sg7Fm0E2S5Hm1k': { name: 'Numere', price: 39 },
-      'prod_Sg7FLP5uIieb7r': { name: 'Forme si Culori', price: 39 },
-      'prod_Sg7FB1xJVJc2MV': { name: 'Pachet Complet', price: 89 },
-    };
-    const productInfo = productInfoMap[productId] || { name: 'Produs necunoscut', price: 0 };
-    const invoiceData = {
-      clientEmail: emailClient,
-      clientName: session.customer_details.name || '',
-      productName: productInfo.name,
-      price: productInfo.price,
-      date: new Date(session.created * 1000).toLocaleDateString('ro-RO'),
-    };
+    const product = session.metadata.product; // trebuie să setezi metadata.product când creezi sesiunea
 
     try {
-      await sendPDF(emailClient, productId);
-      await generateAndSendInvoice(emailClient, invoiceData);
-      console.log(`PDF și factură trimise către: ${emailClient}`);
+      await sendPDF(emailClient, product);
+      console.log(`PDF trimis către: ${emailClient}`);
     } catch (err) {
-      console.error('Eroare la trimiterea PDF-ului sau facturii:', err);
+      console.error('Eroare la trimiterea PDF-ului:', err);
     }
   }
 
