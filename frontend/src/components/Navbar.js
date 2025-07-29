@@ -13,7 +13,7 @@ const Navbar = () => {
             <Link to="/" className="flex-shrink-0 flex items-center">
               <img
                 className="h-12 w-auto"
-                src="/images/img1.png"
+                src="/images/logo.png"
                 alt="Corcodușa Logo"
               />
               <span className="ml-2 text-xl font-bold text-blue-600">Corcodușa</span>

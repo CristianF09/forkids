@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MessageSquare, Zap, Smile, Check, User, DollarSign, Download, CreditCard, HelpCircle, Star, BookOpen } from 'lucide-react';
+import { MessageSquare, Zap, Smile, Check, Download, CreditCard, HelpCircle, Star, BookOpen } from 'lucide-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+
 
 const Home = () => {
   const testimonials = [
@@ -322,14 +323,14 @@ const Home = () => {
                   <li className="flex items-center text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> BONUS: Diplome speciale</li>
                 </ul>
               </div>
-              <a
-                href="https://buy.stripe.com/28E3cwc3ceav0OD5hWeZ203"
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={() => {
+                  window.open('https://buy.stripe.com/test_aFaaEQ9Ex4Pm8CS1T2bbG00', '_blank');
+                }}
                 className="w-full bg-[#FF6B00] text-white py-3 rounded-md text-lg font-semibold hover:bg-[#E05C00] transition-colors shadow-lg inline-block mb-4"
               >
                 Cumpără pachetul complet
-              </a>
+              </button>
               <p className="text-gray-800 text-center text-sm flex items-center justify-center">
                 Plată securizată prin
                 <span className="ml-2" style={{ display: 'inline-flex', alignItems: 'center', height: '24px' }}>

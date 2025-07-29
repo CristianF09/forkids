@@ -82,8 +82,8 @@ async function sendContactEmail({ name, email, message }) {
  * @param {string} to - Adresa de email a destinatarului
  * @param {string} productName - Numele produsului (inclusiv extensia, ex: Alfabetul .pdf)
  */
-async function sendEmailWithAttachment(to, ) {
-  const filePath = path.join(__dirname, 'public', 'pdfs', productName);
+async function sendEmailWithAttachment(to, productName) {
+  const filePath = path.join(__dirname, '..', 'public', 'pdfs', productName);
   if (!fs.existsSync(filePath)) {
     throw new Error(`Fișierul PDF nu a fost găsit: ${filePath}`);
   }

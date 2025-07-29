@@ -1,54 +1,60 @@
 import React, { useState } from 'react';
 import { Search, ShoppingCart, CheckCircle2, ArrowRight, Gift } from 'lucide-react';
 
+
 const products = [
   {
-    id: 'prod_Sg7FSlYGXYLqIx',
+    id: 'prod_SdSxihb3Lajpej',
+    title: 'Pachet Complet',
+    ageRangeDisplay: '3-7 ani',
+    description: 'Obține toate cele 3 cărți la un preț special, cu peste 150 de pagini de activități educative și distractive.',
+    price: 89,
+    image: '/images/Pachet Promo.jpg',
+    category: 'all',
+    stripeLink: 'https://buy.stripe.com/test_aFaaEQ9Ex4Pm8CS1T2bbG00',
+    priceId: 'price_1RiC232c4OeQrchOX05BvSdj',
+    imageBgColor: 'bg-gradient-to-r from-[#20BF55] to-[#01BAEF]'
+  },
+  {
+    id: 'prod_SdSGaF749Hq8Qc',
     title: 'Alfabetul în Joacă',
     ageRangeDisplay: '3-5 ani',
     description: 'Învață literele și scrisul de mână prin activități captivante și jocuri interactive.',
     price: 39,
-    image: '/images/Alfabetul .png',
+    image: '/images/Alfabetul .jpg',
     category: 'alfabet',
-    stripeLink: 'https://buy.stripe.com/14AaEY8R02rNfJxh0EeZ202',
-    priceId: 'price_1Rkl17K6Qc2WK3kdesB8V3Hm',
+    stripeLink: 'https://buy.stripe.com/test_5kQaEQ2c5chO5qGfJSbbG01',
+    priceId: 'price_1RiBRR2c4OeQrchOtK2eOVra',
     imageBgColor: 'bg-[#2680EB]'
   },
   {
-    id: 'prod_Sg7Fm0E2S5Hm1k',
+    id: 'prod_SdSKXVYUi4Gf7C',
     title: 'Matematică Distractivă',
     ageRangeDisplay: '4-6 ani',
     description: 'Descoperă cifrele, număratul și operații matematice simple prin jocuri și activități interactive.',
     price: 39,
-    image: '/images/Numere.png',
+    image: '/images/Numere.jpg',
     category: 'numere',
-    stripeLink: 'https://buy.stripe.com/fZu8wQ8R0c2n2WLh0EeZ201',
-    priceId: 'price_1Rkl16K6Qc2WK3kdu5bsOWqZ',
+    stripeLink: 'https://buy.stripe.com/test_8x25kw6slepWf1g2X6bbG02',
+    priceId: 'price_1RiBPO2c4OeQrchOsizd12wR',
     imageBgColor: 'bg-[#20BF55]'
   },
   {
-    id: 'prod_Sg7FLP5uIieb7r',
+    id: 'prod_SdSMtxL88WMarI',
     title: 'Aventuri în Culori',
     ageRangeDisplay: '3-7 ani',
     description: 'Planșe de colorat, activități de desen și jocuri care dezvoltă creativitatea și motricitatea fină.',
     price: 39,
-    image: '/images/Forme si culori.png',
+    image: '/images/Forme si culori.jpg',
     category: 'culori',
-    stripeLink: 'https://buy.stripe.com/eVqdRaffo2rNfJxbGkeZ200',
-    priceId: 'price_1Rkl16K6Qc2WK3kdr90F7xZM',
+    stripeLink: 'https://buy.stripe.com/test_4gMbIU8Atfu0dXc0OYbbG03',
+    priceId: 'price_1RiBM12c4OeQrchOGrwdUbD2',
     imageBgColor: 'bg-[#FFD100]'
   }
 ];
 
-const promoPackageBannerImage = '/images/Pachet Promo.png'; // Ensure this image exists in public/images/
+const promoPackageBannerImage = '/images/Pachet Promo.jpg'; // Updated to use correct image
 const promoPackagePdf = '/pdfs/pachet-complet.pdf'; // Path for the promo package PDF
-const promoPackage = {
-  id: 'prod_Sg7FB1xJVJc2MV',
-  title: 'Pachet complet',
-  price: 89,
-  stripeLink: 'https://buy.stripe.com/28E3cwc3ceav0OD5hWeZ203',
-  priceId: 'price_1Rkl17K6Qc2WK3kdsulZ1UxS',
-};
 
 const Catalog = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -65,6 +71,7 @@ const Catalog = () => {
     const matchesSearch = product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          product.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
+    console.log(`Product: ${product.title}, Category: ${product.category}, Selected: ${selectedCategory}, Matches: ${matchesCategory}`);
     return matchesSearch && matchesCategory;
   });
 
@@ -144,22 +151,16 @@ const Catalog = () => {
                 <p className="text-gray-600 mb-4 text-sm">{product.description}</p>
                 <div className="flex items-center justify-between mt-auto">
                   <span className="text-xl sm:text-2xl font-bold text-[#20BF55]">{product.price} Lei</span>
-                  <a
-                    href={product.stripeLink && product.stripeLink !== 'https://buy.stripe.com/your-link-here' ? product.stripeLink : '#'}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-[#FF6B00] text-white px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold hover:bg-[#FF6B00]/90 transition-colors text-sm sm:text-base"
-                    onClick={e => {
-                      if (!product.stripeLink || product.stripeLink === 'https://buy.stripe.com/your-link-here') {
-                        e.preventDefault();
-                        alert('Linkul de plată nu este configurat încă. Vă rugăm să reveniți mai târziu.');
-                      }
+                  <button
+                    onClick={() => {
+                      window.open(product.stripeLink, '_blank');
                     }}
+                    className="inline-flex items-center gap-2 bg-[#FF6B00] text-white px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl font-bold hover:bg-[#FF6B00]/90 transition-colors text-sm sm:text-base"
                     aria-label={`Cumpără ${product.title}`}
                   >
                     <ShoppingCart className="w-5 h-5" />
                     Cumpără
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
@@ -193,7 +194,9 @@ const Catalog = () => {
               </div>
               <div className="text-center">
                 <button
-                  onClick={handlePromoDownload} // Trigger download on click
+                  onClick={() => {
+                    window.open('https://buy.stripe.com/test_aFaaEQ9Ex4Pm8CS1T2bbG00', '_blank');
+                  }}
                   className="buy-button inline-flex items-center gap-2 bg-[#FF6B00] text-white px-4 py-2 sm:px-6 sm:py-3 rounded-xl font-bold hover:bg-[#FF6B00]/90 transition-colors text-sm sm:text-base"
                 >
                   <ShoppingCart className="w-5 h-5" />
@@ -233,7 +236,7 @@ const Catalog = () => {
                 </li>
               </ul>
               <button
-                onClick={() => console.log('Choose individual book')}
+                onClick={() => window.location.href = '/produse'}
                 className="inline-flex items-center gap-2 bg-[#FF6B00] text-white px-6 py-3 rounded-xl font-bold hover:bg-[#FF6B00]/90 transition-colors"
               >
                 Alege o carte
@@ -270,7 +273,9 @@ const Catalog = () => {
                 </li>
               </ul>
               <button
-                onClick={() => console.log('Buy complete package')}
+                onClick={() => {
+                  window.open('https://buy.stripe.com/test_aFaaEQ9Ex4Pm8CS1T2bbG00', '_blank');
+                }}
                 className="inline-flex items-center gap-2 bg-[#FF6B00] text-white px-6 py-3 rounded-xl font-bold hover:bg-[#FF6B00]/90 transition-colors"
               >
                 Cumpără pachetul complet

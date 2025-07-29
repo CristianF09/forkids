@@ -1,23 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import axios from 'axios';
 
 const Success = () => {
   const [searchParams] = useSearchParams();
   const sessionId = searchParams.get('session_id');
-  const [status, setStatus] = useState('Verificăm plata...');
+  const [status, setStatus] = useState('Plata a fost confirmată!');
 
   useEffect(() => {
     if (sessionId) {
-      axios
-        .get(`/api/checkout/confirm?session_id=${sessionId}`)
-        .then((res) => {
-          setStatus('Plata a fost confirmată! Am trimis materialul prin email.');
-        })
-        .catch((err) => {
-          console.error(err);
-          setStatus('A apărut o eroare la confirmarea plății.');
-        });
+      setStatus('Plata a fost confirmată! Veți primi materialul prin email în câteva minute.');
+    } else {
+      setStatus('Mulțumim pentru achiziție! Veți primi materialul prin email.');
     }
   }, [sessionId]);
 

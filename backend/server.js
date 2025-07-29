@@ -16,7 +16,8 @@ const app = express();
 
 // Middleware generale
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:3000',
+  origin: ['http://localhost:3000', 'http://localhost:10000', 'http://127.0.0.1:3000', 'http://127.0.0.1:10000'],
+  credentials: true
 }));
 
 // Stripe webhook must be mounted BEFORE express.json(), with express.raw()
@@ -26,14 +27,20 @@ app.use('/api/webhook', express.raw({ type: 'application/json' }), webhookRoutes
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Conectare MongoDB - înlocuim <DB_PASSWORD> cu parola
-const rawMongoUri = process.env.MONGODB_URI;  // ex: mongodb+srv://forkids-admin:<DB_PASSWORD>@cluster...
-const dbPassword = encodeURIComponent(process.env.DB_PASSWORD || '');
-const mongoUri = rawMongoUri.replace('<DB_PASSWORD>', dbPassword);
+// Conectare MongoDB - folosim direct MONGODB_URI din .env
+const mongoUri = process.env.MONGODB_URI;
 
-mongoose.connect(mongoUri)
-  .then(() => console.log('✅ Conectat la MongoDB'))
-  .catch(err => console.error('❌ Eroare conectare MongoDB:', err));
+// MongoDB connection (optional for development)
+if (mongoUri) {
+  mongoose.connect(mongoUri)
+    .then(() => console.log('✅ Conectat la MongoDB'))
+    .catch(err => {
+      console.error('❌ Eroare conectare MongoDB:', err.message);
+      console.log('⚠️ Serverul va rula fără MongoDB pentru testare');
+    });
+} else {
+  console.log('⚠️ MONGODB_URI nu este setat - serverul va rula fără MongoDB');
+}
 
 // Folosim rutele definite
 app.use('/api/pdfs', pdfRoutes);
@@ -45,14 +52,18 @@ app.use('/api', successRoutes); // <-- aici
 // Health check route
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 
-// Servește frontendul în producție (din folderul build)
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'frontend', 'build')));
+// Servește frontendul (din folderul build)
+const frontendBuildPath = path.join(__dirname, '..', 'frontend', 'build');
+if (require('fs').existsSync(frontendBuildPath)) {
+  app.use(express.static(frontendBuildPath));
 
   // Servește index.html pentru orice altă rută neidentificată (SPA routing)
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
+    res.sendFile(path.resolve(frontendBuildPath, 'index.html'));
   });
+  console.log('✅ Frontend build găsit și servit din:', frontendBuildPath);
+} else {
+  console.log('⚠️ Frontend build nu a fost găsit la:', frontendBuildPath);
 }
 
 // Middleware pentru prinderea erorilor
@@ -60,7 +71,7 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ message: 'A apărut o eroare pe server!' });
 });
-
+  
 // Pornire server
 const PORT = process.env.PORT || 10000;
 const server = app.listen(PORT, () => {
@@ -70,7 +81,7 @@ const server = app.listen(PORT, () => {
 // Dacă portul este ocupat, încearcă portul următor
 server.on('error', (err) => {
   if (err.code === 'EADDRINUSE') {
-    const nextPort = PORT + 1;
+    const nextPort = parseInt(PORT) + 1;
     console.log(`⚠️ Portul ${PORT} este ocupat, încerc portul ${nextPort}`);
     app.listen(nextPort, () => {
       console.log(`🚀 Server rulează acum pe portul ${nextPort}`);

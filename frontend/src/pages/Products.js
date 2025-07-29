@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Check, Download, Heart } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
+import { Check } from 'lucide-react';
 import PurchaseSteps from '../components/PurchaseSteps';
+
 
 const productsData = [
   {
     id: 1,
     category: 'Pachet Complet',
     title: 'PACHET COMPLET',
-    pdfFile: 'BonusCertificateDeAbsovire.pdf', // Update with correct file if needed
+    pdfFile: 'BonusCertificateDeAbsovire.pdf',
     price: 89,
     image: '/images/Pachet Promo.jpg',
-    priceId: 'price_1Rkl17K6Qc2WK3kdsulZ1UxS',
-    productId: 'prod_Sg7FB1xJVJc2MV',
-    stripeLink: 'https://buy.stripe.com/28E3cwc3ceav0OD5hWeZ203',
+    priceId: 'price_1RiC232c4OeQrchOX05BvSdj',
+    productId: 'prod_SdSxihb3Lajpej',
+    stripeLink: 'https://buy.stripe.com/test_aFaaEQ9Ex4Pm8CS1T2bbG00',
     age: '3-7 ani',
     description: 'Obține toate cele 3 cărți la un preț special, cu peste 150 de pagini de activități educative și distractive pentru copilul tău.',
     features: [
@@ -31,9 +32,9 @@ const productsData = [
     pdfFile: 'Alfabetul .pdf',
     price: 39,
     image: '/images/Alfabetul .jpg',
-    priceId: 'price_1Rkl17K6Qc2WK3kdesB8V3Hm',
-    productId: 'prod_Sg7FSlYGXYLqIx',
-    stripeLink: 'https://buy.stripe.com/14AaEY8R02rNfJxh0EeZ202',
+    priceId: 'price_1RiBRR2c4OeQrchOtK2eOVra',
+    productId: 'prod_SdSGaF749Hq8Qc',
+    stripeLink: 'https://buy.stripe.com/test_5kQaEQ2c5chO5qGfJSbbG01',
     age: '3-5 ani',
     description: 'Această carte educativă îi ajută pe cei mici să descopere literele alfabetului printr-o serie de activități captivante și jocuri distractive.',
     features: [
@@ -46,14 +47,14 @@ const productsData = [
   },
   {
     id: 3,
-    category: 'Numere',
+    category: 'Matematică',
     title: 'NUMERE',
     pdfFile: 'Numere.pdf',
     price: 39,
     image: '/images/Numere.jpg',
-    priceId: 'price_1Rkl16K6Qc2WK3kdu5bsOWqZ',
-    productId: 'prod_Sg7Fm0E2S5Hm1k',
-    stripeLink: 'https://buy.stripe.com/fZu8wQ8R0c2n2WLh0EeZ201',
+    priceId: 'price_1RiBPO2c4OeQrchOsizd12wR',
+    productId: 'prod_SdSKXVYUi4Gf7C',
+    stripeLink: 'https://buy.stripe.com/test_8x25kw6slepWf1g2X6bbG02',
     age: '3-7 ani',
     description: 'Cărțile de numere sunt un instrument excelent pentru dezvoltarea abilităților matematice și logice a copiilor.',
     features: [
@@ -65,14 +66,14 @@ const productsData = [
   },
   {
     id: 4,
-    category: 'Forme si Culori',
+    category: 'Forme și Culori',
     title: 'FORME SI CULORI',
     pdfFile: 'FormeSiCulori.pdf',
     price: 39,
     image: '/images/Forme si culori.jpg',
-    priceId: 'price_1Rkl16K6Qc2WK3kdr90F7xZM',
-    productId: 'prod_Sg7FLP5uIieb7r',
-    stripeLink: 'https://buy.stripe.com/eVqdRaffo2rNfJxbGkeZ200',
+    priceId: 'price_1RiBM12c4OeQrchOGrwdUbD2',
+    productId: 'prod_SdSMtxL88WMarI',
+    stripeLink: 'https://buy.stripe.com/test_4gMbIU8Atfu0dXc0OYbbG03',
     age: '3-7 ani',
     description: 'Cărțile de forme și culori sunt ideale pentru dezvoltarea percepției spațiale și a culorilor.',
     features: [
@@ -179,7 +180,7 @@ const Products = () => {
                 className="max-w-xs w-full h-56 object-contain rounded-md mb-4 bg-white mx-auto"
                 onError={(e) => {
                   e.target.onerror = null;
-                  e.target.src = '/images/placeholder.jpg'; // Fallback image
+                  e.target.src = '/images/Icon.png'; // Fallback image
                 }}
               />
               <h3 className="text-xl font-semibold text-gray-800 mb-2">{product.title}</h3>
@@ -195,21 +196,15 @@ const Products = () => {
               </ul>
               <div className="mt-auto w-full flex justify-between items-center">
                 <span className="text-2xl font-bold text-[#20BF55]">{product.price} Lei</span>
-                <a
-                  href={product.stripeLink && product.stripeLink !== 'https://buy.stripe.com/your-link-here' ? product.stripeLink : '#'}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center bg-[#FF6B00] text-white px-6 py-2 rounded-md hover:bg-[#E05C00] transition-colors shadow"
-                  onClick={e => {
-                    if (!product.stripeLink || product.stripeLink === 'https://buy.stripe.com/your-link-here') {
-                      e.preventDefault();
-                      alert('Linkul de plată nu este configurat încă. Vă rugăm să reveniți mai târziu.');
-                    }
+                <button
+                  onClick={() => {
+                    window.open(product.stripeLink, '_blank');
                   }}
+                  className="inline-flex items-center bg-[#FF6B00] text-white px-6 py-2 rounded-md hover:bg-[#E05C00] transition-colors shadow"
                   aria-label={`Cumpără ${product.title}`}
                 >
                   Cumpără
-                </a>
+                </button>
               </div>
             </div>
           ))}
@@ -241,14 +236,14 @@ const Products = () => {
                 <span className="text-5xl font-bold text-[#20BF55]">89 Lei</span>
                 <span className="text-2xl line-through text-gray-500">117 Lei</span>
               </div>
-              <a
-                href="https://buy.stripe.com/28E3cwc3ceav0OD5hWeZ203"
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={() => {
+                  window.open('https://buy.stripe.com/test_aFaaEQ9Ex4Pm8CS1T2bbG00', '_blank');
+                }}
                 className="w-full bg-[#FF6B00] text-white py-3 rounded-md text-lg font-semibold hover:bg-[#E05C00] transition-colors shadow-lg inline-block mb-4"
               >
                 Cumpără pachetul complet
-              </a>
+              </button>
               <p className="text-gray-700 text-center text-sm flex items-center justify-center">
                 Plată securizată prin
                 <span className="ml-2" style={{ display: 'inline-flex', alignItems: 'center', height: '24px' }}>
