@@ -65,16 +65,52 @@ async function sendContactEmail({ name, email, message }) {
   });
 
   await transporter.sendMail({
-    from: `"${name}" <${process.env.ZMAIL_USER}>`,
-    to: process.env.ZMAIL_USER,
+    from: `"CorcoDușa Contact Form" <${process.env.ZMAIL_USER}>`,
+    to: 'contact@corcodusa.ro',
     subject: 'Mesaj nou din formularul de contact',
     html: `
       <h3>Ai primit un mesaj nou de la ${name} (${email})</h3>
+      <p><strong>Mesaj:</strong></p>
       <p>${message}</p>
+      <hr>
+      <p><small>Acest mesaj a fost trimis din formularul de contact de pe site-ul CorcoDușa.</small></p>
     `,
     replyTo: email,
   });
-  console.log(`Email de contact primit de la: ${name} <${email}>`);
+  console.log(`Email de contact trimis către contact@corcodusa.ro de la: ${name} <${email}>`);
+}
+
+/**
+ * Trimite o notificare de comandă către contact@corcodusa.ro
+ * @param {Object} orderDetails - Detaliile comenzii
+ */
+async function sendOrderNotification(orderDetails) {
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.zoho.eu',
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.ZMAIL_USER,
+      pass: process.env.ZMAIL_PASS,
+    },
+  });
+
+  await transporter.sendMail({
+    from: `"CorcoDușa Orders" <${process.env.ZMAIL_USER}>`,
+    to: 'contact@corcodusa.ro',
+    subject: 'Comandă nouă - CorcoDușa',
+    html: `
+      <h3>Comandă nouă primită!</h3>
+      <p><strong>Client:</strong> ${orderDetails.customerEmail}</p>
+      <p><strong>Produs:</strong> ${orderDetails.productName}</p>
+      <p><strong>Preț:</strong> ${orderDetails.amount} ${orderDetails.currency}</p>
+      <p><strong>Data:</strong> ${new Date().toLocaleString('ro-RO')}</p>
+      <p><strong>Session ID:</strong> ${orderDetails.sessionId}</p>
+      <hr>
+      <p><small>Notificare automată de la sistemul CorcoDușa.</small></p>
+    `,
+  });
+  console.log(`Notificare comandă trimisă către contact@corcodusa.ro pentru: ${orderDetails.customerEmail}`);
 }
 
 /**
@@ -112,4 +148,4 @@ async function sendEmailWithAttachment(to, productName) {
   });
 }
 
-module.exports = { sendPDF, sendContactEmail, sendEmailWithAttachment };
+module.exports = { sendPDF, sendContactEmail, sendOrderNotification, sendEmailWithAttachment };

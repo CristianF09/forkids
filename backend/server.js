@@ -11,6 +11,8 @@ const contactRoutes = require('./routes/contact');
 const checkoutRoutes = require('./routes/checkout');
 const successRoutes = require('./routes/success');
 const webhookRoutes = require('./routes/webhook');
+const emailTestRoutes = require('./routes/emailTest');
+const productsRoutes = require('./routes/products');
 
 const app = express();
 
@@ -48,6 +50,8 @@ app.use('/api/payments', paymentRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/checkout', checkoutRoutes);
 app.use('/api', successRoutes); // <-- aici
+app.use('/api', emailTestRoutes); // Email test routes
+app.use('/api/products', productsRoutes); // Products routes
 
 // Health check route
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));

@@ -2,19 +2,17 @@ const express = require('express');
 const router = express.Router();
 const Stripe = require('stripe');
 
-// Use a test key if STRIPE_SECRET_KEY is not set
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY || 'sk_test_51RiBQx2c4OeQrchOX05BvSdj';
+// Use only environment variable for Stripe key
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+if (!stripeSecretKey) {
+  console.error('❌ STRIPE_SECRET_KEY not found in environment variables');
+  throw new Error('STRIPE_SECRET_KEY is required');
+}
+
 console.log('🔑 Using Stripe key:', stripeSecretKey.substring(0, 20) + '...');
 
-// Ensure we're using a test key for development
-let stripe;
-if (stripeSecretKey.startsWith('sk_live_')) {
-  console.error('❌ Live Stripe key detected! Using test key instead.');
-  const testKey = 'sk_test_51RiBQx2c4OeQrchOX05BvSdj';
-  stripe = Stripe(testKey);
-} else {
-  stripe = Stripe(stripeSecretKey);
-}
+// Initialize Stripe with the secret key
+const stripe = Stripe(stripeSecretKey);
 
 const products = require('../config/products');
 
