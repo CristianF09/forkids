@@ -12,9 +12,9 @@ const productsData = [
     pdfFile: 'BonusCertificateDeAbsovire.pdf',
     price: 89,
     image: '/images/Pachet Promo.jpg',
-    priceId: 'price_1RiC232c4OeQrchOX05BvSdj',
-    productId: 'prod_SdSxihb3Lajpej',
-    stripeLink: 'https://buy.stripe.com/test_aFaaEQ9Ex4Pm8CS1T2bbG00',
+    priceId: 'price_1Rkl17K6Qc2WK3kdsulZ1UxS',
+    productId: 'prod_Sg7FB1xJVJc2MV',
+    stripeLink: 'https://buy.stripe.com/28E3cwc3ceav0OD5hWeZ203',
     age: '3-7 ani',
     description: 'Obține toate cele 3 cărți la un preț special, cu peste 150 de pagini de activități educative și distractive pentru copilul tău.',
     features: [
@@ -32,9 +32,9 @@ const productsData = [
     pdfFile: 'Alfabetul .pdf',
     price: 39,
     image: '/images/Alfabetul .jpg',
-    priceId: 'price_1RiBRR2c4OeQrchOtK2eOVra',
-    productId: 'prod_SdSGaF749Hq8Qc',
-    stripeLink: 'https://buy.stripe.com/test_5kQaEQ2c5chO5qGfJSbbG01',
+    priceId: 'price_1Rkl17K6Qc2WK3kdesB8V3Hm',
+    productId: 'prod_Sg7FSlYGXYLqIx',
+    stripeLink: 'https://buy.stripe.com/14AaEY8R02rNfJxh0EeZ202',
     age: '3-5 ani',
     description: 'Această carte educativă îi ajută pe cei mici să descopere literele alfabetului printr-o serie de activități captivante și jocuri distractive.',
     features: [
@@ -52,9 +52,9 @@ const productsData = [
     pdfFile: 'Numere.pdf',
     price: 39,
     image: '/images/Numere.jpg',
-    priceId: 'price_1RiBPO2c4OeQrchOsizd12wR',
-    productId: 'prod_SdSKXVYUi4Gf7C',
-    stripeLink: 'https://buy.stripe.com/test_8x25kw6slepWf1g2X6bbG02',
+    priceId: 'price_1Rkl16K6Qc2WK3kdu5bsOWqZ',
+    productId: 'prod_Sg7Fm0E2S5Hm1k',
+    stripeLink: 'https://buy.stripe.com/fZu8wQ8R0c2n2WLh0EeZ201',
     age: '3-7 ani',
     description: 'Cărțile de numere sunt un instrument excelent pentru dezvoltarea abilităților matematice și logice a copiilor.',
     features: [
@@ -71,9 +71,9 @@ const productsData = [
     pdfFile: 'FormeSiCulori.pdf',
     price: 39,
     image: '/images/Forme si culori.jpg',
-    priceId: 'price_1RiBM12c4OeQrchOGrwdUbD2',
-    productId: 'prod_SdSMtxL88WMarI',
-    stripeLink: 'https://buy.stripe.com/test_4gMbIU8Atfu0dXc0OYbbG03',
+    priceId: 'price_1Rkl16K6Qc2WK3kdr90F7xZM',
+    productId: 'prod_Sg7FLP5uIieb7r',
+    stripeLink: 'https://buy.stripe.com/eVqdRaffo2rNfJxbGkeZ200',
     age: '3-7 ani',
     description: 'Cărțile de forme și culori sunt ideale pentru dezvoltarea percepției spațiale și a culorilor.',
     features: [
@@ -238,7 +238,7 @@ const Products = () => {
               </div>
               <button
                 onClick={() => {
-                  window.open('https://buy.stripe.com/test_aFaaEQ9Ex4Pm8CS1T2bbG00', '_blank');
+                  window.open('https://buy.stripe.com/28E3cwc3ceav0OD5hWeZ203', '_blank');
                 }}
                 className="w-full bg-[#FF6B00] text-white py-3 rounded-md text-lg font-semibold hover:bg-[#E05C00] transition-colors shadow-lg inline-block mb-4"
               >

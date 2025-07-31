@@ -4,51 +4,51 @@ import { Search, ShoppingCart, CheckCircle2, ArrowRight, Gift } from 'lucide-rea
 
 const products = [
   {
-    id: 'prod_SdSxihb3Lajpej',
+    id: 'prod_Sg7FB1xJVJc2MV',
     title: 'Pachet Complet',
     ageRangeDisplay: '3-7 ani',
     description: 'Obține toate cele 3 cărți la un preț special, cu peste 150 de pagini de activități educative și distractive.',
     price: 89,
     image: '/images/Pachet Promo.jpg',
     category: 'all',
-    stripeLink: 'https://buy.stripe.com/test_aFaaEQ9Ex4Pm8CS1T2bbG00',
-    priceId: 'price_1RiC232c4OeQrchOX05BvSdj',
+    stripeLink: 'https://buy.stripe.com/28E3cwc3ceav0OD5hWeZ203',
+    priceId: 'price_1Rkl17K6Qc2WK3kdsulZ1UxS',
     imageBgColor: 'bg-gradient-to-r from-[#20BF55] to-[#01BAEF]'
   },
   {
-    id: 'prod_SdSGaF749Hq8Qc',
+    id: 'prod_Sg7FSlYGXYLqIx',
     title: 'Alfabetul în Joacă',
     ageRangeDisplay: '3-5 ani',
     description: 'Învață literele și scrisul de mână prin activități captivante și jocuri interactive.',
     price: 39,
     image: '/images/Alfabetul .jpg',
     category: 'alfabet',
-    stripeLink: 'https://buy.stripe.com/test_5kQaEQ2c5chO5qGfJSbbG01',
-    priceId: 'price_1RiBRR2c4OeQrchOtK2eOVra',
+    stripeLink: 'https://buy.stripe.com/14AaEY8R02rNfJxh0EeZ202',
+    priceId: 'price_1Rkl17K6Qc2WK3kdesB8V3Hm',
     imageBgColor: 'bg-[#2680EB]'
   },
   {
-    id: 'prod_SdSKXVYUi4Gf7C',
+    id: 'prod_Sg7Fm0E2S5Hm1k',
     title: 'Matematică Distractivă',
     ageRangeDisplay: '4-6 ani',
     description: 'Descoperă cifrele, număratul și operații matematice simple prin jocuri și activități interactive.',
     price: 39,
     image: '/images/Numere.jpg',
     category: 'numere',
-    stripeLink: 'https://buy.stripe.com/test_8x25kw6slepWf1g2X6bbG02',
-    priceId: 'price_1RiBPO2c4OeQrchOsizd12wR',
+    stripeLink: 'https://buy.stripe.com/fZu8wQ8R0c2n2WLh0EeZ201',
+    priceId: 'price_1Rkl16K6Qc2WK3kdu5bsOWqZ',
     imageBgColor: 'bg-[#20BF55]'
   },
   {
-    id: 'prod_SdSMtxL88WMarI',
+    id: 'prod_Sg7FLP5uIieb7r',
     title: 'Aventuri în Culori',
     ageRangeDisplay: '3-7 ani',
     description: 'Planșe de colorat, activități de desen și jocuri care dezvoltă creativitatea și motricitatea fină.',
     price: 39,
     image: '/images/Forme si culori.jpg',
     category: 'culori',
-    stripeLink: 'https://buy.stripe.com/test_4gMbIU8Atfu0dXc0OYbbG03',
-    priceId: 'price_1RiBM12c4OeQrchOGrwdUbD2',
+    stripeLink: 'https://buy.stripe.com/eVqdRaffo2rNfJxbGkeZ200',
+    priceId: 'price_1Rkl16K6Qc2WK3kdr90F7xZM',
     imageBgColor: 'bg-[#FFD100]'
   }
 ];
@@ -195,7 +195,7 @@ const Catalog = () => {
               <div className="text-center">
                 <button
                   onClick={() => {
-                    window.open('https://buy.stripe.com/test_aFaaEQ9Ex4Pm8CS1T2bbG00', '_blank');
+                    window.open('https://buy.stripe.com/28E3cwc3ceav0OD5hWeZ203', '_blank');
                   }}
                   className="buy-button inline-flex items-center gap-2 bg-[#FF6B00] text-white px-4 py-2 sm:px-6 sm:py-3 rounded-xl font-bold hover:bg-[#FF6B00]/90 transition-colors text-sm sm:text-base"
                 >
@@ -274,7 +274,7 @@ const Catalog = () => {
               </ul>
               <button
                 onClick={() => {
-                  window.open('https://buy.stripe.com/test_aFaaEQ9Ex4Pm8CS1T2bbG00', '_blank');
+                  window.open('https://buy.stripe.com/28E3cwc3ceav0OD5hWeZ203', '_blank');
                 }}
                 className="inline-flex items-center gap-2 bg-[#FF6B00] text-white px-6 py-3 rounded-xl font-bold hover:bg-[#FF6B00]/90 transition-colors"
               >

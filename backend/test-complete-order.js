@@ -124,7 +124,7 @@ async function testWebhookSimulation() {
         line_items: {
           data: [{
             price: {
-              id: 'price_1RiBPO2c4OeQrchOsizd12wR'
+              id: 'price_1Rkl16K6Qc2WK3kdu5bsOWqZ'
             }
           }]
         }

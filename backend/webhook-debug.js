@@ -12,7 +12,7 @@ console.log('ZMAIL_USER:', process.env.ZMAIL_USER ? '✅ Set' : '❌ Not set');
 console.log('ZMAIL_PASS:', process.env.ZMAIL_PASS ? '✅ Set' : '❌ Not set');
 
 // Check if we can connect to Stripe
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_placeholder');
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY || 'sk_live_placeholder');
 
 async function checkStripeConnection() {
   try {
@@ -43,7 +43,7 @@ async function simulateWebhook() {
         line_items: {
           data: [{
             price: {
-              id: 'price_1RiC232c4OeQrchOX05BvSdj' // Pachet Complet price ID
+              id: 'price_1Rkl17K6Qc2WK3kdsulZ1UxS' // Pachet Complet price ID
             }
           }]
         },

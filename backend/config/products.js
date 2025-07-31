@@ -1,27 +1,27 @@
 const products = {
-  "price_1RiC232c4OeQrchOX05BvSdj": {
+  "price_1Rkl17K6Qc2WK3kdsulZ1UxS": {
     name: "Pachet Complet",
     filePath: "BonusCertificateDeAbsovire.pdf",
-    paymentLink: "https://buy.stripe.com/test_aFaaEQ9Ex4Pm8CS1T2bbG00",
-    productId: "prod_SdSxihb3Lajpej"
+    paymentLink: "https://buy.stripe.com/28E3cwc3ceav0OD5hWeZ203",
+    productId: "prod_Sg7FB1xJVJc2MV"
   },
-  "price_1RiBRR2c4OeQrchOtK2eOVra": {
+  "price_1Rkl17K6Qc2WK3kdesB8V3Hm": {
     name: "Alfabetul",
     filePath: "Alfabetul .pdf",
-    paymentLink: "https://buy.stripe.com/test_5kQaEQ2c5chO5qGfJSbbG01",
-    productId: "prod_SdSGaF749Hq8Qc"
+    paymentLink: "https://buy.stripe.com/14AaEY8R02rNfJxh0EeZ202",
+    productId: "prod_Sg7FSlYGXYLqIx"
   },
-  "price_1RiBPO2c4OeQrchOsizd12wR": {
+  "price_1Rkl16K6Qc2WK3kdu5bsOWqZ": {
     name: "Numere",
     filePath: "Numere.pdf",
-    paymentLink: "https://buy.stripe.com/test_8x25kw6slepWf1g2X6bbG02",
-    productId: "prod_SdSKXVYUi4Gf7C"
+    paymentLink: "https://buy.stripe.com/fZu8wQ8R0c2n2WLh0EeZ201",
+    productId: "prod_Sg7Fm0E2S5Hm1k"
   },
-  "price_1RiBM12c4OeQrchOGrwdUbD2": {
+  "price_1Rkl16K6Qc2WK3kdr90F7xZM": {
     name: "Forme și Culori",
     filePath: "FormeSiCulori.pdf",
-    paymentLink: "https://buy.stripe.com/test_4gMbIU8Atfu0dXc0OYbbG03",
-    productId: "prod_SdSMtxL88WMarI"
+    paymentLink: "https://buy.stripe.com/eVqdRaffo2rNfJxbGkeZ200",
+    productId: "prod_Sg7FLP5uIieb7r"
   },
 };
 

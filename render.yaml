@@ -1,9 +1,9 @@
 services:
-  # Backend service
+  # Main service (backend + frontend)
   - type: web
-    name: forkids-backend
+    name: forkids-app
     env: node
-    buildCommand: cd backend && npm install
+    buildCommand: npm install && cd frontend && npm install && cd ../backend && npm install && npm run build
     startCommand: cd backend && npm start
     envVars:
       - key: NODE_ENV
@@ -16,15 +16,15 @@ services:
         sync: false
       - key: STRIPE_SECRET_KEY
         sync: false
-
-  # Frontend service
-  - type: web
-    name: forkids-frontend
-    env: node
-    buildCommand: cd frontend && npm install && npm run build
-    startCommand: cd frontend && serve -s build
-    envVars:
+      - key: STRIPE_PUBLISHABLE_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: ZMAIL_USER
+        sync: false
+      - key: ZMAIL_PASS
+        sync: false
       - key: REACT_APP_API_URL
-        value: https://forkids-backend.onrender.com
-      - key: REACT_APP_STRIPE_PUBLIC_KEY
+        value: https://forkids-app.onrender.com
+      - key: REACT_APP_STRIPE_PUBLISHABLE_KEY
         sync: false 

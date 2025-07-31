@@ -20,7 +20,7 @@ const testEvent = {
       line_items: {
         data: [{
           price: {
-            id: 'price_1RiC232c4OeQrchOX05BvSdj' // Pachet Complet price ID
+            id: 'price_1Rkl17K6Qc2WK3kdsulZ1UxS' // Pachet Complet price ID
           }
         }]
       },

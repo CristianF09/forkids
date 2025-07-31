@@ -56,8 +56,8 @@ app.use('/api/products', productsRoutes); // Products routes
 // Health check route
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 
-// Servește frontendul (din folderul build)
-const frontendBuildPath = path.join(__dirname, '..', 'frontend', 'build');
+// Servește frontendul (din folderul backend/frontend)
+const frontendBuildPath = path.join(__dirname, 'frontend');
 if (require('fs').existsSync(frontendBuildPath)) {
   app.use(express.static(frontendBuildPath));
 

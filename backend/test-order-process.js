@@ -21,7 +21,7 @@ Object.entries(products).forEach(([priceId, product]) => {
 });
 
 console.log('\n4️⃣ Test payment link directly:');
-console.log('   Try clicking this link: https://buy.stripe.com/test_aFaaEQ9Ex4Pm8CS1T2bbG00');
+console.log('   Try clicking this link: https://buy.stripe.com/28E3cwc3ceav0OD5hWeZ203');
 console.log('   This should open Stripe checkout for Pachet Complet');
 
 console.log('\n5️⃣ Common issues and solutions:');
