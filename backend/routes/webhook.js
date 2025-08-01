@@ -3,14 +3,19 @@ const router = express.Router();
 const Stripe = require('stripe');
 const nodemailer = require('nodemailer');
 
-// Use only environment variable for Stripe key
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
-if (!stripeSecretKey) {
-  console.error('❌ STRIPE_SECRET_KEY not found in environment variables');
-  throw new Error('STRIPE_SECRET_KEY is required');
+// Initialize Stripe lazily (only when webhook is called)
+let stripe = null;
+function getStripe() {
+  if (!stripe) {
+    const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+    if (!stripeSecretKey) {
+      console.error('❌ STRIPE_SECRET_KEY not found in environment variables');
+      throw new Error('STRIPE_SECRET_KEY is required');
+    }
+    stripe = Stripe(stripeSecretKey);
+  }
+  return stripe;
 }
-
-const stripe = Stripe(stripeSecretKey);
 const { sendEmailWithAttachment, sendOrderNotification } = require('../services/emailService');
 const products = require('../config/products');
 
@@ -25,12 +30,13 @@ router.post('/', async (req, res) => {
       return res.status(500).send('Webhook secret not configured');
     }
     
-    event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
+    event = getStripe().webhooks.constructEvent(req.body, sig, webhookSecret);
   } catch (err) {
     console.log(`⚠️  Eroare webhook: ${err.message}`);
     return res.status(400).send(`Webhook error: ${err.message}`);
   }
 
+  // Handle checkout.session.completed (your current logic)
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object;
     const customerEmail = session.customer_email;
@@ -73,37 +79,7 @@ router.post('/', async (req, res) => {
       });
       console.log('✅ Order notification sent to contact@corcodusa.ro');
       
-      // Step 2: Send invoice to customer
-      const transporter = nodemailer.createTransport({
-        host: 'smtp.zoho.eu',
-        port: 465,
-        secure: true,
-        auth: {
-          user: process.env.ZMAIL_USER,
-          pass: process.env.ZMAIL_PASS,
-        },
-      });
-      
-      const invoiceEmail = {
-        from: `"CorcoDușa" <${process.env.ZMAIL_USER}>`,
-        to: customerEmail,
-        subject: `Factura pentru ${productName} - CorcoDușa`,
-        html: `
-          <h2>Factura - CorcoDușa</h2>
-          <p><strong>Produs:</strong> ${productName}</p>
-          <p><strong>Preț:</strong> ${amount} ${currency}</p>
-          <p><strong>Data:</strong> ${new Date().toLocaleString('ro-RO')}</p>
-          <p><strong>Session ID:</strong> ${sessionId}</p>
-          <hr>
-          <p>Mulțumim pentru achiziție!</p>
-          <p>Pentru întrebări: contact@corcodusa.ro</p>
-        `
-      };
-      
-      await transporter.sendMail(invoiceEmail);
-      console.log('✅ Invoice sent to customer:', customerEmail);
-      
-      // Step 3: Try to send PDF to customer (with error handling for large files)
+      // Step 2: Send PDF to customer (Stripe will handle the invoice automatically)
       try {
         await sendEmailWithAttachment(customerEmail, pdfFileName);
         console.log('✅ PDF sent to customer:', customerEmail);
@@ -111,6 +87,16 @@ router.post('/', async (req, res) => {
         console.log('⚠️ PDF attachment failed (file too large), sending notification instead');
         
         // Send PDF delivery notification instead
+        const transporter = nodemailer.createTransport({
+          host: 'smtp.zoho.eu',
+          port: 465,
+          secure: true,
+          auth: {
+            user: process.env.ZMAIL_USER,
+            pass: process.env.ZMAIL_PASS,
+          },
+        });
+        
         const pdfNotificationEmail = {
           from: `"CorcoDușa" <${process.env.ZMAIL_USER}>`,
           to: customerEmail,
@@ -134,6 +120,81 @@ router.post('/', async (req, res) => {
       
     } catch (error) {
       console.error('❌ Error processing payment:', error);
+      return res.status(500).end();
+    }
+  }
+
+  // Handle Stripe's automated invoice events
+  if (event.type === 'invoice.payment_succeeded') {
+    const invoice = event.data.object;
+    const customerEmail = invoice.customer_email;
+    const invoiceId = invoice.id;
+    const amount = invoice.amount_paid / 100;
+    const currency = invoice.currency?.toUpperCase() || 'RON';
+    
+    console.log('📄 Stripe invoice payment succeeded:', invoiceId);
+    console.log('📧 Customer email:', customerEmail);
+    console.log('💰 Amount:', amount, currency);
+    
+    // Extract product information from invoice
+    let productName = 'Produs digital';
+    let pdfFileName = 'Produs digital.pdf';
+    
+    if (invoice.lines && invoice.lines.data.length > 0) {
+      const lineItem = invoice.lines.data[0];
+      const priceId = lineItem.price?.id;
+      
+      if (priceId) {
+        const product = products[priceId];
+        if (product) {
+          productName = product.name;
+          pdfFileName = product.filePath;
+          console.log('📦 Product found from invoice:', productName, 'PDF:', pdfFileName);
+        }
+      }
+    }
+    
+    try {
+      // Send PDF to customer (invoice is already sent by Stripe)
+      try {
+        await sendEmailWithAttachment(customerEmail, pdfFileName);
+        console.log('✅ PDF sent to customer after invoice:', customerEmail);
+      } catch (pdfError) {
+        console.log('⚠️ PDF attachment failed (file too large), sending notification instead');
+        
+        const transporter = nodemailer.createTransport({
+          host: 'smtp.zoho.eu',
+          port: 465,
+          secure: true,
+          auth: {
+            user: process.env.ZMAIL_USER,
+            pass: process.env.ZMAIL_PASS,
+          },
+        });
+        
+        const pdfNotificationEmail = {
+          from: `"CorcoDușa" <${process.env.ZMAIL_USER}>`,
+          to: customerEmail,
+          subject: `Materialul digital ${productName} - CorcoDușa`,
+          html: `
+            <h2>Materialul digital este gata!</h2>
+            <p><strong>Produs:</strong> ${productName}</p>
+            <p><strong>Preț:</strong> ${amount} ${currency}</p>
+            <p><strong>Data:</strong> ${new Date().toLocaleString('ro-RO')}</p>
+            <hr>
+            <p>Materialul digital pentru ${productName} a fost pregătit și va fi trimis în următoarele minute.</p>
+            <p>Pentru întrebări: contact@corcodusa.ro</p>
+          `
+        };
+        
+        await transporter.sendMail(pdfNotificationEmail);
+        console.log('✅ PDF delivery notification sent to customer:', customerEmail);
+      }
+      
+      console.log('🎉 Invoice processing completed successfully!');
+      
+    } catch (error) {
+      console.error('❌ Error processing invoice:', error);
       return res.status(500).end();
     }
   }

@@ -80,12 +80,12 @@
 ### **Enhanced Files:**
 - ✅ `backend/routes/webhook.js` - Added invoice sending and error handling
 - ✅ `backend/services/emailService.js` - Working perfectly
-- ✅ `backend/test-notifications.js` - Comprehensive testing
+- ✅ Webhook processing - Comprehensive payment handling
 
 ### **Test Results:**
-- ✅ `test-notifications.js` - All notifications working
-- ✅ `test-email-simple.js` - Email authentication working
-- ✅ `email-diagnostic.js` - SMTP configuration verified
+- ✅ Webhook processing - All notifications working
+- ✅ Email service - Email authentication working
+- ✅ SMTP configuration - Configuration verified
 
 ## 🎯 **What Happens After Payment**
 
@@ -100,7 +100,7 @@
 ### **Environment Variables** ✅
 ```env
 ZMAIL_USER=contact@corcodusa.ro
-ZMAIL_PASS=59sr0kGL1ibD  # ✅ Working
+ZMAIL_PASS=your_zoho_app_password_here  # ✅ Working
 ```
 
 ### **Email Configuration** ✅

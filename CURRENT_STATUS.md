@@ -29,7 +29,7 @@
 - ✅ Contact form emails working ✅
 - ✅ Order notification emails working ✅
 - ✅ PDF delivery emails working ✅
-- ✅ Zoho App Password: 59sr0kGL1ibD ✅
+- ✅ Zoho App Password: [CONFIGURED IN RENDER] ✅
 
 ### **Payment System**
 - ✅ Stripe checkout integration
@@ -74,7 +74,7 @@ STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret_here
 NODE_ENV=production
 PORT=10000
 ZMAIL_USER=contact@corcodusa.ro
-ZMAIL_PASS=59sr0kGL1ibD  # ✅ WORKING
+ZMAIL_PASS=your_zoho_app_password_here  # ✅ WORKING
 STRIPE_SECRET_KEY=sk_test_your_stripe_secret_key_here
 STRIPE_PUBLISHABLE_KEY=pk_test_your_stripe_publishable_key_here
 STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret_here
@@ -106,7 +106,7 @@ CLIENT_URL=https://corcodusa.ro
 - ✅ `POST /api/contact` - Contact form ✅ **WORKING**
 - ✅ `POST /api/checkout/create-checkout-session` - Stripe checkout
 - ✅ `POST /api/webhook` - Stripe webhook
-- ✅ `GET /api/test-email` - Email testing ✅ **WORKING**
+- ✅ Email service - Email functionality ✅ **WORKING**
 
 ### **Expected Behavior:**
 - ✅ Contact form → Email sent to contact@corcodusa.ro ✅ **WORKING**
