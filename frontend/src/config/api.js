@@ -1,5 +1,5 @@
 // API Configuration
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:10000';
+const API_BASE_URL = process.env.REACT_APP_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:10000' : 'https://corcodusa.ro');
 
 export const API_ENDPOINTS = {
   CONTACT: `${API_BASE_URL}/api/contact`,
