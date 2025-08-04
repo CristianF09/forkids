@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MessageSquare, Zap, Smile, Check, Download, CreditCard, HelpCircle, Star, BookOpen } from 'lucide-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -7,8 +7,22 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-
 const Home = () => {
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [loadedImages, setLoadedImages] = useState(0);
+  const totalImages = 28; // Total number of images on the page
+
+  // Track image loading progress
+  const handleImageLoad = () => {
+    setLoadedImages(prev => {
+      const newCount = prev + 1;
+      if (newCount >= totalImages) {
+        setImagesLoaded(true);
+      }
+      return newCount;
+    });
+  };
+
   const testimonials = [
     {
       id: 1,
@@ -125,6 +139,8 @@ const Home = () => {
                           src={`/images/carousel/${img}`}
                           alt={`Carousel ${idx * 4 + i + 1}`}
                           className="max-w-xs w-full h-56 object-contain rounded-md mb-4 bg-white"
+                          loading="lazy"
+                          onLoad={handleImageLoad}
                         />
                       </div>
                     ))}
@@ -185,22 +201,46 @@ const Home = () => {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col items-center">
-              <img src='/images/Alfabetul .jpg' alt="Alfabetul Ilustrat" className="max-w-xs w-full h-56 object-contain rounded-md mb-4 bg-white" />
+              <img 
+                src='/images/Alfabetul .jpg' 
+                alt="Alfabetul Ilustrat" 
+                className="max-w-xs w-full h-56 object-contain rounded-md mb-4 bg-white"
+                loading="lazy"
+                onLoad={handleImageLoad}
+              />
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Alfabetul Ilustrat</h3>
               <p className="text-gray-600 text-center">Învățarea alfabetului în scriere de tipar și de mână.</p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col items-center">
-              <img src="/images/Numere.jpg" alt="Învățarea Numerelor" className="max-w-xs w-full h-56 object-contain rounded-md mb-4 bg-white" />
+              <img 
+                src="/images/Numere.jpg" 
+                alt="Învățarea Numerelor" 
+                className="max-w-xs w-full h-56 object-contain rounded-md mb-4 bg-white"
+                loading="lazy"
+                onLoad={handleImageLoad}
+              />
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Învățarea Numerelor</h3>
               <p className="text-gray-600 text-center">Exerciții interactive pentru recunoașterea și scrierea numerelor.</p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col items-center">
-              <img src="/images/Forme si culori.jpg" alt="Activități de Coordonare" className="max-w-xs w-full h-56 object-contain rounded-md mb-4 bg-white" />
+              <img 
+                src="/images/Forme si culori.jpg" 
+                alt="Activități de Coordonare" 
+                className="max-w-xs w-full h-56 object-contain rounded-md mb-4 bg-white"
+                loading="lazy"
+                onLoad={handleImageLoad}
+              />
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Activități de Coordonare</h3>
               <p className="text-gray-600 text-center">Dezvoltarea atenției și coordonării mână-ochi.</p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col items-center">
-              <img src="/images/Bonus - Fise de colorat.jpg" alt="Planșe de Colorat" className="max-w-xs w-full h-56 object-contain rounded-md mb-4 bg-white" />
+              <img 
+                src="/images/Bonus - Fise de colorat.jpg" 
+                alt="Planșe de Colorat" 
+                className="max-w-xs w-full h-56 object-contain rounded-md mb-4 bg-white"
+                loading="lazy"
+                onLoad={handleImageLoad}
+              />
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Planșe de Colorat</h3>
               <p className="text-gray-600 text-center">Zeci de planșe haioase ce așteaptă să fie colorate.</p>
             </div>
