@@ -1,8 +1,10 @@
-const { sendOrderNotification } = require('./backend/services/emailService');
-const { sendPDFWithOptimization } = require('./backend/services/pdfDeliveryService');
-const products = require('./backend/config/products');
+const { sendOrderNotification } = require('./services/emailService');
+const { sendPDFWithOptimization } = require('./services/pdfDeliveryService');
+const products = require('./config/products');
+const fs = require('fs');
+const path = require('path');
 
-console.log('🧪 TESTING COMPLETE PAYMENT FLOW\n');
+console.log('🧪 TESTING COMPLETE PAYMENT FUNCTIONALITY\n');
 
 // Test data based on your recent payment
 const testPayment = {
@@ -53,9 +55,7 @@ console.log('');
 
 // Test 3: Check PDF file existence
 console.log('🔍 Test 3: PDF File Check');
-const fs = require('fs');
-const path = require('path');
-const pdfPath = path.join(__dirname, 'backend', 'public', 'pdfs', testPayment.pdfFileName);
+const pdfPath = path.join(__dirname, 'public', 'pdfs', testPayment.pdfFileName);
 
 if (fs.existsSync(pdfPath)) {
   const stats = fs.statSync(pdfPath);

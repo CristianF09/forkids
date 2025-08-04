@@ -1,14 +1,16 @@
-const { sendOrderNotification } = require('./backend/services/emailService');
-const { sendPDFWithOptimization } = require('./backend/services/pdfDeliveryService');
-const products = require('./backend/config/products');
+const { sendOrderNotification } = require('./services/emailService');
+const { sendPDFWithOptimization } = require('./services/pdfDeliveryService');
+const products = require('./config/products');
+const fs = require('fs');
+const path = require('path');
 
-console.log('🧪 TESTING COMPLETE PAYMENT FLOW\n');
+console.log('🧪 TESTING PAYMENT FUNCTIONALITY\n');
 
-// Test data based on your recent payment
+// Test data
 const testPayment = {
   customerEmail: 'cris7i_laurentiu@yahoo.com',
   customerName: 'Cristian Florea',
-  sessionId: 'cs_live_a1GlCv1yE53kqmsfiOhlqXEAr8BxqwOFK7Q1oiVjDydORc9rzmWDF4stiX',
+  sessionId: 'cs_live_test_session',
   amount: 39.00,
   currency: 'RON',
   priceId: 'price_1Rkl17K6Qc2WK3kdesB8V3Hm', // Alfabetul
@@ -20,22 +22,20 @@ console.log('📋 Test Payment Details:');
 console.log(`- Customer: ${testPayment.customerName} (${testPayment.customerEmail})`);
 console.log(`- Product: ${testPayment.productName}`);
 console.log(`- Amount: ${testPayment.amount} ${testPayment.currency}`);
-console.log(`- PDF: ${testPayment.pdfFileName}`);
-console.log(`- Session ID: ${testPayment.sessionId}\n`);
+console.log(`- PDF: ${testPayment.pdfFileName}\n`);
 
-// Test 1: Check if product exists in config
+// Test 1: Product configuration
 console.log('🔍 Test 1: Product Configuration');
 const product = products[testPayment.priceId];
 if (product) {
   console.log(`✅ Product found: ${product.name}`);
   console.log(`✅ PDF file: ${product.filePath}`);
-  console.log(`✅ Payment link: ${product.paymentLink}`);
 } else {
   console.log(`❌ Product not found for price ID: ${testPayment.priceId}`);
 }
 console.log('');
 
-// Test 2: Check environment variables
+// Test 2: Environment variables
 console.log('🔍 Test 2: Environment Variables');
 const requiredVars = ['STRIPE_SECRET_KEY', 'STRIPE_WEBHOOK_SECRET', 'ZMAIL_USER', 'ZMAIL_PASS'];
 let envVarsOk = true;
@@ -43,7 +43,7 @@ let envVarsOk = true;
 requiredVars.forEach(varName => {
   const value = process.env[varName];
   if (value && !value.includes('your_') && !value.includes('placeholder')) {
-    console.log(`✅ ${varName}: Set (looks real)`);
+    console.log(`✅ ${varName}: Set`);
   } else {
     console.log(`❌ ${varName}: ${value ? 'Placeholder' : 'Not set'}`);
     envVarsOk = false;
@@ -51,11 +51,9 @@ requiredVars.forEach(varName => {
 });
 console.log('');
 
-// Test 3: Check PDF file existence
+// Test 3: PDF file check
 console.log('🔍 Test 3: PDF File Check');
-const fs = require('fs');
-const path = require('path');
-const pdfPath = path.join(__dirname, 'backend', 'public', 'pdfs', testPayment.pdfFileName);
+const pdfPath = path.join(__dirname, 'public', 'pdfs', testPayment.pdfFileName);
 
 if (fs.existsSync(pdfPath)) {
   const stats = fs.statSync(pdfPath);
@@ -73,8 +71,8 @@ if (fs.existsSync(pdfPath)) {
 }
 console.log('');
 
-// Test 4: Test order notification email
-console.log('🔍 Test 4: Order Notification Email');
+// Test 4: Email functionality (if env vars are set)
+console.log('🔍 Test 4: Email Functionality');
 if (envVarsOk) {
   try {
     await sendOrderNotification({
@@ -94,29 +92,9 @@ if (envVarsOk) {
 }
 console.log('');
 
-// Test 5: Test PDF delivery
-console.log('🔍 Test 5: PDF Delivery');
-if (envVarsOk) {
-  try {
-    await sendPDFWithOptimization(
-      testPayment.customerEmail,
-      testPayment.pdfFileName,
-      testPayment.productName,
-      testPayment.amount,
-      testPayment.currency
-    );
-    console.log('✅ PDF delivery test completed');
-  } catch (error) {
-    console.log('❌ PDF delivery failed:', error.message);
-  }
-} else {
-  console.log('⚠️ Skipping PDF delivery test - environment variables not set');
-}
-console.log('');
-
 // Summary
-console.log('📊 TEST SUMMARY:');
-console.log('================');
+console.log('📊 FUNCTIONALITY SUMMARY:');
+console.log('========================');
 console.log('✅ Product configuration: Working');
 console.log('✅ PDF files: Available');
 console.log(envVarsOk ? '✅ Environment variables: Set' : '❌ Environment variables: Need updating');

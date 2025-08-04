@@ -16,7 +16,8 @@ function getStripe() {
   }
   return stripe;
 }
-const { sendEmailWithAttachment, sendOrderNotification } = require('../services/emailService');
+const { sendOrderNotification } = require('../services/emailService');
+const { sendPDFWithOptimization } = require('../services/pdfDeliveryService');
 const products = require('../config/products');
 
 router.post('/', async (req, res) => {
@@ -39,11 +40,13 @@ router.post('/', async (req, res) => {
   // Handle checkout.session.completed (your current logic)
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object;
-    const customerEmail = session.customer_email;
+    const customerEmail = session.customer_details?.email || session.customer_email;
+    const customerName = session.customer_details?.name || 'Customer';
     const sessionId = session.id;
     
     console.log('💰 Payment completed for session:', sessionId);
     console.log('📧 Customer email:', customerEmail);
+    console.log('👤 Customer name:', customerName);
     
     // Get the line items to find the price ID
     const lineItems = session.line_items?.data || [];
@@ -72,6 +75,7 @@ router.post('/', async (req, res) => {
       // Step 1: Send order notification to contact@corcodusa.ro
       await sendOrderNotification({
         customerEmail,
+        customerName,
         productName,
         amount,
         currency,
@@ -79,42 +83,8 @@ router.post('/', async (req, res) => {
       });
       console.log('✅ Order notification sent to contact@corcodusa.ro');
       
-      // Step 2: Send PDF to customer (Stripe will handle the invoice automatically)
-      try {
-        await sendEmailWithAttachment(customerEmail, pdfFileName);
-        console.log('✅ PDF sent to customer:', customerEmail);
-      } catch (pdfError) {
-        console.log('⚠️ PDF attachment failed (file too large), sending notification instead');
-        
-        // Send PDF delivery notification instead
-        const transporter = nodemailer.createTransport({
-          host: 'smtp.zoho.eu',
-          port: 465,
-          secure: true,
-          auth: {
-            user: process.env.ZMAIL_USER,
-            pass: process.env.ZMAIL_PASS,
-          },
-        });
-        
-        const pdfNotificationEmail = {
-          from: `"CorcoDușa" <${process.env.ZMAIL_USER}>`,
-          to: customerEmail,
-          subject: `Materialul digital ${productName} - CorcoDușa`,
-          html: `
-            <h2>Materialul digital este gata!</h2>
-            <p><strong>Produs:</strong> ${productName}</p>
-            <p><strong>Preț:</strong> ${amount} ${currency}</p>
-            <p><strong>Data:</strong> ${new Date().toLocaleString('ro-RO')}</p>
-            <hr>
-            <p>Materialul digital pentru ${productName} a fost pregătit și va fi trimis în următoarele minute.</p>
-            <p>Pentru întrebări: contact@corcodusa.ro</p>
-          `
-        };
-        
-        await transporter.sendMail(pdfNotificationEmail);
-        console.log('✅ PDF delivery notification sent to customer:', customerEmail);
-      }
+      // Step 2: Send PDF to customer with size optimization
+      await sendPDFWithOptimization(customerEmail, pdfFileName, productName, amount, currency);
       
       console.log('🎉 All payment processing completed successfully!');
       
@@ -155,41 +125,8 @@ router.post('/', async (req, res) => {
     }
     
     try {
-      // Send PDF to customer (invoice is already sent by Stripe)
-      try {
-        await sendEmailWithAttachment(customerEmail, pdfFileName);
-        console.log('✅ PDF sent to customer after invoice:', customerEmail);
-      } catch (pdfError) {
-        console.log('⚠️ PDF attachment failed (file too large), sending notification instead');
-        
-        const transporter = nodemailer.createTransport({
-          host: 'smtp.zoho.eu',
-          port: 465,
-          secure: true,
-          auth: {
-            user: process.env.ZMAIL_USER,
-            pass: process.env.ZMAIL_PASS,
-          },
-        });
-        
-        const pdfNotificationEmail = {
-          from: `"CorcoDușa" <${process.env.ZMAIL_USER}>`,
-          to: customerEmail,
-          subject: `Materialul digital ${productName} - CorcoDușa`,
-          html: `
-            <h2>Materialul digital este gata!</h2>
-            <p><strong>Produs:</strong> ${productName}</p>
-            <p><strong>Preț:</strong> ${amount} ${currency}</p>
-            <p><strong>Data:</strong> ${new Date().toLocaleString('ro-RO')}</p>
-            <hr>
-            <p>Materialul digital pentru ${productName} a fost pregătit și va fi trimis în următoarele minute.</p>
-            <p>Pentru întrebări: contact@corcodusa.ro</p>
-          `
-        };
-        
-        await transporter.sendMail(pdfNotificationEmail);
-        console.log('✅ PDF delivery notification sent to customer:', customerEmail);
-      }
+      // Send PDF to customer with size optimization
+      await sendPDFWithOptimization(customerEmail, pdfFileName, productName, amount, currency);
       
       console.log('🎉 Invoice processing completed successfully!');
       
