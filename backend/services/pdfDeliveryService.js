@@ -17,7 +17,7 @@ async function sendPDFWithOptimization(toEmail, pdfFileName, productName, amount
   
   console.log(`📁 PDF file: ${pdfFileName}, Size: ${fileSizeInMB.toFixed(2)} MB`);
 
-  const transporter = nodemailer.createTransporter({
+  const transporter = nodemailer.createTransport({
     host: 'smtp.zoho.eu',
     port: 465,
     secure: true,

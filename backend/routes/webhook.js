@@ -37,7 +37,7 @@ router.post('/', async (req, res) => {
     return res.status(400).send(`Webhook error: ${err.message}`);
   }
 
-  // Handle checkout.session.completed (your current logic)
+  // Handle checkout.session.completed
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object;
     const customerEmail = session.customer_details?.email || session.customer_email;
@@ -48,23 +48,58 @@ router.post('/', async (req, res) => {
     console.log('📧 Customer email:', customerEmail);
     console.log('👤 Customer name:', customerName);
     
-    // Get the line items to find the price ID
-    const lineItems = session.line_items?.data || [];
-    let pdfFileName = 'Produs digital.pdf';
-    let productName = 'Produs digital';
+    // Get product information from session
+    let pdfFileName = 'BonusCertificateDeAbsovire.pdf'; // Default
+    let productName = 'Pachet Complet'; // Default
     let amount = session.amount_total / 100; // Convert from cents
     let currency = session.currency?.toUpperCase() || 'RON';
     
+    // Try to get product from line items if available
+    const lineItems = session.line_items?.data || [];
     if (lineItems.length > 0) {
       const priceId = lineItems[0].price.id;
-      const product = products[priceId];
+      const pdfFile = products[priceId];
       
-      if (product) {
-        pdfFileName = product.filePath;
-        productName = product.name;
-        console.log('📦 Product found:', productName, 'PDF:', pdfFileName);
+      if (pdfFile) {
+        pdfFileName = pdfFile;
+        // Map PDF filename to product name
+        if (pdfFile === 'BonusCertificateDeAbsovire.pdf') productName = 'Pachet Complet';
+        else if (pdfFile === 'Alfabetul.pdf') productName = 'Alfabetul';
+        else if (pdfFile === 'Numere.pdf') productName = 'Numere';
+        else if (pdfFile === 'FormeSiCulori.pdf') productName = 'Forme și Culori';
+        else if (pdfFile === 'BonusFiseDeColorat.pdf') productName = 'Bonus Fise de Colorat';
+        
+        console.log('📦 Product found from price ID:', priceId);
+        console.log('📦 Product name:', productName);
+        console.log('📦 PDF file:', pdfFileName);
       } else {
         console.log('⚠️ Product not found for price ID:', priceId);
+        console.log('🔍 Available price IDs:', Object.keys(products));
+      }
+    } else {
+      // If no line items, try to determine product from amount
+      console.log('📊 Amount paid:', amount, currency);
+      console.log('🔍 No line items, using amount mapping...');
+      
+      // Map amount to product (fallback)
+      if (amount === 39) {
+        pdfFileName = 'BonusCertificateDeAbsovire.pdf';
+        productName = 'Pachet Complet';
+        console.log('📦 Determined product from amount: Pachet Complet');
+      } else if (amount === 29) {
+        pdfFileName = 'Alfabetul.pdf';
+        productName = 'Alfabetul';
+        console.log('📦 Determined product from amount: Alfabetul');
+      } else if (amount === 25) {
+        pdfFileName = 'Numere.pdf';
+        productName = 'Numere';
+        console.log('📦 Determined product from amount: Numere');
+      } else if (amount === 20) {
+        pdfFileName = 'FormeSiCulori.pdf';
+        productName = 'Forme și Culori';
+        console.log('📦 Determined product from amount: Forme și Culori');
+      } else {
+        console.log('⚠️ Unknown amount, using default product');
       }
     }
     
@@ -107,18 +142,24 @@ router.post('/', async (req, res) => {
     console.log('💰 Amount:', amount, currency);
     
     // Extract product information from invoice
-    let productName = 'Produs digital';
-    let pdfFileName = 'Produs digital.pdf';
+    let productName = 'Pachet Complet';
+    let pdfFileName = 'BonusCertificateDeAbsovire.pdf';
     
     if (invoice.lines && invoice.lines.data.length > 0) {
       const lineItem = invoice.lines.data[0];
       const priceId = lineItem.price?.id;
       
       if (priceId) {
-        const product = products[priceId];
-        if (product) {
-          productName = product.name;
-          pdfFileName = product.filePath;
+        const pdfFile = products[priceId];
+        if (pdfFile) {
+          pdfFileName = pdfFile;
+          // Map PDF filename to product name
+          if (pdfFile === 'BonusCertificateDeAbsovire.pdf') productName = 'Pachet Complet';
+          else if (pdfFile === 'Alfabetul.pdf') productName = 'Alfabetul';
+          else if (pdfFile === 'Numere.pdf') productName = 'Numere';
+          else if (pdfFile === 'FormeSiCulori.pdf') productName = 'Forme și Culori';
+          else if (pdfFile === 'BonusFiseDeColorat.pdf') productName = 'Bonus Fise de Colorat';
+          
           console.log('📦 Product found from invoice:', productName, 'PDF:', pdfFileName);
         }
       }
