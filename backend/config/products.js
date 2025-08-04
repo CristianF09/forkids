@@ -7,7 +7,7 @@ const products = {
   },
   "price_1Rkl17K6Qc2WK3kdesB8V3Hm": {
     name: "Alfabetul",
-    filePath: "Alfabetul .pdf",
+    filePath: "Alfabetul.pdf",
     paymentLink: "https://buy.stripe.com/14AaEY8R02rNfJxh0EeZ202",
     productId: "prod_Sg7FSlYGXYLqIx"
   },
