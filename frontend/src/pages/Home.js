@@ -6,6 +6,7 @@ import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import Loader from '../components/Loader';
 
 const Home = () => {
   const [imagesLoaded, setImagesLoaded] = useState(false);
@@ -22,6 +23,44 @@ const Home = () => {
       return newCount;
     });
   };
+
+  // Preload critical images for faster loading
+  useEffect(() => {
+    const preloadImages = () => {
+      const criticalImages = [
+        '/images/carousel/AL1.png',
+        '/images/carousel/FC1.png',
+        '/images/carousel/NR1.png',
+        '/images/Logo -Corcodusa.ro.png'
+      ];
+      
+      criticalImages.forEach(src => {
+        const img = new Image();
+        img.src = src;
+      });
+    };
+
+    preloadImages();
+  }, []);
+
+  // Show loader while images are loading
+  if (!imagesLoaded) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#20BF55] mx-auto mb-4"></div>
+          <p className="text-lg text-gray-600">Se încarcă materialele educaționale...</p>
+          <div className="mt-4 w-64 bg-gray-200 rounded-full h-2">
+            <div 
+              className="bg-gradient-to-r from-[#20BF55] to-[#FF6B00] h-2 rounded-full transition-all duration-300"
+              style={{ width: `${(loadedImages / totalImages) * 100}%` }}
+            ></div>
+          </div>
+          <p className="text-sm text-gray-500 mt-2">{loadedImages} / {totalImages} imagini încărcate</p>
+        </div>
+      </div>
+    );
+  }
 
   const testimonials = [
     {
@@ -122,32 +161,61 @@ const Home = () => {
           {/* Bottom: Galerie Carousel */}
           <div className="w-full">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 text-center drop-shadow-lg">Activități și materiale</h2>
-            <Swiper
-              modules={[Navigation, Pagination]}
-              navigation
-              pagination={{ clickable: true }}
-              spaceBetween={30}
-              slidesPerView={1}
-              className="w-full max-w-4xl mx-auto"
-            >
+            {!imagesLoaded && (
+              <div className="text-center py-8">
+                <div className="inline-flex items-center space-x-2 text-white/80">
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                  <span>Se încarcă galeria...</span>
+                </div>
+              </div>
+            )}
+            {imagesLoaded && (
+              <Swiper
+                modules={[Navigation, Pagination]}
+                navigation
+                pagination={{ clickable: true }}
+                spaceBetween={30}
+                slidesPerView={1}
+                className="w-full max-w-4xl mx-auto"
+                lazy={{
+                  loadPrevNext: true,
+                  loadPrevNextAmount: 1
+                }}
+                preloadImages={false}
+                watchSlidesProgress={true}
+              >
               {slides.map((group, idx) => (
                 <SwiperSlide key={idx}>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {group.map((img, i) => (
                       <div key={i} className="bg-white p-6 rounded-xl shadow-lg flex flex-col items-center">
-                        <img
-                          src={`/images/carousel/${img}`}
-                          alt={`Carousel ${idx * 4 + i + 1}`}
-                          className="max-w-xs w-full h-56 object-contain rounded-md mb-4 bg-white"
-                          loading="lazy"
-                          onLoad={handleImageLoad}
-                        />
+                        <div className="relative w-full h-56 mb-4 bg-gray-100 rounded-md flex items-center justify-center">
+                          <img
+                            src={`/images/carousel/${img}`}
+                            alt={`Carousel ${idx * 4 + i + 1}`}
+                            className="max-w-xs w-full h-full object-contain rounded-md transition-opacity duration-300"
+                            loading={idx === 0 ? "eager" : "lazy"}
+                            onLoad={(e) => {
+                              e.target.style.opacity = '1';
+                              handleImageLoad();
+                            }}
+                            onError={(e) => {
+                              e.target.style.opacity = '0.5';
+                              handleImageLoad(); // Count as loaded even if failed
+                            }}
+                            style={{ opacity: 0 }}
+                          />
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="animate-pulse bg-gray-200 w-16 h-16 rounded-full"></div>
+                          </div>
+                        </div>
                       </div>
                     ))}
                   </div>
                 </SwiperSlide>
               ))}
-            </Swiper>
+              </Swiper>
+            )}
           </div>
         </div>
       </section>
@@ -159,7 +227,10 @@ const Home = () => {
             De ce Corcodușa este alegerea perfectă?
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="flex flex-col items-center p-6 rounded-xl shadow-lg bg-gray-50">
+            <div 
+              className="flex flex-col items-center p-6 rounded-xl shadow-lg bg-gray-50 animate-fadeInUp"
+              style={{ animationDelay: '0.1s', animationFillMode: 'both' }}
+            >
               <div className="bg-[#20BF55]/20 p-4 rounded-full mb-4">
                 <Zap className="w-8 h-8 text-[#20BF55]" />
               </div>
@@ -168,7 +239,10 @@ const Home = () => {
                 Activitățile noastre stimulează gândirea critică și ajută la dezvoltarea abilităților cognitive într-un mod captivant.
               </p>
             </div>
-            <div className="flex flex-col items-center p-6 rounded-xl shadow-lg bg-gray-50">
+            <div 
+              className="flex flex-col items-center p-6 rounded-xl shadow-lg bg-gray-50 animate-fadeInUp"
+              style={{ animationDelay: '0.2s', animationFillMode: 'both' }}
+            >
               <div className="bg-[#FF6B00]/20 p-4 rounded-full mb-4">
                 <Smile className="w-8 h-8 text-[#FF6B00]" />
               </div>
@@ -177,7 +251,10 @@ const Home = () => {
                 Desenele și activitățile creative dezvoltă imaginația și expresivitatea copilului tău.
               </p>
             </div>
-            <div className="flex flex-col items-center p-6 rounded-xl shadow-lg bg-gray-50">
+            <div 
+              className="flex flex-col items-center p-6 rounded-xl shadow-lg bg-gray-50 animate-fadeInUp"
+              style={{ animationDelay: '0.3s', animationFillMode: 'both' }}
+            >
               <div className="bg-[#20BF55]/20 p-4 rounded-full mb-4">
                 <BookOpen className="w-8 h-8 text-[#20BF55]" />
               </div>
@@ -201,46 +278,82 @@ const Home = () => {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col items-center">
-              <img 
-                src='/images/Alfabetul .jpg' 
-                alt="Alfabetul Ilustrat" 
-                className="max-w-xs w-full h-56 object-contain rounded-md mb-4 bg-white"
-                loading="lazy"
-                onLoad={handleImageLoad}
-              />
+              <div className="relative w-full h-56 mb-4 bg-gray-100 rounded-md flex items-center justify-center">
+                <img 
+                  src='/images/Alfabetul .jpg' 
+                  alt="Alfabetul Ilustrat" 
+                  className="max-w-xs w-full h-full object-contain rounded-md transition-opacity duration-300"
+                  loading="lazy"
+                  onLoad={(e) => {
+                    e.target.style.opacity = '1';
+                    handleImageLoad();
+                  }}
+                  style={{ opacity: 0 }}
+                />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="animate-pulse bg-gray-200 w-16 h-16 rounded-full"></div>
+                </div>
+              </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Alfabetul Ilustrat</h3>
               <p className="text-gray-600 text-center">Învățarea alfabetului în scriere de tipar și de mână.</p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col items-center">
-              <img 
-                src="/images/Numere.jpg" 
-                alt="Învățarea Numerelor" 
-                className="max-w-xs w-full h-56 object-contain rounded-md mb-4 bg-white"
-                loading="lazy"
-                onLoad={handleImageLoad}
-              />
+              <div className="relative w-full h-56 mb-4 bg-gray-100 rounded-md flex items-center justify-center">
+                <img 
+                  src="/images/Numere.jpg" 
+                  alt="Învățarea Numerelor" 
+                  className="max-w-xs w-full h-full object-contain rounded-md transition-opacity duration-300"
+                  loading="lazy"
+                  onLoad={(e) => {
+                    e.target.style.opacity = '1';
+                    handleImageLoad();
+                  }}
+                  style={{ opacity: 0 }}
+                />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="animate-pulse bg-gray-200 w-16 h-16 rounded-full"></div>
+                </div>
+              </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Învățarea Numerelor</h3>
               <p className="text-gray-600 text-center">Exerciții interactive pentru recunoașterea și scrierea numerelor.</p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col items-center">
-              <img 
-                src="/images/Forme si culori.jpg" 
-                alt="Activități de Coordonare" 
-                className="max-w-xs w-full h-56 object-contain rounded-md mb-4 bg-white"
-                loading="lazy"
-                onLoad={handleImageLoad}
-              />
+              <div className="relative w-full h-56 mb-4 bg-gray-100 rounded-md flex items-center justify-center">
+                <img 
+                  src="/images/Forme si culori.jpg" 
+                  alt="Activități de Coordonare" 
+                  className="max-w-xs w-full h-full object-contain rounded-md transition-opacity duration-300"
+                  loading="lazy"
+                  onLoad={(e) => {
+                    e.target.style.opacity = '1';
+                    handleImageLoad();
+                  }}
+                  style={{ opacity: 0 }}
+                />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="animate-pulse bg-gray-200 w-16 h-16 rounded-full"></div>
+                </div>
+              </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Activități de Coordonare</h3>
               <p className="text-gray-600 text-center">Dezvoltarea atenției și coordonării mână-ochi.</p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-lg flex flex-col items-center">
-              <img 
-                src="/images/Bonus - Fise de colorat.jpg" 
-                alt="Planșe de Colorat" 
-                className="max-w-xs w-full h-56 object-contain rounded-md mb-4 bg-white"
-                loading="lazy"
-                onLoad={handleImageLoad}
-              />
+              <div className="relative w-full h-56 mb-4 bg-gray-100 rounded-md flex items-center justify-center">
+                <img 
+                  src="/images/Bonus - Fise de colorat.jpg" 
+                  alt="Planșe de Colorat" 
+                  className="max-w-xs w-full h-full object-contain rounded-md transition-opacity duration-300"
+                  loading="lazy"
+                  onLoad={(e) => {
+                    e.target.style.opacity = '1';
+                    handleImageLoad();
+                  }}
+                  style={{ opacity: 0 }}
+                />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="animate-pulse bg-gray-200 w-16 h-16 rounded-full"></div>
+                </div>
+              </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Planșe de Colorat</h3>
               <p className="text-gray-600 text-center">Zeci de planșe haioase ce așteaptă să fie colorate.</p>
             </div>
@@ -258,8 +371,15 @@ const Home = () => {
             Peste 500 de familii au ales deja cărțile noastre pentru educația copiilor lor
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial) => (
-              <div key={testimonial.id} className="bg-gray-50 p-6 rounded-xl shadow-lg text-left">
+            {testimonials.map((testimonial, index) => (
+              <div 
+                key={testimonial.id} 
+                className="bg-gray-50 p-6 rounded-xl shadow-lg text-left animate-fadeInUp"
+                style={{
+                  animationDelay: `${index * 0.2}s`,
+                  animationFillMode: 'both'
+                }}
+              >
                 <div className="flex mb-3">
                   {[...Array(testimonial.rating)].map((_, i) => (
                     <Star key={i} className="w-5 h-5 text-[#FFC107] fill-[#FFC107]" />
@@ -281,28 +401,40 @@ const Home = () => {
             Proces simplu și rapid
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg">
+            <div 
+              className="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg animate-fadeInUp"
+              style={{ animationDelay: '0.1s', animationFillMode: 'both' }}
+            >
               <div className="bg-[#20BF55]/20 p-4 rounded-full mb-4">
                 <Check className="w-8 h-8 text-[#20BF55]" />
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Alege cărțile</h3>
               <p className="text-gray-600">Selectează cărțile care se potrivesc nevoilor copilului tău sau alege pachetul complet pentru economii maxime.</p>
             </div>
-            <div className="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg">
+            <div 
+              className="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg animate-fadeInUp"
+              style={{ animationDelay: '0.2s', animationFillMode: 'both' }}
+            >
               <div className="bg-[#FF6B00]/20 p-4 rounded-full mb-4">
                 <CreditCard className="w-8 h-8 text-[#FF6B00]" />
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Finalizează comanda</h3>
               <p className="text-gray-600">Plătește în siguranță prin sistemul securizat EuPlatesc și primești o confirmare imediată.</p>
             </div>
-            <div className="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg">
+            <div 
+              className="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg animate-fadeInUp"
+              style={{ animationDelay: '0.3s', animationFillMode: 'both' }}
+            >
               <div className="bg-[#20BF55]/20 p-4 rounded-full mb-4">
                 <MessageSquare className="w-8 h-8 text-[#20BF55]" />
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Primești email-ul</h3>
               <p className="text-gray-600">În câteva minute vei primi un email cu linkul de descărcare pentru cărțile achiziționate.</p>
             </div>
-            <div className="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg">
+            <div 
+              className="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg animate-fadeInUp"
+              style={{ animationDelay: '0.4s', animationFillMode: 'both' }}
+            >
               <div className="bg-[#FF6B00]/20 p-4 rounded-full mb-4">
                 <Download className="w-8 h-8 text-[#FF6B00]" />
               </div>
@@ -393,7 +525,14 @@ const Home = () => {
           </p>
           <div className="space-y-6">
             {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-gray-200 pb-4">
+              <div 
+                key={index} 
+                className="border-b border-gray-200 pb-4 animate-fadeInUp"
+                style={{
+                  animationDelay: `${index * 0.1}s`,
+                  animationFillMode: 'both'
+                }}
+              >
                 <h3 className="text-xl font-semibold text-gray-800 mb-2 flex items-center">
                   <HelpCircle className="w-6 h-6 text-[#20BF55] mr-3" />
                   {faq.question}

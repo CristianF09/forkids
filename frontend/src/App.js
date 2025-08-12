@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Loader from './components/Loader';
 import Home from './pages/Home';
 import About from './pages/About';
 import Products from './pages/Products';
@@ -15,6 +16,21 @@ import Success from './pages/Success';
 import Cancel from './pages/Cancel';
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate app initialization time
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500); // Reduced from default to make it faster
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       <Header />

@@ -13,6 +13,7 @@ const successRoutes = require('./routes/success');
 const webhookRoutes = require('./routes/webhook');
 // const emailTestRoutes = require('./routes/emailTest'); // Test route removed
 const productsRoutes = require('./routes/products');
+const downloadRoutes = require('./routes/download');
 
 const app = express();
 
@@ -52,6 +53,7 @@ app.use('/api/checkout', checkoutRoutes);
 app.use('/api', successRoutes); // <-- aici
 // app.use('/api', emailTestRoutes); // Email test routes - removed
 app.use('/api/products', productsRoutes); // Products routes
+app.use('/api/download', downloadRoutes); // Download routes for PDFs
 
 // Health check route
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
