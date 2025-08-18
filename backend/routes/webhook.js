@@ -141,8 +141,8 @@ router.post('/', async (req, res) => {
             pdfFileName = 'Numere.pdf';
             productName = 'Numere';
             isCompletePackage = false;
-          } else if (productFromMetadata === 'FormeSiCulori' || productFromMetadata === 'Forme si culori') {
-            pdfFileName = 'Forme si culori.pdf';
+          } else if (productFromMetadata === 'FormeSiCulori' || productFromMetadata === 'Forme si culori' || productFromMetadata === 'FormeSICulori') {
+            pdfFileName = 'FormeSiCulori.pdf';
             productName = 'Forme și Culori';
             isCompletePackage = false;
           } else {
@@ -174,17 +174,22 @@ router.post('/', async (req, res) => {
     console.log('📦 Session metadata:', session.metadata);
     console.log('�� Processing payment for:', customerEmail, 'Product:', productName);
     
+    const isDryRun = process.env.DRY_RUN === 'true';
     try {
       // Step 1: Send order notification to contact@corcodusa.ro
-      await sendOrderNotification({
-        customerEmail,
-        customerName,
-        productName,
-        amount,
-        currency,
-        sessionId
-      });
-      console.log('✅ Order notification sent to contact@corcodusa.ro');
+      if (isDryRun) {
+        console.log('🧪 DRY_RUN: would send order notification', { customerEmail, productName, amount, currency, sessionId });
+      } else {
+        await sendOrderNotification({
+          customerEmail,
+          customerName,
+          productName,
+          amount,
+          currency,
+          sessionId
+        });
+        console.log('✅ Order notification sent to contact@corcodusa.ro');
+      }
       
       // Step 2: Send PDF(s) to customer
       if (isCompletePackage) {
@@ -264,7 +269,8 @@ async function sendCompletePackage(toEmail, productName, amount, currency) {
   console.log('📦 Starting Complete Package delivery to:', toEmail);
   
   // Check environment variables first
-  if (!process.env.ZMAIL_USER || !process.env.ZMAIL_PASS) {
+  const isDryRun = process.env.DRY_RUN === 'true';
+  if (!isDryRun && (!process.env.ZMAIL_USER || !process.env.ZMAIL_PASS)) {
     throw new Error('ZMAIL_USER and ZMAIL_PASS environment variables are required');
   }
   
@@ -273,7 +279,7 @@ async function sendCompletePackage(toEmail, productName, amount, currency) {
   const fs = require('fs');
   const archiver = require('archiver');
 
-  const transporter = nodemailer.createTransport({
+  const transporter = !isDryRun ? nodemailer.createTransport({
     host: 'smtp.zoho.eu',
     port: 465,
     secure: true,
@@ -281,13 +287,13 @@ async function sendCompletePackage(toEmail, productName, amount, currency) {
       user: process.env.ZMAIL_USER,
       pass: process.env.ZMAIL_PASS,
     },
-  });
+  }) : null;
 
   // All PDFs for Complete Package
   const pdfFiles = [
     'Alfabetul.pdf',
     'Numere.pdf', 
-    'Forme si culori.pdf',
+    'FormeSiCulori.pdf',
     'BonusFiseDeColorat.pdf',
     'BonusCertificateDeAbsovire.pdf'
   ];
@@ -337,39 +343,43 @@ async function sendCompletePackage(toEmail, productName, amount, currency) {
           // File size is acceptable, send via email
           console.log('✅ ZIP file size acceptable, sending via email');
           
-          await transporter.sendMail({
-            from: `"CorcoDușa" <${process.env.ZMAIL_USER}>`,
-            to: toEmail,
-            subject: `Pachetul Complet - Toate materialele digitale - CorcoDușa`,
-            html: `
-              <h2>Pachetul Complet - Toate materialele digitale!</h2>
-              <p><strong>Produs:</strong> ${productName}</p>
-              <p><strong>Preț:</strong> ${amount} ${currency}</p>
-              <p><strong>Data:</strong> ${new Date().toLocaleString('ro-RO')}</p>
-              <hr>
-              <p>Găsești atașat fișierul ZIP cu toate materialele digitale din Pachetul Complet:</p>
-              <ul>
-                <li>🔠 Alfabetul.pdf</li>
-                <li>🔢 Numere.pdf</li>
-                <li>🎨 Forme și Culori.pdf</li>
-                <li>🎨 Bonus - Fișe de Colorat.pdf</li>
-                <li>🏆 Bonus - Certificat de Absolvire.pdf</li>
-              </ul>
-              <p><strong>Instrucțiuni:</strong></p>
-              <ol>
-                <li>Descarcă fișierul ZIP atașat</li>
-                <li>Dezarhivează fișierul pe calculatorul tău</li>
-                <li>Găsești toate materialele digitale în folderul dezarhivat</li>
-              </ol>
-              <p>Pentru întrebări: contact@corcodusa.ro</p>
-            `,
-            attachments: [
-              {
-                filename: zipFileName,
-                path: zipFilePath,
-              }
-            ]
-          });
+          if (isDryRun) {
+            console.log('🧪 DRY_RUN: would send Complete Package ZIP', { toEmail, zipFileName });
+          } else {
+            await transporter.sendMail({
+              from: `"CorcoDușa" <${process.env.ZMAIL_USER}>`,
+              to: toEmail,
+              subject: `Pachetul Complet - Toate materialele digitale - CorcoDușa`,
+              html: `
+                <h2>Pachetul Complet - Toate materialele digitale!</h2>
+                <p><strong>Produs:</strong> ${productName}</p>
+                <p><strong>Preț:</strong> ${amount} ${currency}</p>
+                <p><strong>Data:</strong> ${new Date().toLocaleString('ro-RO')}</p>
+                <hr>
+                <p>Găsești atașat fișierul ZIP cu toate materialele digitale din Pachetul Complet:</p>
+                <ul>
+                  <li>🔠 Alfabetul.pdf</li>
+                  <li>🔢 Numere.pdf</li>
+                  <li>🎨 Forme și Culori.pdf</li>
+                  <li>🎨 Bonus - Fișe de Colorat.pdf</li>
+                  <li>🏆 Bonus - Certificat de Absolvire.pdf</li>
+                </ul>
+                <p><strong>Instrucțiuni:</strong></p>
+                <ol>
+                  <li>Descarcă fișierul ZIP atașat</li>
+                  <li>Dezarhivează fișierul pe calculatorul tău</li>
+                  <li>Găsești toate materialele digitale în folderul dezarhivat</li>
+                </ol>
+                <p>Pentru întrebări: contact@corcodusa.ro</p>
+              `,
+              attachments: [
+                {
+                  filename: zipFileName,
+                  path: zipFilePath,
+                }
+              ]
+            });
+          }
 
           console.log(`✅ Complete Package ZIP sent to: ${toEmail}`);
           
@@ -463,7 +473,7 @@ async function sendIndividualPDFs(toEmail, productName, amount, currency, pdfFil
         let pdfProductName = pdfFile.replace('.pdf', '');
         if (pdfFile === 'Alfabetul.pdf') pdfProductName = 'Alfabetul';
         else if (pdfFile === 'Numere.pdf') pdfProductName = 'Numere';
-        else if (pdfFile === 'Forme si culori.pdf') pdfProductName = 'Forme și Culori';
+        else if (pdfFile === 'FormeSiCulori.pdf') pdfProductName = 'Forme și Culori';
         else if (pdfFile === 'BonusFiseDeColorat.pdf') pdfProductName = 'Bonus - Fișe de Colorat';
         else if (pdfFile === 'BonusCertificateDeAbsovire.pdf') pdfProductName = 'Bonus - Certificat de Absolvire';
         

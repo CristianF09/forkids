@@ -31,7 +31,7 @@ router.post('/send', ensureEnabled, async (req, res) => {
   const currency = (overrideCurrency || 'RON').toUpperCase();
 
   try {
-    if (product === 'Pachet Complet') {
+    if (product === 'Pachet Complet' || product === 'PachetComplet') {
       if (!sendCompletePackage) {
         return res.status(500).json({ error: 'sendCompletePackage not available' });
       }
@@ -45,7 +45,7 @@ router.post('/send', ensureEnabled, async (req, res) => {
     let pdfFileName;
     if (product === 'Alfabetul') pdfFileName = 'Alfabetul.pdf';
     else if (product === 'Numere') pdfFileName = 'Numere.pdf';
-    else if (product === 'Forme si culori' || product === 'Forme și Culori' || product === 'FormeSiCulori') pdfFileName = 'Forme si culori.pdf';
+    else if (product === 'Forme si culori' || product === 'Forme și Culori' || product === 'FormeSiCulori' || product === 'FormeSICulori') pdfFileName = 'FormeSiCulori.pdf';
 
     if (!pdfFileName) {
       return res.status(400).json({ error: 'Unknown product' });

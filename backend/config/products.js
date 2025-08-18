@@ -18,8 +18,8 @@ module.exports = {
   
   // FORME SI CULORI - 39 Lei
   "price_1Rkl16K6Qc2WK3kdr90F7xZM": {
-    pdf: "Forme si culori.pdf",
-    name: "Forme și Culori",
+    pdf: "FormeSiCulori.pdf",
+    name: "FormeSiCulori",
     price: 39,
     type: "individual"
   },
@@ -27,7 +27,7 @@ module.exports = {
   // PACHET COMPLET - 89 Lei (toate 3 cărțile + bonus)
   "price_1Rkl17K6Qc2WK3kdsulZ1UxS": {
     pdf: "BonusCertificateDeAbsovire.pdf", // triggers complete package
-    name: "Pachet Complet",
+    name: "PachetComplet",
     price: 89,
     type: "complete"
   }
