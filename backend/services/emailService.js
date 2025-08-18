@@ -9,7 +9,7 @@ require('dotenv').config();
  * @param {string} productId - ID-ul produsului (ex: price_1RiBRR2c4OeQrchOtK2eOVra)
  */
 async function sendPDF(toEmail, productId) {
-  const pdfDir = path.join(__dirname, 'public', 'pdfs');
+  const pdfDir = path.join(__dirname, '..', 'public', 'pdfs');
   const pdfFilename = `${productId}.pdf`;
   const pdfPath = path.join(pdfDir, pdfFilename);
 

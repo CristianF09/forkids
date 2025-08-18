@@ -9,8 +9,6 @@ if (!stripeSecretKey) {
   throw new Error('STRIPE_SECRET_KEY is required');
 }
 
-console.log('🔑 Using Stripe key:', stripeSecretKey.substring(0, 20) + '...');
-
 // Initialize Stripe with the secret key
 const stripe = Stripe(stripeSecretKey);
 
@@ -55,6 +53,8 @@ router.post('/create-checkout-session', async (req, res) => {
       cancel_url: `${process.env.CLIENT_URL || 'http://localhost:3000'}/cancel`,
       metadata: {
         productName: productName || 'Unknown product',
+        // Add a simplified product hint for webhook fallback logic
+        product: productName || 'Unknown product',
       },
       customer_email: customerEmail || undefined, // dacă frontend-ul trimite emailul utilizatorului
     });

@@ -19,8 +19,27 @@ const testRoutes = require('./routes/test');
 const app = express();
 
 // Middleware generale
+const defaultAllowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:10000',
+  'http://127.0.0.1:3000',
+  'http://127.0.0.1:10000',
+  'https://corcodusa.ro',
+  'https://www.corcodusa.ro',
+  'https://forkids-app.onrender.com'
+];
+const envAllowedOrigins = (process.env.ALLOWED_ORIGINS || '')
+  .split(',')
+  .map(o => o.trim())
+  .filter(Boolean);
+const allowedOrigins = Array.from(new Set([...defaultAllowedOrigins, ...envAllowedOrigins]));
+
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:10000', 'http://127.0.0.1:3000', 'http://127.0.0.1:10000'],
+  origin: function(origin, callback) {
+    if (!origin) return callback(null, true); // allow non-browser or same-origin
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    return callback(new Error('Not allowed by CORS'));
+  },
   credentials: true
 }));
 
@@ -99,4 +118,7 @@ server.on('error', (err) => {
   }
 });
 
-console.log('🔍 mongoUri final:', mongoUri);
+if (mongoUri) {
+  const masked = mongoUri.replace(/:[^@]+@/, ':****@');
+  console.log('🔍 mongoUri configurat:', masked);
+}

@@ -42,224 +42,115 @@ router.post('/', async (req, res) => {
     return res.status(400).send(`Webhook error: ${err.message}`);
   }
 
-  // Handle checkout.session.completed
-  if (event.type === 'checkout.session.completed') {
-    const session = event.data.object;
-    const customerEmail = session.customer_details?.email || session.customer_email;
-    const customerName = session.customer_details?.name || 'Customer';
-    const sessionId = session.id;
-    
-    console.log('💰 Payment completed for session:', sessionId);
-    console.log('📧 Customer email:', customerEmail);
-    console.log('👤 Customer name:', customerName);
-    
-    // Log all available session information for debugging
-    console.log('🔍 Session details:');
-    console.log('  - Amount total:', session.amount_total);
-    console.log('  - Currency:', session.currency);
-    console.log('  - Line items count:', session.line_items?.data?.length || 0);
-    console.log('  - Metadata:', session.metadata);
-    console.log('  - Payment intent:', session.payment_intent);
-    console.log('  - Customer:', session.customer);
-    console.log('  - Mode:', session.mode);
-    
-    // Try to get expanded session with line items
-    let expandedSession = session;
+  // Acknowledge to Stripe immediately to avoid timeouts, then process in background
+  res.status(200).json({ received: true });
+
+  setImmediate(async () => {
     try {
-      if (!session.line_items?.data || session.line_items.data.length === 0) {
-        console.log('🔍 No line items in webhook, retrieving expanded session...');
-        expandedSession = await getStripe().checkout.sessions.retrieve(sessionId, {
-          expand: ['line_items']
-        });
-        console.log('✅ Retrieved expanded session with line items');
-        console.log('  - Expanded line items count:', expandedSession.line_items?.data?.length || 0);
-      }
-    } catch (error) {
-      console.log('⚠️ Could not retrieve expanded session:', error.message);
-      console.log('⚠️ Using original session data');
-    }
-    
-    // Validate email
-    if (!customerEmail) {
-      console.error('❌ No customer email found in session');
-      return res.status(400).json({ error: 'No customer email found' });
-    }
-    
-    // Get product information from session
-    let pdfFileName = 'BonusCertificateDeAbsovire.pdf'; // Default
-    let productName = 'Pachet Complet'; // Default
-    let amount = session.amount_total / 100; // Convert from cents
-    let currency = session.currency?.toUpperCase() || 'RON';
-    let isCompletePackage = false;
-    
-    // Try to get product from line items if available
-    const lineItems = expandedSession.line_items?.data || [];
-    if (lineItems.length > 0) {
-      const priceId = lineItems[0].price.id;
-      const productInfo = products[priceId];
-      
-      if (productInfo) {
-        pdfFileName = productInfo.pdf;
-        productName = productInfo.name;
-        isCompletePackage = productInfo.type === 'complete';
-        
-        console.log('📦 Product found from price ID:', priceId);
-        console.log('📦 Product name:', productName);
-        console.log('📦 PDF file:', pdfFileName);
-        console.log('📦 Product type:', productInfo.type);
-        console.log('📦 Is Complete Package:', isCompletePackage);
-      } else {
-        console.log('⚠️ Product not found for price ID:', priceId);
-        console.log('🔍 Available price IDs:', Object.keys(products));
-      }
-    } else {
-      // If no line items, try to determine product from amount
-      console.log('📊 Amount paid:', amount, currency);
-      console.log('🔍 No line items, using amount mapping...');
-      
-      // Map amount to product (fallback) - Updated prices
-      if (amount === 110) {
-        pdfFileName = 'BonusCertificateDeAbsovire.pdf';
-        productName = 'Pachet Complet';
-        isCompletePackage = true; // Special handling for complete package
-        console.log('📦 Determined product from amount: Pachet Complet (110 Lei)');
-      } else if (amount === 49) {
-        // For 49 Lei, we need to determine which individual product it is
-        // Check if we can get more info from session metadata or customer details
-        console.log('⚠️ Amount 49 Lei detected - individual product purchase');
-        
-        // Try to determine product from session metadata or other clues
-        if (session.metadata && session.metadata.product) {
-          const productFromMetadata = session.metadata.product;
-          console.log('📦 Product from metadata:', productFromMetadata);
-          
-          if (productFromMetadata === 'Alfabetul') {
-            pdfFileName = 'Alfabetul.pdf';
-            productName = 'Alfabetul';
-            isCompletePackage = false;
-          } else if (productFromMetadata === 'Numere') {
-            pdfFileName = 'Numere.pdf';
-            productName = 'Numere';
-            isCompletePackage = false;
-          } else if (productFromMetadata === 'FormeSiCulori' || productFromMetadata === 'Forme si culori' || productFromMetadata === 'FormeSICulori') {
-            pdfFileName = 'FormeSiCulori.pdf';
-            productName = 'Forme și Culori';
-            isCompletePackage = false;
-          } else {
-            // Default to Alfabetul if metadata is unclear
-            pdfFileName = 'Alfabetul.pdf';
-            productName = 'Alfabetul';
-            isCompletePackage = false;
-            console.log('⚠️ Unclear product from metadata, defaulting to Alfabetul');
+      // Handle checkout.session.completed
+      if (event.type === 'checkout.session.completed') {
+        const session = event.data.object;
+        const customerEmail = session.customer_details?.email || session.customer_email;
+        const customerName = session.customer_details?.name || 'Customer';
+        const sessionId = session.id;
+
+        console.log('💰 Payment completed for session:', sessionId);
+        console.log('📧 Customer email:', customerEmail);
+        console.log('👤 Customer name:', customerName);
+
+        // Try to get expanded session with line items
+        let expandedSession = session;
+        try {
+          if (!session.line_items?.data || session.line_items.data.length === 0) {
+            console.log('🔍 No line items in webhook, retrieving expanded session...');
+            expandedSession = await getStripe().checkout.sessions.retrieve(sessionId, { expand: ['line_items'] });
+            console.log('✅ Retrieved expanded session with line items');
+          }
+        } catch (error) {
+          console.log('⚠️ Could not retrieve expanded session:', error.message);
+        }
+
+        if (!customerEmail) {
+          console.error('❌ No customer email found in session');
+          return; // stop processing
+        }
+
+        // Determine product
+        let pdfFileName = 'BonusCertificateDeAbsovire.pdf';
+        let productName = 'Pachet Complet';
+        let amount = session.amount_total / 100;
+        let currency = session.currency?.toUpperCase() || 'RON';
+        let isCompletePackage = false;
+
+        const lineItems = expandedSession.line_items?.data || [];
+        if (lineItems.length > 0) {
+          const priceId = lineItems[0].price.id;
+          const productInfo = products[priceId];
+          if (productInfo) {
+            pdfFileName = productInfo.pdf;
+            productName = productInfo.name;
+            isCompletePackage = productInfo.type === 'complete';
           }
         } else {
-          // No metadata, check if we can determine from customer behavior
-          // For now, default to Alfabetul since it's the most common individual purchase
-          pdfFileName = 'Alfabetul.pdf';
-          productName = 'Alfabetul';
-          isCompletePackage = false;
-          console.log('⚠️ No product metadata, defaulting to Alfabetul (most common individual purchase)');
+          if (amount === 110) {
+            pdfFileName = 'BonusCertificateDeAbsovire.pdf';
+            productName = 'Pachet Complet';
+            isCompletePackage = true;
+          } else if (amount === 49) {
+            const hint = session.metadata?.product;
+            if (hint === 'Alfabetul') { pdfFileName = 'Alfabetul.pdf'; productName = 'Alfabetul'; }
+            else if (hint === 'Numere') { pdfFileName = 'Numere.pdf'; productName = 'Numere'; }
+            else if (hint === 'FormeSiCulori' || hint === 'Forme si culori' || hint === 'FormeSICulori') { pdfFileName = 'FormeSiCulori.pdf'; productName = 'Forme și Culori'; }
+            else { pdfFileName = 'Alfabetul.pdf'; productName = 'Alfabetul'; }
+          } else {
+            pdfFileName = 'Alfabetul.pdf';
+            productName = 'Alfabetul';
+          }
         }
-        
-        console.log(`📦 Determined individual product: ${productName} (${pdfFileName})`);
-      } else {
-        console.log('⚠️ Unknown amount, using default product');
-        // Default to individual product instead of complete package
-        pdfFileName = 'Alfabetul.pdf';
-        productName = 'Alfabetul';
-        isCompletePackage = false;
-      }
-    }
-    
-    console.log('📦 Session metadata:', session.metadata);
-    console.log('�� Processing payment for:', customerEmail, 'Product:', productName);
-    
-    const isDryRun = process.env.DRY_RUN === 'true';
-    try {
-      // Step 1: Send order notification to contact@corcodusa.ro
-      if (isDryRun) {
-        console.log('🧪 DRY_RUN: would send order notification', { customerEmail, productName, amount, currency, sessionId });
-      } else {
-        await sendOrderNotification({
-          customerEmail,
-          customerName,
-          productName,
-          amount,
-          currency,
-          sessionId
-        });
-        console.log('✅ Order notification sent to contact@corcodusa.ro');
-      }
-      
-      // Step 2: Send PDF(s) to customer
-      if (isCompletePackage) {
-        // For Complete Package, send all PDFs
-        console.log('📦 Sending Complete Package with all PDFs...');
-        await sendCompletePackage(customerEmail, productName, amount, currency);
-      } else {
-        await sendPDFWithOptimization(customerEmail, pdfFileName, productName, amount, currency);
-      }
-      
-      console.log('🎉 All payment processing completed successfully!');
-      
-    } catch (error) {
-      console.error('❌ Error processing payment:', error);
-      console.error('❌ Error stack:', error.stack);
-      return res.status(500).json({ error: error.message });
-    }
-  }
 
-  // Handle Stripe's automated invoice events
-  if (event.type === 'invoice.payment_succeeded') {
-    const invoice = event.data.object;
-    const customerEmail = invoice.customer_email;
-    const invoiceId = invoice.id;
-    const amount = invoice.amount_paid / 100;
-    const currency = invoice.currency?.toUpperCase() || 'RON';
-    
-    console.log('📄 Stripe invoice payment succeeded:', invoiceId);
-    console.log('📧 Customer email:', customerEmail);
-    console.log('💰 Amount:', amount, currency);
-    
-    // Extract product information from invoice
-    let productName = 'Pachet Complet';
-    let pdfFileName = 'BonusCertificateDeAbsovire.pdf';
-    let isCompletePackage = false;
-    
-    if (invoice.lines && invoice.lines.data.length > 0) {
-      const lineItem = invoice.lines.data[0];
-      const priceId = lineItem.price?.id;
-      
-      if (priceId) {
-        const productInfo = products[priceId];
-        if (productInfo) {
-          pdfFileName = productInfo.pdf;
-          productName = productInfo.name;
-          isCompletePackage = productInfo.type === 'complete';
-          
-          console.log('📦 Product found from invoice:', productName, 'PDF:', pdfFileName);
+        const isDryRun = process.env.DRY_RUN === 'true';
+        if (isDryRun) {
+          console.log('🧪 DRY_RUN: would send order notification and delivery', { customerEmail, productName, amount, currency, sessionId });
+          return;
         }
-      }
-    }
-    
-    try {
-      // Send PDF(s) to customer
-      if (isCompletePackage) {
-        await sendCompletePackage(customerEmail, productName, amount, currency);
-      } else {
-        await sendPDFWithOptimization(customerEmail, pdfFileName, productName, amount, currency);
-      }
-      
-      console.log('🎉 Invoice processing completed successfully!');
-      
-    } catch (error) {
-      console.error('❌ Error processing invoice:', error);
-      console.error('❌ Error stack:', error.stack);
-      return res.status(500).json({ error: error.message });
-    }
-  }
 
-  res.status(200).json({ received: true });
+        await sendOrderNotification({ customerEmail, customerName, productName, amount, currency, sessionId });
+        if (isCompletePackage) {
+          await sendCompletePackage(customerEmail, productName, amount, currency);
+        } else {
+          await sendPDFWithOptimization(customerEmail, pdfFileName, productName, amount, currency);
+        }
+        console.log('🎉 Delivery flow completed for session:', sessionId);
+      }
+
+      // Handle Stripe's automated invoice events
+      if (event.type === 'invoice.payment_succeeded') {
+        const invoice = event.data.object;
+        const customerEmail = invoice.customer_email;
+        const amount = invoice.amount_paid / 100;
+        const currency = invoice.currency?.toUpperCase() || 'RON';
+
+        let productName = 'Pachet Complet';
+        let pdfFileName = 'BonusCertificateDeAbsovire.pdf';
+        let isCompletePackage = false;
+        if (invoice.lines && invoice.lines.data.length > 0) {
+          const priceId = invoice.lines.data[0].price?.id;
+          if (priceId && products[priceId]) {
+            pdfFileName = products[priceId].pdf;
+            productName = products[priceId].name;
+            isCompletePackage = products[priceId].type === 'complete';
+          }
+        }
+
+        if (!customerEmail) return;
+        if (isCompletePackage) await sendCompletePackage(customerEmail, productName, amount, currency);
+        else await sendPDFWithOptimization(customerEmail, pdfFileName, productName, amount, currency);
+        console.log('🎉 Invoice delivery completed for:', customerEmail);
+      }
+    } catch (error) {
+      console.error('❌ Async webhook processing error:', error);
+    }
+  });
 });
 
 /**
