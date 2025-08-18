@@ -6,12 +6,12 @@ import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import Loader from '../components/Loader';
+// Loader component not needed since we use an inline overlay
 
 const Home = () => {
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [loadedImages, setLoadedImages] = useState(0);
-  const totalImages = 28; // Total number of images on the page
+  const totalImages = 27; // Correct total number of images expected to load
 
   // Track image loading progress
   const handleImageLoad = () => {
@@ -43,24 +43,15 @@ const Home = () => {
     preloadImages();
   }, []);
 
-  // Show loader while images are loading
-  if (!imagesLoaded) {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#20BF55] mx-auto mb-4"></div>
-          <p className="text-lg text-gray-600">Se încarcă materialele educaționale...</p>
-          <div className="mt-4 w-64 bg-gray-200 rounded-full h-2">
-            <div 
-              className="bg-gradient-to-r from-[#20BF55] to-[#FF6B00] h-2 rounded-full transition-all duration-300"
-              style={{ width: `${(loadedImages / totalImages) * 100}%` }}
-            ></div>
-          </div>
-          <p className="text-sm text-gray-500 mt-2">{loadedImages} / {totalImages} imagini încărcate</p>
-        </div>
-      </div>
-    );
-  }
+  // Fallback: ensure overlay disappears even if some images fail to report onLoad
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setImagesLoaded(true);
+    }, 8000);
+    return () => clearTimeout(timeoutId);
+  }, []);
+
+  // Note: We no longer block the page rendering; instead we show an overlay loader below until images finish loading
 
   const testimonials = [
     {
@@ -139,6 +130,21 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
+      {!imagesLoaded && (
+        <div className="fixed inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#20BF55] mx-auto mb-4"></div>
+            <p className="text-lg text-gray-600">Se încarcă materialele educaționale...</p>
+            <div className="mt-4 w-64 bg-gray-200 rounded-full h-2 mx-auto">
+              <div
+                className="bg-gradient-to-r from-[#20BF55] to-[#FF6B00] h-2 rounded-full transition-all duration-300"
+                style={{ width: `${(loadedImages / totalImages) * 100}%` }}
+              ></div>
+            </div>
+            <p className="text-sm text-gray-500 mt-2">{loadedImages} / {totalImages} imagini încărcate</p>
+          </div>
+        </div>
+      )}
       {/* Hero Section - Now Split Vertically */}
       <section className="relative bg-gradient-to-r from-[#20BF55] to-[#FF6B00] text-white py-12 sm:py-16 md:py-20 lg:py-28 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col gap-12">
