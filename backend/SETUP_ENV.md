@@ -119,7 +119,7 @@ backend/
 │   └── pdfs/
 │       ├── Alfabetul.pdf
 │       ├── Numere.pdf
-│       ├── FormeSiCulori.pdf
+│       ├── Forme si culori.pdf
 │       ├── BonusFiseDeColorat.pdf
 │       └── BonusCertificateDeAbsovire.pdf
 ├── routes/

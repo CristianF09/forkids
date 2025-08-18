@@ -18,7 +18,7 @@ module.exports = {
   
   // FORME SI CULORI - 39 Lei
   "price_1Rkl16K6Qc2WK3kdr90F7xZM": {
-    pdf: "FormeSiCulori.pdf",
+    pdf: "Forme si culori.pdf",
     name: "Forme și Culori",
     price: 39,
     type: "individual"

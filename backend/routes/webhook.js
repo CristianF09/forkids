@@ -141,8 +141,8 @@ router.post('/', async (req, res) => {
             pdfFileName = 'Numere.pdf';
             productName = 'Numere';
             isCompletePackage = false;
-          } else if (productFromMetadata === 'FormeSiCulori') {
-            pdfFileName = 'FormeSiCulori.pdf';
+          } else if (productFromMetadata === 'FormeSiCulori' || productFromMetadata === 'Forme si culori') {
+            pdfFileName = 'Forme si culori.pdf';
             productName = 'Forme și Culori';
             isCompletePackage = false;
           } else {
@@ -287,7 +287,7 @@ async function sendCompletePackage(toEmail, productName, amount, currency) {
   const pdfFiles = [
     'Alfabetul.pdf',
     'Numere.pdf', 
-    'FormeSiCulori.pdf',
+    'Forme si culori.pdf',
     'BonusFiseDeColorat.pdf',
     'BonusCertificateDeAbsovire.pdf'
   ];
@@ -463,7 +463,7 @@ async function sendIndividualPDFs(toEmail, productName, amount, currency, pdfFil
         let pdfProductName = pdfFile.replace('.pdf', '');
         if (pdfFile === 'Alfabetul.pdf') pdfProductName = 'Alfabetul';
         else if (pdfFile === 'Numere.pdf') pdfProductName = 'Numere';
-        else if (pdfFile === 'FormeSiCulori.pdf') pdfProductName = 'Forme și Culori';
+        else if (pdfFile === 'Forme si culori.pdf') pdfProductName = 'Forme și Culori';
         else if (pdfFile === 'BonusFiseDeColorat.pdf') pdfProductName = 'Bonus - Fișe de Colorat';
         else if (pdfFile === 'BonusCertificateDeAbsovire.pdf') pdfProductName = 'Bonus - Certificat de Absolvire';
         
@@ -582,3 +582,7 @@ async function sendIndividualPDFs(toEmail, productName, amount, currency, pdfFil
 }
 
 module.exports = router;
+
+// Expose internal helpers for local testing (non-production usage)
+module.exports.sendCompletePackage = sendCompletePackage;
+module.exports.sendIndividualPDFs = sendIndividualPDFs;
