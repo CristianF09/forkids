@@ -347,8 +347,7 @@ async function sendCompletePackage(toEmail, productName, amount, currency) {
             await transporter.sendMail({
               from: `"CorcoDușa" <${process.env.ZMAIL_USER}>`,
               to: toEmail,
-              subject: `Pachetul Complet - Descărcare ZIP - CorcoDușa`\
-              ,
+              subject: `Pachetul Complet - Descărcare ZIP - CorcoDușa`,
               html: `
                 <h2>Pachetul Complet - Descărcare fișier</h2>
                 <p><strong>Produs:</strong> ${displayProductName}</p>
