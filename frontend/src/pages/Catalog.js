@@ -12,7 +12,7 @@ const products = [
     image: '/images/Pachet Promo.jpg',
     category: 'all',
     stripeLink: 'https://buy.stripe.com/28E3cwc3ceav0OD5hWeZ203',
-    priceId: 'price_1Rkl17K6Qc2WK3kdsulZ1UxS',
+    priceId: 'price_1RxRyVK6Qc2WK3kdnE1H9PkY',
     imageBgColor: 'bg-gradient-to-r from-[#20BF55] to-[#01BAEF]'
   },
   {
@@ -24,7 +24,7 @@ const products = [
     image: '/images/Alfabetul .jpg',
     category: 'alfabet',
     stripeLink: 'https://buy.stripe.com/14AaEY8R02rNfJxh0EeZ202',
-    priceId: 'price_1Rkl17K6Qc2WK3kdesB8V3Hm',
+    priceId: 'price_1RxRzjK6Qc2WK3kdz8eAiQjD',
     imageBgColor: 'bg-[#2680EB]'
   },
   {
@@ -36,7 +36,7 @@ const products = [
     image: '/images/Numere.jpg',
     category: 'numere',
     stripeLink: 'https://buy.stripe.com/fZu8wQ8R0c2n2WLh0EeZ201',
-    priceId: 'price_1Rkl16K6Qc2WK3kdu5bsOWqZ',
+    priceId: 'price_1RxS3KK6Qc2WK3kd97xe4ihN',
     imageBgColor: 'bg-[#20BF55]'
   },
   {
@@ -48,7 +48,7 @@ const products = [
     image: '/images/Forme si culori.jpg',
     category: 'culori',
     stripeLink: 'https://buy.stripe.com/eVqdRaffo2rNfJxbGkeZ200',
-    priceId: 'price_1Rkl16K6Qc2WK3kdr90F7xZM',
+    priceId: 'price_1RxS3hK6Qc2WK3kdTL15dECJ',
     imageBgColor: 'bg-[#FFD100]'
   }
 ];

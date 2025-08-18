@@ -19,7 +19,7 @@ function getStripe() {
 
 const { sendOrderNotification } = require('../services/emailService');
 const { sendPDFWithOptimization } = require('../services/pdfDeliveryService');
-const products = require('../config/products');
+const { products } = require('../routes/products');
 
 // Add better error handling and logging
 router.post('/', async (req, res) => {

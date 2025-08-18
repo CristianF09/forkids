@@ -12,7 +12,7 @@ if (!stripeSecretKey) {
 // Initialize Stripe with the secret key
 const stripe = Stripe(stripeSecretKey);
 
-const products = require('../config/products');
+// No local products mapping needed here; frontend passes the priceId
 
 // Creează sesiune Stripe Checkout
 router.post('/create-checkout-session', async (req, res) => {

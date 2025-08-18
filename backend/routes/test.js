@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 
 const { sendPDFWithOptimization } = require('../services/pdfDeliveryService');
-const products = require('../config/products');
 
 // Reuse internal helpers from webhook route for complete package
 let sendCompletePackage;
