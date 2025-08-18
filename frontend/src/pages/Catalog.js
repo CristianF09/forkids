@@ -190,7 +190,7 @@ const Catalog = () => {
               </p>
               <div className="price flex items-center gap-2 sm:gap-4 mb-4 sm:mb-6 justify-center">
                   <span className="promo text-2xl sm:text-3xl font-bold text-[#FF6B00]">110 Lei</span>
-                  <span className="original text-base sm:text-lg text-gray-400 line-through">117 Lei</span>
+                  <span className="original text-base sm:text-lg text-gray-400 line-through">147 Lei</span>
               </div>
               <div className="text-center">
                 <button
@@ -249,7 +249,7 @@ const Catalog = () => {
               </div>
               <h3 className="text-2xl font-bold text-gray-800 mb-4 mt-6">Pachet Complet</h3>
               <p className="text-4xl font-bold text-[#FF6B00] mb-4">110 <span className="text-xl">Lei</span></p>
-              <p className="text-lg text-gray-400 line-through mb-4">117 Lei</p>
+              <p className="text-lg text-gray-400 line-through mb-4">147 Lei</p>
               <ul className="space-y-3 mb-6 text-left">
                 <li className="flex items-center">
                   <CheckCircle2 className="w-5 h-5 text-[#20BF55] mr-2" />

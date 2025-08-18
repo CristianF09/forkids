@@ -124,7 +124,7 @@ router.post('/', async (req, res) => {
         isCompletePackage = true; // Special handling for complete package
         console.log('📦 Determined product from amount: Pachet Complet (110 Lei)');
       } else if (amount === 49) {
-        // For 39 Lei, we need to determine which individual product it is
+        // For 49 Lei, we need to determine which individual product it is
         // Check if we can get more info from session metadata or customer details
         console.log('⚠️ Amount 49 Lei detected - individual product purchase');
         

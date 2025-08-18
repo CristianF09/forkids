@@ -234,7 +234,7 @@ const Products = () => {
               </ul>
               <div className="flex justify-center items-center mb-6 space-x-4">
                 <span className="text-5xl font-bold text-[#20BF55]">110 Lei</span>
-                <span className="text-2xl line-through text-gray-500">117 Lei</span>
+                <span className="text-2xl line-through text-gray-500">147 Lei</span>
               </div>
               <button
                 onClick={() => {

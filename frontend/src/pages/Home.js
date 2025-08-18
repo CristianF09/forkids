@@ -485,7 +485,7 @@ const Home = () => {
                 <h3 className="text-2xl font-bold mb-4">Pachet Complet</h3>
                 <div className="flex justify-center items-center mb-6 space-x-4">
                   <span className="text-5xl font-bold text-[#20BF55]">110 Lei</span>
-                  <span className="text-2xl line-through text-gray-500">117 Lei</span>
+                  <span className="text-2xl line-through text-gray-500">147 Lei</span>
                 </div>
                 <ul className="space-y-3 text-left mb-8">
                   <li className="flex items-center text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> Toate cele 3 cărți</li>
