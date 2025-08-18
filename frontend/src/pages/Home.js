@@ -133,9 +133,8 @@ const Home = () => {
       {!imagesLoaded && (
         <div className="fixed inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center z-50">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#20BF55] mx-auto mb-4"></div>
-            <p className="text-lg text-gray-600">Se încarcă materialele educaționale...</p>
-            <div className="mt-4 w-64 bg-gray-200 rounded-full h-2 mx-auto">
+            <p className="text-lg text-gray-600 mb-2">Se încarcă materialele educaționale...</p>
+            <div className="mt-2 w-64 bg-gray-200 rounded-full h-2 mx-auto">
               <div
                 className="bg-gradient-to-r from-[#20BF55] to-[#FF6B00] h-2 rounded-full transition-all duration-300"
                 style={{ width: `${(loadedImages / totalImages) * 100}%` }}
@@ -168,12 +167,7 @@ const Home = () => {
           <div className="w-full">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 text-center drop-shadow-lg">Activități și materiale</h2>
             {!imagesLoaded && (
-              <div className="text-center py-8">
-                <div className="inline-flex items-center space-x-2 text-white/80">
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                  <span>Se încarcă galeria...</span>
-                </div>
-              </div>
+              <div className="text-center py-6 text-white/90">Se încarcă galeria...</div>
             )}
             {imagesLoaded && (
               <Swiper
@@ -211,9 +205,7 @@ const Home = () => {
                             }}
                             style={{ opacity: 0 }}
                           />
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="animate-pulse bg-gray-200 w-16 h-16 rounded-full"></div>
-                          </div>
+                          {/* Removed placeholder circle overlay to avoid visual artifact and extra paint */}
                         </div>
                       </div>
                     ))}
@@ -296,9 +288,7 @@ const Home = () => {
                   }}
                   style={{ opacity: 0 }}
                 />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="animate-pulse bg-gray-200 w-16 h-16 rounded-full"></div>
-                </div>
+                {/* Removed placeholder circle overlay */}
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Alfabetul Ilustrat</h3>
               <p className="text-gray-600 text-center">Învățarea alfabetului în scriere de tipar și de mână.</p>
@@ -316,9 +306,7 @@ const Home = () => {
                   }}
                   style={{ opacity: 0 }}
                 />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="animate-pulse bg-gray-200 w-16 h-16 rounded-full"></div>
-                </div>
+                {/* Removed placeholder circle overlay */}
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Învățarea Numerelor</h3>
               <p className="text-gray-600 text-center">Exerciții interactive pentru recunoașterea și scrierea numerelor.</p>
@@ -336,9 +324,7 @@ const Home = () => {
                   }}
                   style={{ opacity: 0 }}
                 />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="animate-pulse bg-gray-200 w-16 h-16 rounded-full"></div>
-                </div>
+                {/* Removed placeholder circle overlay */}
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Activități de Coordonare</h3>
               <p className="text-gray-600 text-center">Dezvoltarea atenției și coordonării mână-ochi.</p>
@@ -356,9 +342,7 @@ const Home = () => {
                   }}
                   style={{ opacity: 0 }}
                 />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="animate-pulse bg-gray-200 w-16 h-16 rounded-full"></div>
-                </div>
+                {/* Removed placeholder circle overlay */}
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Planșe de Colorat</h3>
               <p className="text-gray-600 text-center">Zeci de planșe haioase ce așteaptă să fie colorate.</p>
