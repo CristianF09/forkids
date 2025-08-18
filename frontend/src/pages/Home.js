@@ -461,7 +461,7 @@ const Home = () => {
             <div className="bg-white text-gray-800 rounded-xl shadow-xl p-8 flex flex-col justify-between transform transition-transform duration-300 hover:scale-105">
               <div>
                 <h3 className="text-2xl font-bold mb-4">Cărți Individuale</h3>
-                <p className="text-4xl font-bold text-[#FF6B00] mb-6">39 <span className="text-xl">Lei/carte</span></p>
+                <p className="text-4xl font-bold text-[#FF6B00] mb-6">49 <span className="text-xl">Lei/carte</span></p>
                 <ul className="space-y-3 text-left mb-8">
                   <li className="flex items-center text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> O carte la alegere</li>
                   <li className="flex items-center text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> Peste 50 de pagini de activități</li>
@@ -484,7 +484,7 @@ const Home = () => {
               <div>
                 <h3 className="text-2xl font-bold mb-4">Pachet Complet</h3>
                 <div className="flex justify-center items-center mb-6 space-x-4">
-                  <span className="text-5xl font-bold text-[#20BF55]">89 Lei</span>
+                  <span className="text-5xl font-bold text-[#20BF55]">110 Lei</span>
                   <span className="text-2xl line-through text-gray-500">117 Lei</span>
                 </div>
                 <ul className="space-y-3 text-left mb-8">

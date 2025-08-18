@@ -118,15 +118,15 @@ router.post('/', async (req, res) => {
       console.log('🔍 No line items, using amount mapping...');
       
       // Map amount to product (fallback) - Updated prices
-      if (amount === 89) {
+      if (amount === 110) {
         pdfFileName = 'BonusCertificateDeAbsovire.pdf';
         productName = 'Pachet Complet';
         isCompletePackage = true; // Special handling for complete package
-        console.log('📦 Determined product from amount: Pachet Complet (89 Lei)');
-      } else if (amount === 39) {
+        console.log('📦 Determined product from amount: Pachet Complet (110 Lei)');
+      } else if (amount === 49) {
         // For 39 Lei, we need to determine which individual product it is
         // Check if we can get more info from session metadata or customer details
-        console.log('⚠️ Amount 39 Lei detected - individual product purchase');
+        console.log('⚠️ Amount 49 Lei detected - individual product purchase');
         
         // Try to determine product from session metadata or other clues
         if (session.metadata && session.metadata.product) {

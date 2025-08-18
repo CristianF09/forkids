@@ -36,7 +36,7 @@ router.post('/send', ensureEnabled, async (req, res) => {
         return res.status(500).json({ error: 'sendCompletePackage not available' });
       }
 
-      const amount = overrideAmount != null ? overrideAmount : 89;
+      const amount = overrideAmount != null ? overrideAmount : 110;
       await sendCompletePackage(email, product, amount, currency);
       return res.json({ ok: true, message: 'Complete package sent (ZIP or individual, depending on size).' });
     }
@@ -51,7 +51,7 @@ router.post('/send', ensureEnabled, async (req, res) => {
       return res.status(400).json({ error: 'Unknown product' });
     }
 
-    const amount = overrideAmount != null ? overrideAmount : 39;
+    const amount = overrideAmount != null ? overrideAmount : 49;
     await sendPDFWithOptimization(email, pdfFileName, product, amount, currency);
     return res.json({ ok: true, message: `${product} sent as attachment or notification depending on size.` });
   } catch (error) {

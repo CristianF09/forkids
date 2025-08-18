@@ -8,7 +8,7 @@ const products = [
     title: 'Pachet Complet',
     ageRangeDisplay: '3-7 ani',
     description: 'Obține toate cele 3 cărți la un preț special, cu peste 150 de pagini de activități educative și distractive.',
-    price: 89,
+    price: 110,
     image: '/images/Pachet Promo.jpg',
     category: 'all',
     stripeLink: 'https://buy.stripe.com/28E3cwc3ceav0OD5hWeZ203',
@@ -20,7 +20,7 @@ const products = [
     title: 'Alfabetul în Joacă',
     ageRangeDisplay: '3-5 ani',
     description: 'Învață literele și scrisul de mână prin activități captivante și jocuri interactive.',
-    price: 39,
+    price: 49,
     image: '/images/Alfabetul .jpg',
     category: 'alfabet',
     stripeLink: 'https://buy.stripe.com/14AaEY8R02rNfJxh0EeZ202',
@@ -32,7 +32,7 @@ const products = [
     title: 'Matematică Distractivă',
     ageRangeDisplay: '4-6 ani',
     description: 'Descoperă cifrele, număratul și operații matematice simple prin jocuri și activități interactive.',
-    price: 39,
+    price: 49,
     image: '/images/Numere.jpg',
     category: 'numere',
     stripeLink: 'https://buy.stripe.com/fZu8wQ8R0c2n2WLh0EeZ201',
@@ -44,7 +44,7 @@ const products = [
     title: 'Aventuri în Culori',
     ageRangeDisplay: '3-7 ani',
     description: 'Planșe de colorat, activități de desen și jocuri care dezvoltă creativitatea și motricitatea fină.',
-    price: 39,
+    price: 49,
     image: '/images/Forme si culori.jpg',
     category: 'culori',
     stripeLink: 'https://buy.stripe.com/eVqdRaffo2rNfJxbGkeZ200',
@@ -189,7 +189,7 @@ const Catalog = () => {
                 Obține toate cele 3 cărți la un preț special, cu peste 150 de pagini de activități educative și distractive.
               </p>
               <div className="price flex items-center gap-2 sm:gap-4 mb-4 sm:mb-6 justify-center">
-                  <span className="promo text-2xl sm:text-3xl font-bold text-[#FF6B00]">89 Lei</span>
+                  <span className="promo text-2xl sm:text-3xl font-bold text-[#FF6B00]">110 Lei</span>
                   <span className="original text-base sm:text-lg text-gray-400 line-through">117 Lei</span>
               </div>
               <div className="text-center">
@@ -220,7 +220,7 @@ const Catalog = () => {
           <div className="flex flex-col md:flex-row justify-center gap-8">
             <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
               <h3 className="text-2xl font-bold text-gray-800 mb-4">Cărți Individuale</h3>
-              <p className="text-4xl font-bold text-[#20BF55] mb-4">39 <span className="text-xl">Lei/carte</span></p>
+              <p className="text-4xl font-bold text-[#20BF55] mb-4">49 <span className="text-xl">Lei/carte</span></p>
               <ul className="space-y-3 mb-6 text-left">
                 <li className="flex items-center">
                   <CheckCircle2 className="w-5 h-5 text-[#20BF55] mr-2" />
@@ -248,7 +248,7 @@ const Catalog = () => {
                 Cea mai bună ofertă
               </div>
               <h3 className="text-2xl font-bold text-gray-800 mb-4 mt-6">Pachet Complet</h3>
-              <p className="text-4xl font-bold text-[#FF6B00] mb-4">89 <span className="text-xl">Lei</span></p>
+              <p className="text-4xl font-bold text-[#FF6B00] mb-4">110 <span className="text-xl">Lei</span></p>
               <p className="text-lg text-gray-400 line-through mb-4">117 Lei</p>
               <ul className="space-y-3 mb-6 text-left">
                 <li className="flex items-center">
