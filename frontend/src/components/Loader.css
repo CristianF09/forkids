@@ -130,3 +130,46 @@
 .loader-progress-bar {
   animation-duration: 1.5s;
 } 
+
+/* Orbit loader using site colors (primary, secondary, accent) */
+.loader-orbit {
+  --core: #16610E;      /* primary */
+  --a: #FED16A;         /* accent */
+  --b: #F97A00;         /* secondary */
+  width: 22px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--core);
+  animation: loaderOrbit 1.5s infinite linear;
+  margin-bottom: 18px;
+}
+
+@keyframes loaderOrbit {
+  0%    {box-shadow:
+          0 -30px var(--a), calc(30px*0.707) calc(-30px*0.707) var(--b),30px 0 var(--a), 0 0 var(--b),
+          0 0 var(--a), 0 0 var(--b),0 0 var(--a), 0 0 var(--b)}
+  12.5% {box-shadow:
+          0 0 var(--a), calc(30px*0.707) calc(-30px*0.707) var(--b),30px 0 var(--a), calc(30px*0.707) calc(30px*0.707) var(--b),
+          0 0 var(--a), 0 0 var(--b),0 0 var(--a), 0 0 var(--b)}
+  25%   {box-shadow:
+          0 0 var(--a), 0 0 var(--b),30px 0 var(--a), calc(30px*0.707) calc(30px*0.707) var(--b),
+          0 30px var(--a), 0 0 var(--b),0 0 var(--a), 0 0 var(--b)}
+  37.5% {box-shadow:
+          0 0 var(--a), 0 0 var(--b),0 0 var(--a), calc(30px*0.707) calc(30px*0.707) var(--b),
+          0 30px var(--a), calc(-30px*0.707) calc(30px*0.707) var(--b),0 0 var(--a), 0 0 var(--b)}
+  50%   {box-shadow:
+          0 0 var(--a), 0 0 var(--b),0 0 var(--a), 0 0 var(--b),
+          0 30px var(--a), calc(-30px*0.707) calc(30px*0.707) var(--b),-30px 0 var(--a), 0 0 var(--b)}
+  62.5% {box-shadow:
+          0 0 var(--a), 0 0 var(--b),0 0 var(--a), 0 0 var(--b),
+          0 0 var(--a), calc(-30px*0.707) calc(30px*0.707) var(--b),-30px 0 var(--a), calc(-30px*0.707) calc(-30px*0.707) var(--b)}
+  75%   {box-shadow:
+          0 -30px var(--a), 0 0 var(--b),0 0 var(--a), 0 0 var(--b),
+          0 0 var(--a), 0 0 var(--b),-30px 0 var(--a), calc(-30px*0.707) calc(-30px*0.707) var(--b)}
+  87.5% {box-shadow:
+          0 -30px var(--a), calc(30px*0.707) calc(-30px*0.707) var(--b),0 0 var(--a), 0 0 var(--b),
+          0 0 var(--a), 0 0 var(--b),0 0 var(--a), calc(-30px*0.707) calc(-30px*0.707) var(--b)}
+  100%  {box-shadow:
+          0 -30px var(--a), calc(30px*0.707) calc(-30px*0.707) var(--b),30px 0 var(--a), 0 0 var(--b),
+          0 0 var(--a), 0 0 var(--b),0 0 var(--a), 0 0 var(--b)}
+}

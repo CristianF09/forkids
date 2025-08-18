@@ -323,21 +323,56 @@ async function sendCompletePackage(toEmail, productName, amount, currency) {
         // Check file size - if too large, send individual PDFs instead
         const stats = fs.statSync(zipFilePath);
         const fileSizeInMB = stats.size / (1024 * 1024);
+        const serverUrl = process.env.SERVER_URL || 'https://corcodusa.ro';
+        const displayProductName = productName === 'PachetComplet' ? 'Pachet Complet' : productName;
         
         if (fileSizeInMB > 25) { // Zoho limit is around 25MB
-          console.log('⚠️ ZIP file too large for email, sending individual PDFs instead');
-          
-          // Clean up ZIP file first
-          fs.unlink(zipFilePath, (err) => {
-            if (err) {
-              console.log(`⚠️ Could not delete temporary ZIP file: ${err.message}`);
-            } else {
-              console.log(`🗑️ Temporary ZIP file deleted: ${zipFileName}`);
-            }
-          });
-          
-          // Send individual PDFs
-          await sendIndividualPDFs(toEmail, productName, amount, currency, pdfFiles);
+          console.log('⚠️ ZIP file too large to attach. Providing secure download link for complete ZIP.');
+
+          // Move ZIP to public/pdfs so it can be downloaded via /api/download
+          const publicZipPath = path.join(__dirname, '..', 'public', 'pdfs', zipFileName);
+          try {
+            fs.renameSync(zipFilePath, publicZipPath);
+          } catch (moveErr) {
+            // fallback copy
+            fs.copyFileSync(zipFilePath, publicZipPath);
+            fs.unlinkSync(zipFilePath);
+          }
+
+          const downloadUrl = `${serverUrl}/api/download/${encodeURIComponent(zipFileName)}`;
+
+          if (isDryRun) {
+            console.log('🧪 DRY_RUN: would send ZIP download link', { toEmail, downloadUrl });
+          } else {
+            await transporter.sendMail({
+              from: `"CorcoDușa" <${process.env.ZMAIL_USER}>`,
+              to: toEmail,
+              subject: `Pachetul Complet - Descărcare ZIP - CorcoDușa`\
+              ,
+              html: `
+                <h2>Pachetul Complet - Descărcare fișier</h2>
+                <p><strong>Produs:</strong> ${displayProductName}</p>
+                <p><strong>Preț:</strong> ${amount} ${currency}</p>
+                <p><strong>Data:</strong> ${new Date().toLocaleString('ro-RO')}</p>
+                <hr>
+                <p>Fișierul ZIP cu toate materialele este disponibil pentru descărcare în siguranță:</p>
+                <p>
+                  <a href="${downloadUrl}" style="background:#20BF55;color:#fff;padding:10px 18px;text-decoration:none;border-radius:6px;display:inline-block;">
+                    📦 Descarcă Pachetul Complet (ZIP)
+                  </a>
+                </p>
+                <p>Conținut:</p>
+                <ul>
+                  <li>🔠 Alfabetul.pdf</li>
+                  <li>🔢 Numere.pdf</li>
+                  <li>🎨 Forme și Culori.pdf</li>
+                  <li>🎨 Bonus - Fișe de Colorat.pdf</li>
+                  <li>🏆 Bonus - Certificat de Absolvire.pdf</li>
+                </ul>
+                <p>Pentru întrebări: contact@corcodusa.ro</p>
+              `,
+            });
+          }
           
         } else {
           // File size is acceptable, send via email
@@ -352,7 +387,7 @@ async function sendCompletePackage(toEmail, productName, amount, currency) {
               subject: `Pachetul Complet - Toate materialele digitale - CorcoDușa`,
               html: `
                 <h2>Pachetul Complet - Toate materialele digitale!</h2>
-                <p><strong>Produs:</strong> ${productName}</p>
+                <p><strong>Produs:</strong> ${displayProductName}</p>
                 <p><strong>Preț:</strong> ${amount} ${currency}</p>
                 <p><strong>Data:</strong> ${new Date().toLocaleString('ro-RO')}</p>
                 <hr>
@@ -454,7 +489,7 @@ async function sendIndividualPDFs(toEmail, productName, amount, currency, pdfFil
   });
 
   // Get your server URL from environment or use a default
-  const serverUrl = process.env.SERVER_URL || 'https://yourdomain.com';
+  const serverUrl = process.env.SERVER_URL || 'https://corcodusa.ro';
   
   // Send each PDF individually
   let sentCount = 0;
@@ -527,8 +562,9 @@ async function sendIndividualPDFs(toEmail, productName, amount, currency, pdfFil
     }
   }
   
-  // Send summary email with download links for large files
+  // Send summary email with clean content and download links (no numeric status)
   try {
+    const displayProductName = productName === 'PachetComplet' ? 'Pachet Complet' : productName;
     let largeFilesHtml = '';
     if (largeFiles.length > 0) {
       largeFilesHtml = `
@@ -552,19 +588,12 @@ async function sendIndividualPDFs(toEmail, productName, amount, currency, pdfFil
     await transporter.sendMail({
       from: `"CorcoDușa" <${process.env.ZMAIL_USER}>`,
       to: toEmail,
-      subject: `Pachetul Complet - Rezumat livrare - CorcoDușa`,
+      subject: `Pachetul Complet - Materiale digitale - CorcoDușa`,
       html: `
-        <h2>Pachetul Complet - Rezumat livrare</h2>
-        <p><strong>Produs:</strong> ${productName}</p>
+        <h2>Pachetul Complet - Materiale digitale</h2>
+        <p><strong>Produs:</strong> ${displayProductName}</p>
         <p><strong>Preț:</strong> ${amount} ${currency}</p>
         <p><strong>Data:</strong> ${new Date().toLocaleString('ro-RO')}</p>
-        <hr>
-        <p><strong>Status livrare:</strong></p>
-        <ul>
-          <li>✅ PDF-uri trimise prin email: ${sentCount}</li>
-          <li>📥 PDF-uri cu link-uri de descărcare: ${largeFiles.length}</li>
-          <li>⚠️ PDF-uri cu probleme: ${failedCount - largeFiles.length}</li>
-        </ul>
         <hr>
         <p><strong>Materialele incluse în pachet:</strong></p>
         <ul>

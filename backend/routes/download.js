@@ -20,7 +20,9 @@ router.get('/:filename', (req, res) => {
   console.log(`📥 Download request for: ${filename} (${fileSizeInMB.toFixed(2)} MB)`);
   
   // Set headers for file download
-  res.setHeader('Content-Type', 'application/pdf');
+  const isZip = filename.toLowerCase().endsWith('.zip');
+  const contentType = isZip ? 'application/zip' : 'application/pdf';
+  res.setHeader('Content-Type', contentType);
   res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
   res.setHeader('Content-Length', stats.size);
   

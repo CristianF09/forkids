@@ -19,17 +19,41 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate app initialization time
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1500); // Reduced from default to make it faster
+    let cancelled = false;
 
-    return () => clearTimeout(timer);
+    async function waitForBackend() {
+      // Fast path: stop loader after 1.2s if backend is already up
+      const fallbackTimer = setTimeout(() => {
+        if (!cancelled) setIsLoading(false);
+      }, 1200);
+
+      try {
+        const apiBase = process.env.REACT_APP_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:10000' : 'https://corcodusa.ro');
+        const deadline = Date.now() + 7000; // up to 7s wait
+
+        while (!cancelled && Date.now() < deadline) {
+          try {
+            const res = await fetch(`${apiBase}/api/health`, { cache: 'no-store' });
+            if (res.ok) {
+              clearTimeout(fallbackTimer);
+              if (!cancelled) setIsLoading(false);
+              return;
+            }
+          } catch (_) {
+            // ignore and retry
+          }
+          await new Promise(r => setTimeout(r, 400));
+        }
+      } finally {
+        if (!cancelled) setIsLoading(false);
+      }
+    }
+
+    waitForBackend();
+    return () => { cancelled = true; };
   }, []);
 
-  if (isLoading) {
-    return <Loader />;
-  }
+  if (isLoading) return <Loader title="CorcoDușa" subtitle="Se încarcă..." />;
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">

@@ -1,7 +1,7 @@
 import React from 'react';
 import './Loader.css';
 
-const Loader = () => {
+const Loader = ({ title = 'corcodusa.ro', subtitle = 'se încarcă...' }) => {
   return (
     <div className="loader-container">
       <div className="loader-content">
@@ -11,10 +11,10 @@ const Loader = () => {
           className="loader-logo" 
         />
         <div className="loader-text">
-          <h2 className="loader-title">corcodusa.ro</h2>
-          <p className="loader-subtitle">se încarcă...</p>
+          <h2 className="loader-title">{title}</h2>
+          <p className="loader-subtitle">{subtitle}</p>
         </div>
-        <div className="loader-spinner"></div>
+        <div className="loader-orbit"></div>
         <div className="loader-progress">
           <div className="loader-progress-bar"></div>
         </div>
