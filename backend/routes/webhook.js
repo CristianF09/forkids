@@ -58,16 +58,47 @@ router.post('/', async (req, res) => {
         console.log('📧 Customer email:', customerEmail);
         console.log('👤 Customer name:', customerName);
 
+        // Security: ignore test-mode events in production unless explicitly allowed
+        const isLiveEvent = !!event.livemode;
+        if (!isLiveEvent && process.env.ALLOW_STRIPE_TEST !== 'true') {
+          console.log('⚠️ Test-mode webhook ignored in production');
+          return;
+        }
+
+        // Only fulfill if Stripe marks the session as PAID
+        if (session.payment_status !== 'paid') {
+          console.log('⚠️ Session not paid, skipping fulfillment. payment_status:', session.payment_status);
+          return;
+        }
+
         // Try to get expanded session with line items
         let expandedSession = session;
         try {
-          if (!session.line_items?.data || session.line_items.data.length === 0) {
-            console.log('🔍 No line items in webhook, retrieving expanded session...');
-            expandedSession = await getStripe().checkout.sessions.retrieve(sessionId, { expand: ['line_items'] });
-            console.log('✅ Retrieved expanded session with line items');
+          if (!session.line_items?.data || session.line_items.data.length === 0 || !session.payment_intent) {
+            console.log('🔍 No line items or payment_intent in webhook, retrieving expanded session...');
+            expandedSession = await getStripe().checkout.sessions.retrieve(sessionId, { expand: ['line_items', 'payment_intent'] });
+            console.log('✅ Retrieved expanded session with line items/payment_intent');
           }
         } catch (error) {
           console.log('⚠️ Could not retrieve expanded session:', error.message);
+        }
+
+        // Double-check via PaymentIntent that funds were captured
+        try {
+          let paymentIntent = expandedSession.payment_intent;
+          if (typeof paymentIntent === 'string') {
+            paymentIntent = await getStripe().paymentIntents.retrieve(paymentIntent);
+          }
+          if (!paymentIntent || paymentIntent.status !== 'succeeded' || (paymentIntent.amount_received || 0) <= 0) {
+            console.log('⚠️ PaymentIntent not succeeded or no funds received. Skipping fulfillment.', {
+              status: paymentIntent?.status,
+              amount_received: paymentIntent?.amount_received
+            });
+            return;
+          }
+        } catch (piErr) {
+          console.log('⚠️ Could not verify PaymentIntent. Skipping fulfillment. Reason:', piErr.message);
+          return;
         }
 
         if (!customerEmail) {
@@ -84,15 +115,40 @@ router.post('/', async (req, res) => {
 
         const lineItems = expandedSession.line_items?.data || [];
         if (lineItems.length > 0) {
-          const priceId = lineItems[0].price.id;
-          const productInfo = products[priceId];
+          const li = lineItems[0];
+          const priceId = li.price?.id;
+          const productInfo = priceId ? products[priceId] : undefined;
+          const liDescription = (li.description || '').toLowerCase();
+          const liUnitAmount = ((li.amount_total ?? li.amount_subtotal ?? li.price?.unit_amount ?? 0) / 100);
+
+          console.log('🧾 Line item details:', { priceId, liDescription, liUnitAmount });
+
           if (productInfo) {
             pdfFileName = productInfo.pdf;
             productName = productInfo.name;
             isCompletePackage = productInfo.type === 'complete';
+          } else {
+            // Fallback detection by description/amount when priceId mapping is unknown
+            if (liDescription.includes('pachet') && liDescription.includes('complet')) {
+              productName = 'Pachet Complet';
+              isCompletePackage = true;
+            } else if (['alfabet', 'alfabetul'].some(k => liDescription.includes(k))) {
+              pdfFileName = 'Alfabetul.pdf';
+              productName = 'Alfabetul';
+            } else if (['numere', 'număr', 'numar'].some(k => liDescription.includes(k))) {
+              pdfFileName = 'Numere.pdf';
+              productName = 'Numere';
+            } else if (['forme', 'culori'].some(k => liDescription.includes(k))) {
+              pdfFileName = 'FormeSiCulori.pdf';
+              productName = 'Forme și Culori';
+            } else if ([110, 89].includes(Math.round(liUnitAmount)) || [110, 89].includes(Math.round(amount))) {
+              // Heuristic by amount for complete package (support legacy/new price points)
+              productName = 'Pachet Complet';
+              isCompletePackage = true;
+            }
           }
         } else {
-          if (amount === 110) {
+          if (amount === 110 || amount === 89) {
             pdfFileName = 'BonusCertificateDeAbsovire.pdf';
             productName = 'Pachet Complet';
             isCompletePackage = true;
@@ -114,11 +170,12 @@ router.post('/', async (req, res) => {
           return;
         }
 
-        await sendOrderNotification({ customerEmail, customerName, productName, amount, currency, sessionId });
+        const displayProductName = productName === 'PachetComplet' ? 'Pachet Complet' : productName;
+        await sendOrderNotification({ customerEmail, customerName, productName: displayProductName, amount, currency, sessionId });
         if (isCompletePackage) {
-          await sendCompletePackage(customerEmail, productName, amount, currency);
+          await sendCompletePackage(customerEmail, displayProductName, amount, currency);
         } else {
-          await sendPDFWithOptimization(customerEmail, pdfFileName, productName, amount, currency);
+          await sendPDFWithOptimization(customerEmail, pdfFileName, displayProductName, amount, currency);
         }
         console.log('🎉 Delivery flow completed for session:', sessionId);
       }
@@ -130,21 +187,59 @@ router.post('/', async (req, res) => {
         const amount = invoice.amount_paid / 100;
         const currency = invoice.currency?.toUpperCase() || 'RON';
 
+        // Security: ignore test-mode events in production unless explicitly allowed
+        const isLiveEvent = !!event.livemode;
+        if (!isLiveEvent && process.env.ALLOW_STRIPE_TEST !== 'true') {
+          console.log('⚠️ Test-mode invoice webhook ignored in production');
+          return;
+        }
+
+        // Only fulfill if the invoice is paid/paid
+        if (!(invoice.paid === true || invoice.status === 'paid')) {
+          console.log('⚠️ Invoice not paid, skipping fulfillment. status:', invoice.status, 'paid:', invoice.paid);
+          return;
+        }
+
         let productName = 'Pachet Complet';
         let pdfFileName = 'BonusCertificateDeAbsovire.pdf';
         let isCompletePackage = false;
         if (invoice.lines && invoice.lines.data.length > 0) {
-          const priceId = invoice.lines.data[0].price?.id;
+          const line = invoice.lines.data[0];
+          const priceId = line.price?.id;
+          const description = (line.description || '').toLowerCase();
           if (priceId && products[priceId]) {
             pdfFileName = products[priceId].pdf;
             productName = products[priceId].name;
             isCompletePackage = products[priceId].type === 'complete';
+          } else {
+            if (description.includes('pachet') && description.includes('complet')) {
+              productName = 'Pachet Complet';
+              isCompletePackage = true;
+            } else if (['alfabet', 'alfabetul'].some(k => description.includes(k))) {
+              pdfFileName = 'Alfabetul.pdf';
+              productName = 'Alfabetul';
+            } else if (['numere', 'număr', 'numar'].some(k => description.includes(k))) {
+              pdfFileName = 'Numere.pdf';
+              productName = 'Numere';
+            } else if (['forme', 'culori'].some(k => description.includes(k))) {
+              pdfFileName = 'FormeSiCulori.pdf';
+              productName = 'Forme și Culori';
+            } else if (amount === 110 || amount === 89) {
+              productName = 'Pachet Complet';
+              isCompletePackage = true;
+            }
+          }
+        } else {
+          if (amount === 110 || amount === 89) {
+            productName = 'Pachet Complet';
+            isCompletePackage = true;
           }
         }
 
         if (!customerEmail) return;
-        if (isCompletePackage) await sendCompletePackage(customerEmail, productName, amount, currency);
-        else await sendPDFWithOptimization(customerEmail, pdfFileName, productName, amount, currency);
+        const displayProductName = productName === 'PachetComplet' ? 'Pachet Complet' : productName;
+        if (isCompletePackage) await sendCompletePackage(customerEmail, displayProductName, amount, currency);
+        else await sendPDFWithOptimization(customerEmail, pdfFileName, displayProductName, amount, currency);
         console.log('🎉 Invoice delivery completed for:', customerEmail);
       }
     } catch (error) {
