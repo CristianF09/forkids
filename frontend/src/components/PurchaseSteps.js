@@ -10,7 +10,7 @@ const PurchaseSteps = () => {
     {
       icon: <CreditCard className="w-10 h-10 text-green-600" />,
       title: "Finalizează comanda",
-      text: "Plătește în siguranță prin sistemul securizat EuPlatesc și primești o confirmare imediată.",
+      text: "Plătește în siguranță prin sistemul securizat Stripe.com și primești o confirmare imediată.",
     },
     {
       icon: <MailCheck className="w-10 h-10 text-blue-600" />,

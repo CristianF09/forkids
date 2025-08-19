@@ -41,11 +41,14 @@ const Footer = () => {
               Materiale educative interactive pentru copii între 3 și 7 ani care transformă învățarea în joacă.
             </p>
             <div className="flex space-x-4">
-              <a href="https://facebook.com/yourpage" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#FF6B00] transition-colors" aria-label="Facebook">
+              <a href="https://www.facebook.com/corcodusa.ro" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#FF6B00] transition-colors" aria-label="Facebook">
                 <Facebook className="w-6 h-6" />
               </a>
-              <a href="https://instagram.com/yourpage" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#FF6B00] transition-colors" aria-label="Instagram">
+              <a href="https://www.instagram.com/corcodusa.ro/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#FF6B00] transition-colors" aria-label="Instagram">
                 <Instagram className="w-6 h-6" />
+              </a>
+              <a href="https://www.tiktok.com/@corcodusa.ro1" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#FF6B00] transition-colors" aria-label="TikTok">
+                <img src="/images/stripe-circle-round-blue-logo-19777.png" alt="TikTok" className="w-6 h-6" />
               </a>
             </div>
           </div>

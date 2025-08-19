@@ -81,8 +81,8 @@ const Contact = () => {
               <Phone className="w-8 h-8 text-[#FF6B00]" />
             </div>
             <h3 className="text-xl font-bold text-gray-800 mb-2">Telefon</h3>
-            <p className="text-gray-800 font-semibold mb-2">+40 755 123 456</p>
-            <p className="text-gray-600">Luni - Vineri: 9:00 - 17:00</p>
+            <p className="text-gray-800 font-semibold mb-2">+40 755 769 210</p>
+            <p className="text-gray-600">Luni - Vineri: 9:00 - 18:00</p>
           </div>
 
           <div className="bg-white rounded-xl p-6 shadow-lg transform hover:scale-105 transition-transform duration-300">
@@ -90,8 +90,8 @@ const Contact = () => {
               <Clock className="w-8 h-8 text-[#20BF55]" />
             </div>
             <h3 className="text-xl font-bold text-gray-800 mb-2">Program</h3>
-            <p className="text-gray-800 font-semibold mb-2">Luni - Vineri: 9:00 - 17:00</p>
-            <p className="text-gray-600">Răspundem și la email în weekend</p>
+            <p className="text-gray-800 font-semibold mb-2">Luni - Vineri: 9:00 - 18:00</p>
+            <p className="text-gray-600">Răspundem și la email in cel mai scurt timp</p>
           </div>
 
           <div className="bg-white rounded-xl p-6 shadow-lg transform hover:scale-105 transition-transform duration-300">
@@ -212,11 +212,11 @@ const Contact = () => {
               </div>
               <div className="bg-gray-50 p-4 rounded-xl">
                 <h4 className="font-bold text-gray-700 mb-2">Telefon</h4>
-                <p className="text-gray-800 font-semibold">+40 755 123 456</p>
+                <p className="text-gray-800 font-semibold">+40 755 769 210</p>
               </div>
               <div className="bg-gray-50 p-4 rounded-xl">
                 <h4 className="font-bold text-gray-700 mb-2">Program</h4>
-                <p className="text-gray-800 font-semibold">Luni - Vineri: 9:00 - 17:00</p>
+                <p className="text-gray-800 font-semibold">Luni - Vineri: 9:00 - 18:00</p>
               </div>
               <div className="bg-gray-50 p-4 rounded-xl">
                 <h4 className="font-bold text-gray-700 mb-2">Adresă</h4>
@@ -245,7 +245,7 @@ const Contact = () => {
               </div>
               <h3 className="text-xl font-bold text-gray-800 mb-2">Finalizează comanda</h3>
               <p className="text-gray-600">
-                Plătește în siguranță prin sistemul securizat EuPlatesc și primești o confirmare imediată.
+                Plătește în siguranță prin sistemul securizat Stripe și primești o confirmare imediată.
               </p>
             </div>
             <div className="text-center transform hover:scale-105 transition-transform duration-300">

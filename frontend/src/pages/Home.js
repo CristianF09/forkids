@@ -104,7 +104,7 @@ const Home = () => {
     },
     {
       question: "Ce metode de plată sunt acceptate?",
-      answer: "Acceptăm plăți securizate online prin card bancar, prin intermediul partenerului nostru EuPlatesc. Tranzacțiile sunt criptate și sigure."
+      answer: "Acceptăm plăți securizate online prin card bancar, prin intermediul partenerului nostru Stripe. Tranzacțiile sunt criptate și sigure."
     },
     {
       question: "Pot oferi fișele educative cadou?",
@@ -409,7 +409,7 @@ const Home = () => {
                 <CreditCard className="w-8 h-8 text-[#FF6B00]" />
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Finalizează comanda</h3>
-              <p className="text-gray-600">Plătește în siguranță prin sistemul securizat EuPlatesc și primești o confirmare imediată.</p>
+              <p className="text-gray-600">Plătește în siguranță prin sistemul securizat Stripe și primești o confirmare imediată.</p>
             </div>
             <div 
               className="flex flex-col items-center text-center p-6 bg-white rounded-xl shadow-lg animate-fadeInUp"

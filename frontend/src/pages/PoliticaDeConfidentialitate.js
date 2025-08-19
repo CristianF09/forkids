@@ -3,98 +3,74 @@ import React from 'react';
 const PoliticaDeConfidentialitate = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-8">Politica de Confidențialitate</h1>
+      <h1 className="text-3xl font-bold text-center mb-8">Politica de Confidențialitate – Corcodusa.ro</h1>
       
       <div className="space-y-6 text-lg">
         <p className="text-gray-700">
-          Știind cât de importantă este confidențialitatea pentru clienții noștri, vă sfătuim să vă luați timpul necesar parcurgerii prezentei politici de confidențialitate, al cărei scop este de a vă explica practicile noastre de colectare și prelucrare a datelor personale ale clienților, categoriile datelor cu caracter personal pe care le prelucrăm, modalitatea și scopul în care le prelucrăm, transferul acestora, precum și drepturile și opțiunile dvs. în legătură cu datele prelucrate de noi.
+          La Corcodusa.ro respectăm confidențialitatea vizitatorilor și clienților noștri. Prezenta politică explică ce date colectăm, cum le folosim și ce drepturi aveți conform legislației în vigoare (Regulamentul (UE) 2016/679 – GDPR).
         </p>
 
-        <p className="text-gray-700">
-          Această Politică se aplică tuturor dispozitivelor, serviciilor și platformelor online gestionate de corcodusa.ro, fiind disponibilă prin simpla sa accesare. Este valabilă indiferent dacă accesați serviciile noastre de pe un computer, telefon mobil, tabletă sau alt dispozitiv electronic.
-        </p>
-
-        <h2 className="text-2xl font-semibold mt-8 mb-4">Temeiuri legale de prelucrare a datelor</h2>
-        <p className="text-gray-700">
-          Începând cu 25 mai 2018, a intrat în vigoare Regulamentul (UE) 2016/679 privind protecția persoanelor fizice în ceea ce privește prelucrarea datelor cu caracter personal (GDPR), regulament direct aplicabil și de către corcodusa.ro.
-        </p>
-
-        <h2 className="text-2xl font-semibold mt-8 mb-4">Ce date colectăm</h2>
-        <p className="text-gray-700">Datele personale prelucrate pot include:</p>
+        <h2 className="text-2xl font-semibold mt-8 mb-2">Ce date colectăm</h2>
+        <p className="text-gray-700">Colectăm doar datele necesare pentru procesarea comenzilor și emiterea documentelor fiscale, prin intermediul platformei de plată Stripe:</p>
         <ul className="list-disc pl-6 text-gray-700">
-          <li>Informații pentru facturare și livrare: nume, prenume, CNP (dacă e cazul), adresă, cod poștal, e-mail, telefon, cont bancar.</li>
-          <li>Informații furnizate pentru servicii de service sau garanție.</li>
-          <li>Date pentru campanii promoționale: nume, prenume, e-mail, telefon, adrese pentru corespondență.</li>
+          <li>Nume și prenume</li>
+          <li>Adresă de e-mail</li>
+          <li>Date de facturare (adresă, cod poștal – dacă este cerut de legislație fiscală)</li>
+          <li>Date de plată (procesate securizat direct de Stripe; Corcodusa.ro nu stochează informații despre carduri bancare).
+          </li>
         </ul>
 
-        <h2 className="text-2xl font-semibold mt-8 mb-4">Cum colectăm datele</h2>
-        <p className="text-gray-700">Colectăm date personale în următoarele moduri:</p>
+        <h2 className="text-2xl font-semibold mt-8 mb-2">Cum colectăm datele</h2>
         <ul className="list-disc pl-6 text-gray-700">
-          <li>Direct, prin formularul de comandă, înregistrare sau contact pe corcodusa.ro.</li>
-          <li>Automat, prin cookie-uri și alte tehnologii similare.</li>
-          <li>Din surse publice sau platforme externe precum Facebook și Instagram, atunci când există interacțiuni cu pagina oficială corcodusa.ro.</li>
+          <li>Direct, prin formularul de comandă disponibil pe corcodusa.ro.</li>
+          <li>Automat, prin cookie-uri esențiale pentru funcționarea site-ului.</li>
         </ul>
 
-        <h2 className="text-2xl font-semibold mt-8 mb-4">Scopurile prelucrării</h2>
-        <p className="text-gray-700">Utilizăm datele personale pentru:</p>
+        <h2 className="text-2xl font-semibold mt-8 mb-2">Scopurile prelucrării</h2>
+        <p className="text-gray-700">Datele dvs. sunt utilizate exclusiv pentru:</p>
         <ul className="list-disc pl-6 text-gray-700">
-          <li>Comercializarea produselor disponibile pe corcodusa.ro.</li>
+          <li>Procesarea plăților și livrarea produselor digitale (fișe educative printabile).</li>
           <li>Emiterea documentelor fiscale.</li>
-          <li>Informări prin newslettere și mesaje promoționale.</li>
-          <li>Oferirea de publicitate personalizată (cu consimțământ).</li>
-          <li>Îmbunătățirea experienței utilizatorilor și înțelegerea nevoilor clienților noștri.</li>
+          <li>Comunicări legate strict de comanda dvs. (confirmare plată, acces la produse, eventuale probleme tehnice).</li>
         </ul>
-
-        <h2 className="text-2xl font-semibold mt-8 mb-4">Durata de stocare</h2>
-        <ul className="list-disc pl-6 text-gray-700">
-          <li>Datele fiscale sunt păstrate minimum 10 ani, conform Codului Fiscal.</li>
-          <li>Alte date sunt păstrate cât timp este necesar desfășurării activităților descrise, dacă nu există alt temei legal pentru păstrarea acestora.</li>
-        </ul>
-
-        <h2 className="text-2xl font-semibold mt-8 mb-4">Divulgarea și transferul datelor</h2>
-        <p className="text-gray-700">
-          Datele personale nu sunt divulgate către terți, cu excepția cazurilor prevăzute de lege. Dacă există transferuri, acestea sunt efectuate numai cu informarea prealabilă a utilizatorului.
+        <p className="text-gray-700">Nu folosim datele pentru campanii promoționale sau publicitate personalizată, decât dacă v-ați abonat explicit la newsletter.
         </p>
 
-        <h2 className="text-2xl font-semibold mt-8 mb-4">Securitatea datelor</h2>
-        <p className="text-gray-700">
-          Datele personale sunt protejate prin măsuri tehnice și organizatorice adecvate. În cazul în care are loc o încălcare a securității care implică un risc ridicat, veți fi informat de îndată, iar Autoritatea Națională de Supraveghere va fi notificată.
-        </p>
-
-        <h2 className="text-2xl font-semibold mt-8 mb-4">Drepturile dvs. conform GDPR</h2>
+        <h2 className="text-2xl font-semibold mt-8 mb-2">Durata de stocare</h2>
         <ul className="list-disc pl-6 text-gray-700">
-          <li>Dreptul la informare și acces;</li>
-          <li>Dreptul de a solicita rectificarea sau ștergerea datelor;</li>
-          <li>Dreptul de a restricționa prelucrarea;</li>
-          <li>Dreptul de portabilitate;</li>
-          <li>Dreptul de opoziție;</li>
-          <li>Dreptul de a nu fi supus unei decizii automate;</li>
-          <li>Dreptul de a depune o plângere la autoritățile competente.</li>
+          <li>Datele fiscale sunt păstrate conform obligațiilor legale din Codul Fiscal (minimum 10 ani).
+          </li>
+          <li>Alte date (ex. e-mailul pentru newsletter) sunt păstrate până la retragerea consimțământului dvs.
+          </li>
         </ul>
 
-        <h2 className="text-2xl font-semibold mt-8 mb-4">Linkuri externe</h2>
-        <p className="text-gray-700">
-          corcodusa.ro poate conține linkuri către alte site-uri. Nu suntem responsabili pentru conținutul sau politica de confidențialitate a acestor terți.
-        </p>
-
-        <h2 className="text-2xl font-semibold mt-8 mb-4">Cookie-uri</h2>
-        <p className="text-gray-700">corcodusa.ro utilizează cookie-uri pentru:</p>
+        <h2 className="text-2xl font-semibold mt-8 mb-2">Divulgarea și transferul datelor</h2>
+        <p className="text-gray-700">Datele dvs. nu sunt vândute și nu sunt divulgate către terți, cu excepția:</p>
         <ul className="list-disc pl-6 text-gray-700">
-          <li>Funcționarea corectă a site-ului;</li>
-          <li>Analiza preferințelor utilizatorilor;</li>
-          <li>Oferirea de reclame relevante (cu acordul utilizatorului).</li>
+          <li>procesatorului de plăți Stripe;</li>
+          <li>autorităților fiscale, dacă este cazul conform legii.</li>
         </ul>
 
-        <p className="text-gray-700">Tipuri de cookie-uri:</p>
+        <h2 className="text-2xl font-semibold mt-8 mb-2">Securitatea datelor</h2>
+        <p className="text-gray-700">Corcodusa.ro utilizează măsuri tehnice și organizatorice pentru a asigura protecția datelor personale.</p>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-2">Drepturile dvs. conform GDPR</h2>
         <ul className="list-disc pl-6 text-gray-700">
-          <li>Cookie-uri de sesiune – stocate temporar, până la închiderea browserului;</li>
-          <li>Cookie-uri persistente – rămân stocate pe dispozitiv pentru o perioadă determinată.</li>
+          <li>Dreptul de acces și informare;</li>
+          <li>Dreptul de rectificare sau ștergere;</li>
+          <li>Dreptul de opoziție și restricționare a prelucrării;</li>
+          <li>Dreptul la portabilitatea datelor;</li>
+          <li>Dreptul de a depune plângere la Autoritatea Națională de Supraveghere a Prelucrării Datelor cu Caracter Personal (ANSPDCP).
+          </li>
         </ul>
 
-        <h2 className="text-2xl font-semibold mt-8 mb-4">Contact</h2>
-        <p className="text-gray-700">
-          Pentru întrebări legate de protecția datelor, ne puteți contacta folosind datele afișate în secțiunea „Contact" de pe site-ul nostru: https://corcodusa.ro
-        </p>
+        <h2 className="text-2xl font-semibold mt-8 mb-2">Cookie-uri</h2>
+        <p className="text-gray-700">Corcodusa.ro folosește cookie-uri strict necesare pentru funcționarea site-ului și analiza traficului.</p>
+        <p className="text-gray-700">Nu utilizăm cookie-uri de marketing fără acordul dvs. explicit.</p>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-2">Contact</h2>
+        <p className="text-gray-700">Pentru orice întrebare legată de datele dvs. personale, ne puteți contacta la:</p>
+        <p className="text-gray-800 font-semibold">📧 contact@corcodusa.ro</p>
       </div>
     </div>
   );
