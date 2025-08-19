@@ -130,20 +130,7 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      {!imagesLoaded && (
-        <div className="fixed inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="text-center">
-            <p className="text-lg text-gray-600 mb-2">Se încarcă materialele educaționale...</p>
-            <div className="mt-2 w-64 bg-gray-200 rounded-full h-2 mx-auto">
-              <div
-                className="bg-gradient-to-r from-[#20BF55] to-[#FF6B00] h-2 rounded-full transition-all duration-300"
-                style={{ width: `${(loadedImages / totalImages) * 100}%` }}
-              ></div>
-            </div>
-            <p className="text-sm text-gray-500 mt-2">{loadedImages} / {totalImages} imagini încărcate</p>
-          </div>
-        </div>
-      )}
+      {/* Inline page overlay loader removed to avoid double loaders; initial logo loader handles page load */}
       {/* Hero Section - Now Split Vertically */}
       <section className="relative bg-gradient-to-r from-[#20BF55] to-[#FF6B00] text-white py-12 sm:py-16 md:py-20 lg:py-28 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col gap-12">
