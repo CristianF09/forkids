@@ -1,0 +1,26 @@
+{
+  "mongoUri": "mongodb+srv://your_real_username:your_real_password@cluster0.c4t3ydg.mongodb.net/corcodusa?retryWrites=true&w=majority&appName=Cluster0"
+}
+
+
+  {
+    { 
+    // Replace this section of the footer (which is currently just "Despre Noi" or similar)
+    // We are replacing with a more detailed structure
+
+    <div class="despre-noi">
+      <h3>🌟 Despre Noi</h3>
+      <p>La Corcodusa.ro, credem că învățarea devine magică atunci când este îmbinată cu joaca și curiozitatea naturală a copiilor.</p>
+      <h4>Misiunea Noastră</h4>
+      <p>Ne dorim ca fiecare copil să descopere bucuria de a învăța prin materiale digitale simple, colorate și interactive. Creăm resurse educative de înaltă calitate care îi ajută pe cei mici să se dezvolte într-un mod distractiv, plăcut și adaptat vârstei lor.</p>
+      <h4>Valorile Noastre</h4>
+      <ul>
+        <li>Educație de Calitate – materialele sunt gândite de specialiști în educația timpurie.</li>
+        <li>Pasiune – suntem dedicați să transformăm învățarea într-o aventură plină de culoare.</li>
+        <li>Sprijin pentru Părinți și Educatori – oferim resurse ușor de folosit acasă sau la grădiniță.</li>
+        <li>Excelență – fiecare fișă și carte este testată și adaptată nevoilor reale ale copiilor.</li>
+      </ul>
+    </div>
+  }
+}
+</footer>

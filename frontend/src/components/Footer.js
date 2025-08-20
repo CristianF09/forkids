@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Instagram, ChevronUp } from 'lucide-react';
+import { ChevronUp } from 'lucide-react';
 
 const Footer = () => {
   const [showScrollToTop, setShowScrollToTop] = useState(false);
@@ -31,7 +31,7 @@ const Footer = () => {
           {/* Company Info */}
           <div className="space-y-4">
             <Link to="/" className="flex items-center space-x-2" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-              <img src="/images/logo.png" alt="Corcodușa Logo" className="h-8 w-auto" />
+              <img src="/images/Icon.png" alt="Corcodușa Logo" className="h-8 w-auto" />
               <span className="text-2xl font-bold">
                 <span className="text-[#20BF55]">Corcodusa</span>
                 <span className="text-[#FF6B00]">.ro</span>
@@ -42,13 +42,13 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4">
               <a href="https://www.facebook.com/corcodusa.ro" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#FF6B00] transition-colors" aria-label="Facebook">
-                <Facebook className="w-6 h-6" />
+                <img src="/images/facebook.svg" alt="Facebook" className="w-6 h-6" />
               </a>
               <a href="https://www.instagram.com/corcodusa.ro/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#FF6B00] transition-colors" aria-label="Instagram">
-                <Instagram className="w-6 h-6" />
+                <img src="/images/instagram.svg" alt="Instagram" className="w-6 h-6" />
               </a>
               <a href="https://www.tiktok.com/@corcodusa.ro1" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#FF6B00] transition-colors" aria-label="TikTok">
-                <img src="/images/stripe-circle-round-blue-logo-19777.png" alt="TikTok" className="w-6 h-6" />
+                <img src="/images/tiktok.svg" alt="TikTok" className="w-6 h-6" />
               </a>
             </div>
           </div>
@@ -117,4 +117,4 @@ const Footer = () => {
   );
 };
 
-export default Footer; 
+export default Footer;
