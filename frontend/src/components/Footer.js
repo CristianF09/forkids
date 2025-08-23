@@ -40,17 +40,17 @@ const Footer = () => {
             <p className="text-gray-400 text-sm">
               Materiale educative interactive pentru copii între 3 și 7 ani care transformă învățarea în joacă.
             </p>
-            <div className="flex space-x-4">
-              <a href="https://www.facebook.com/corcodusa.ro" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#FF6B00] transition-colors" aria-label="Facebook">
-                <img src="/images/facebook.svg" alt="Facebook" className="w-6 h-6" />
-              </a>
-              <a href="https://www.instagram.com/corcodusa.ro/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#FF6B00] transition-colors" aria-label="Instagram">
-                <img src="/images/instagram.svg" alt="Instagram" className="w-6 h-6" />
-              </a>
-              <a href="https://www.tiktok.com/@corcodusa.ro1" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#FF6B00] transition-colors" aria-label="TikTok">
-                <img src="/images/tiktok.svg" alt="TikTok" className="w-6 h-6" />
-              </a>
-            </div>
+              <div className="flex space-x-4">
+                <a href="https://www.facebook.com/corcodusa.ro" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#FF6B00] transition-colors" aria-label="Facebook">
+                  <img src="/images/facebook.svg" alt="Facebook" className="w-6 h-6" />
+                </a>
+                <a href="https://www.instagram.com/corcodusa.ro/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#FF6B00] transition-colors" aria-label="Instagram">
+                  <img src="/images/instagram.svg" alt="Instagram" className="w-6 h-6" />
+                </a>
+                <a href="https://www.tiktok.com/@corcodusa.ro1" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#FF6B00] transition-colors" aria-label="TikTok">
+                  <img src="/images/tiktok.svg" alt="TikTok" className="w-6 h-6" />
+                </a>
+              </div>
           </div>
 
           {/* Produse Links */}

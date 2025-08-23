@@ -69,6 +69,7 @@ const productsData = [
     title: 'PACHET COMPLET',
     pdfFile: 'BonusCertificateDeAbsovire.pdf',
     price: 110,
+    originalPrice: 147,
     image: '/images/Pachet Promo.jpg',
     priceId: 'price_1RxRyVK6Qc2WK3kdnE1H9PkY',
     productId: 'prod_Sg7FB1xJVJc2MV',
@@ -195,7 +196,14 @@ const Products = () => {
                 ))}
               </ul>
               <div className="mt-auto w-full flex justify-between items-center">
-                <span className="text-2xl font-bold text-[#20BF55]">{product.price} Lei</span>
+                {product.id === 1 ? (
+                  <div className="flex flex-col">
+                    <span className="text-2xl font-bold text-[#20BF55]">{product.price} Lei</span>
+                    <span className="text-lg line-through text-gray-500">{product.originalPrice} Lei</span>
+                  </div>
+                ) : (
+                  <span className="text-2xl font-bold text-[#20BF55]">{product.price} Lei</span>
+                )}
                 <button
                   onClick={() => {
                     window.open(product.stripeLink, '_blank');
@@ -234,7 +242,7 @@ const Products = () => {
               </ul>
               <div className="flex justify-center items-center mb-6 space-x-4">
                 <span className="text-5xl font-bold text-[#20BF55]">110 Lei</span>
-                <span className="text-2xl line-through text-gray-500">117 Lei</span>
+                <span className="text-2xl line-through text-gray-500">147 Lei</span>
               </div>
               <button
                 onClick={() => {
@@ -258,4 +266,4 @@ const Products = () => {
   );
 };
 
-export default Products; 
+export default Products;
