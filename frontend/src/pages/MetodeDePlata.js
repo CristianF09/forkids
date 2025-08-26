@@ -12,7 +12,6 @@ const MetodeDePlata = () => {
         {/* Metode de Plată */}
         <section>
           <div className="space-y-6 text-lg text-gray-700">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6 mt-8">Metode de Plată</h2>
             <p>
               Produsele de pe <span className="font-semibold">www.corcodusa.ro</span> pot fi achiziționate prin următoarea metodă:
             </p>
@@ -28,8 +27,13 @@ const MetodeDePlata = () => {
               <p className="mb-3">➡️ Datele cardului <span className="font-semibold">NU</span> sunt stocate de Corcodusa.ro și sunt transmise criptat direct către banca procesatoare, prin conexiune securizată.</p>
               <p>Toate plățile se efectuează în LEI, la cursul de schimb stabilit de banca emitentă. Tranzacțiile vor apărea pe extrasul de cont sub denumirea <span className="font-semibold">Corcodusa.ro</span>.</p>
               <div className="flex space-x-4 mt-4">
-                <i className="payment-icon payment-icon-style-card payment-icon-mastercard text-4xl"></i>
-                <i className="payment-icon payment-icon-style-card payment-icon-visa text-4xl"></i>
+                <img 
+                  src="/images/stripe-circle-round-blue-logo-19777.png" 
+                  alt="Stripe" 
+                  className="h-12 w-auto" 
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
             </div>
 

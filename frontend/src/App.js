@@ -4,7 +4,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Loader from './components/Loader';
 import Home from './pages/Home';
-import About from './pages/About';
+import DespreNoi from './pages/DespreNoi';
 import Products from './pages/Products';
 import Contact from './pages/Contact';
 import TermeniSiConditii from './pages/TermeniSiConditii';
@@ -61,7 +61,7 @@ function App() {
       <main className="flex-grow">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/despre-noi" element={<About />} />
+          <Route path="/despre-noi" element={<DespreNoi />} />
           <Route path="/produse" element={<Products />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/termeni-si-conditii" element={<TermeniSiConditii />} />

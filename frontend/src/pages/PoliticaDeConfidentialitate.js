@@ -3,7 +3,7 @@ import React from 'react';
 const PoliticaDeConfidentialitate = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-8">Politica de Confidențialitate – Corcodusa.ro</h1>
+      <h1 className="text-3xl font-bold text-center mb-8">Politica de Confidențialitate</h1>
       
       <div className="space-y-6 text-lg">
         <p className="text-gray-700">

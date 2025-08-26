@@ -6,7 +6,7 @@ const PoliticaDeRetur = () => {
     <div className="min-h-screen bg-gray-100 py-12 md:py-16 lg:py-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 bg-white rounded-xl shadow-lg p-8 md:p-10">
         <h1 className="text-3xl md:text-4xl font-bold text-gray-800 text-center mb-10">
-          Politica de Retur – Corcodușa
+          Politica de Retur
         </h1>
 
         <section>

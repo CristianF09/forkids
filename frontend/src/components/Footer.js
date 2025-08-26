@@ -37,20 +37,38 @@ const Footer = () => {
                 <span className="text-[#FF6B00]">.ro</span>
               </span>
             </Link>
-            <p className="text-gray-400 text-sm">
+            <p className="text-gray-400 text-sm mb-4">
               Materiale educative interactive pentru copii între 3 și 7 ani care transformă învățarea în joacă.
             </p>
-              <div className="flex space-x-4">
-                <a href="https://www.facebook.com/corcodusa.ro" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#FF6B00] transition-colors" aria-label="Facebook">
-                  <img src="/images/facebook.svg" alt="Facebook" className="w-6 h-6" />
-                </a>
-                <a href="https://www.instagram.com/corcodusa.ro/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#FF6B00] transition-colors" aria-label="Instagram">
-                  <img src="/images/instagram.svg" alt="Instagram" className="w-6 h-6" />
-                </a>
-                <a href="https://www.tiktok.com/@corcodusa.ro1" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#FF6B00] transition-colors" aria-label="TikTok">
-                  <img src="/images/tiktok.svg" alt="TikTok" className="w-6 h-6" />
-                </a>
-              </div>
+            <div className="flex space-x-4">
+              <a 
+                href="https://www.facebook.com/corcodusa.ro" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-gray-400 hover:text-[#FF6B00] transition-colors"
+                aria-label="Urmărește-ne pe Facebook"
+              >
+                <img src="/images/facebook-svgrepo-com.svg" alt="Facebook" className="w-6 h-6" />
+              </a>
+              <a 
+                href="https://www.instagram.com/corcodusa.ro/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-gray-400 hover:text-[#FF6B00] transition-colors"
+                aria-label="Urmărește-ne pe Instagram"
+              >
+                <img src="/images/instagram-1-svgrepo-com.svg" alt="Instagram" className="w-6 h-6" />
+              </a>
+              <a 
+                href="https://www.tiktok.com/@corcodusa.ro1" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-gray-400 hover:text-[#FF6B00] transition-colors"
+                aria-label="Urmărește-ne pe TikTok"
+              >
+                <img src="/images/brand-tiktok-sq-svgrepo-com.svg" alt="TikTok" className="w-6 h-6" />
+              </a>
+            </div>
           </div>
 
           {/* Produse Links */}
@@ -83,7 +101,25 @@ const Footer = () => {
               <li><Link to="/politica-de-confidentialitate" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Politica de Confidențialitate</Link></li>
               <li><Link to="/metode-de-plata" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Metode de Plată</Link></li>
               <li><Link to="/politica-de-retur" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Politica de Retur</Link></li>
-              <li><a href="https://anpc.ro" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">ANPC</a></li>
+              <li className="pt-2">
+                <div>
+                  <a href="https://anpc.ro/ce-este-sal/" target="_blank" rel="nofollow" className="inline-block">
+                    <img 
+                      className="w-[250px] m-[5px]"
+                      src="https://wpfitness.eu/wp-content/uploads/2022/10/anpc-sal.png" 
+                      alt="Solutionarea Alternativa a Litigiilor"
+                    />
+                  </a>
+                  <br/>
+                  <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="nofollow" className="inline-block">
+                    <img 
+                      className="w-[250px] m-[5px]"
+                      src="https://wpfitness.eu/wp-content/uploads/2022/10/anpc-sol.png" 
+                      alt="Solutionarea Online a Litigiilor"
+                    />
+                  </a>
+                </div>
+              </li>
             </ul>
           </div>
         </div>

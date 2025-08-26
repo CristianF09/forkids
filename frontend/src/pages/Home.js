@@ -164,11 +164,6 @@ const Home = () => {
                 spaceBetween={30}
                 slidesPerView={1}
                 className="w-full max-w-4xl mx-auto"
-                lazy={{
-                  loadPrevNext: true,
-                  loadPrevNextAmount: 1
-                }}
-                preloadImages={false}
                 watchSlidesProgress={true}
               >
               {slides.map((group, idx) => (
@@ -176,23 +171,32 @@ const Home = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {group.map((img, i) => (
                       <div key={i} className="bg-white p-6 rounded-xl shadow-lg flex flex-col items-center">
-                        <div className="relative w-full h-56 mb-4 bg-gray-100 rounded-md flex items-center justify-center">
+                        <div className="relative w-full h-56 mb-4 bg-gray-100 rounded-md flex items-center justify-center overflow-hidden">
+                          {/* Blur placeholder */}
+                          <div 
+                            className="absolute inset-0 bg-gray-200 animate-pulse"
+                            style={{
+                              backgroundImage: 'url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx4eHRoaHSQrJiEkKyc4Li4xMy03NDU9OjY8RTYzPUE3QkU+RklLUkJCTk5OPz9O/8IAEQgAEAAQAwEiAAIRAQMRAf/EABYAAQEBAAAAAAAAAAAAAAAAAAQAAf/aAAgBAQAAAAFjTBQ//8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/2gAIAQIQAAAAMF//xAAVAQEBAAAAAAAAAAAAAAAAAAAGBf/aAAgBAxAAAACar//EAB8QAAIBAwQDAAAAAAAAAAAAAAECAwQRAAUSMSEiQf/aAAgBAQABPwClWkqGCQg5JxUUQ3zO0piw3RsHJwP2qWTZNE56GRo6EEpIn1lOQcg/da//xAAaEQACAwEBAAAAAAAAAAAAAAAAAgEREiFB/9oACAECAQE/AKLjIk4XDDpvq7f/xAAZEQEAAgMAAAAAAAAAAAAAAAABAAIDETH/2gAIAQMBAT8AKtsX1Y//2Q==)',
+                              backgroundSize: 'cover',
+                              backgroundPosition: 'center',
+                              filter: 'blur(8px)',
+                              transform: 'scale(1.1)'
+                            }}
+                          />
                           <img
                             src={`/images/carousel/${img}`}
                             alt={`Carousel ${idx * 4 + i + 1}`}
-                            className="max-w-xs w-full h-full object-contain rounded-md transition-opacity duration-300"
+                            className="relative max-w-xs w-full h-full object-contain rounded-md transition-opacity duration-300"
                             loading={idx === 0 ? "eager" : "lazy"}
                             onLoad={(e) => {
-                              e.target.style.opacity = '1';
+                              e.target.style.opacity = "1";
                               handleImageLoad();
                             }}
-                            onError={(e) => {
-                              e.target.style.opacity = '0.5';
-                              handleImageLoad(); // Count as loaded even if failed
-                            }}
                             style={{ opacity: 0 }}
+                            width={320}
+                            height={224}
+                            decoding="async"
                           />
-                          {/* Removed placeholder circle overlay to avoid visual artifact and extra paint */}
                         </div>
                       </div>
                     ))}
@@ -520,6 +524,8 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+
     </div>
   );
 };
