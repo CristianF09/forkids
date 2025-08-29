@@ -82,11 +82,24 @@ app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 // Servește frontendul (din folderul backend/frontend)
 const frontendBuildPath = path.join(__dirname, 'frontend');
 if (require('fs').existsSync(frontendBuildPath)) {
-  app.use(express.static(frontendBuildPath));
+  // Servește frontendul cu cache control pentru index.html
+  app.use(express.static(frontendBuildPath, {
+    setHeaders: (res) => {
+      res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.set('Pragma', 'no-cache');
+      res.set('Expires', '0');
+    }
+  }));
 
   // Servește index.html pentru orice altă rută neidentificată (SPA routing)
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(frontendBuildPath, 'index.html'));
+    res.sendFile(path.resolve(frontendBuildPath, 'index.html'), {
+      headers: {
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+      }
+    });
   });
   console.log('✅ Frontend build găsit și servit din:', frontendBuildPath);
 } else {

@@ -8,7 +8,7 @@
     "client": "npm --prefix frontend start",
     "install-all": "npm install && cd frontend && npm install && cd ../backend && npm install",
     "build": "npm --prefix frontend run build && npm run copy-build",
-    "copy-build": "rimraf backend/frontend && xcopy frontend\\build backend\\frontend /E /I /H /Y"
+    "copy-build": "rimraf backend/frontend && cp -r frontend/build/* backend/frontend || xcopy frontend\\build backend\\frontend /E /I /H /Y"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
