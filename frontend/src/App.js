@@ -53,7 +53,7 @@ function App() {
     return () => { cancelled = true; };
   }, []);
 
-  if (isLoading) return <Loader title="CorcoDușa" subtitle="Se încarcă..." />;
+if (isLoading) return <Loader title="Corcodusa.ro" subtitle="Se încarcă..." />;
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
@@ -78,4 +78,4 @@ function App() {
   );
 }
 
-export default App;  
+export default App;
