@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+﻿import React, { useState, useEffect } from 'react';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { Check } from 'lucide-react';
 import PurchaseSteps from '../components/PurchaseSteps';
-
 
 const productsData = [
   {
     id: 2,
-    category: 'Alfabet',
+    category: 'alfabet',
     title: 'ALFABETUL',
     pdfFile: 'Alfabetul .pdf',
     price: 49,
@@ -19,15 +18,15 @@ const productsData = [
     description: 'Această carte educativă îi ajută pe cei mici să descopere literele alfabetului printr-o serie de activități captivante și jocuri distractive. Peste 50 de pagini de activități.',
     features: [
       'Învățarea literelor mari și mici de tipar',
-      'Recunoașterea formelor  și asocierea cu litere',
+      'Recunoașterea formelor și asocierea cu litere',
       'Exerciții de scris pentru dezvoltarea abilităților motorii fine',
       'Activități de colorat pentru fiecare literă',
-      'Peste 50 de pagini de activități',
-    ],
+      'Peste 50 de pagini de activități'
+    ]
   },
   {
     id: 3,
-    category: 'Matematică',
+    category: 'matematica',
     title: 'NUMERE',
     pdfFile: 'Numere.pdf',
     price: 49,
@@ -41,31 +40,32 @@ const productsData = [
       'Exerciții de numărare și recunoaștere a numerelor',
       'Activități de scriere a numerelor',
       'Exerciții de logică și problem-solving',
-      'Peste 50 de pagini de activități',
-    ],
+      'Peste 50 de pagini de activități'
+    ]
   },
   {
     id: 4,
-    category: 'Forme și Culori',
+    category: 'forme-si-culori',
     title: 'FORME SI CULORI',
     pdfFile: 'FormeSiCulori.pdf',
     price: 49,
     image: '/images/Forme si culori.jpg',
-    priceId: 'price_1RxS3hK6Qc2WK3kdTL15dECJ',
-    productId: 'prod_Sg7FLP5uIieb7r',
-    stripeLink: 'https://buy.stripe.com/eVqdRaffo2rNfJxbGkeZ200',
+    priceId: 'price_1RxS42K6Qc2WK3kdWE7DjklP',
+    productId: 'prod_Sg7GhD6zkyA7lA',
+    stripeLink: 'https://buy.stripe.com/00geVa4AKayf2WL7swiN201',
     age: '3-7 ani',
-    description: 'Cărțile de forme și culori sunt ideale pentru dezvoltarea percepției spațiale și a culorilor. Peste 50 de pagini de activități.',
+    description: 'Cunoașterea formelor și a culorilor este esențială în dezvoltarea cognitivă timpurie a copiilor. Peste 50 de pagini de activități.',
     features: [
-      'Recunoașterea formelor și culorilor',
-      'Exerciții de colorat și desenare',
-      'Activități de identificare a formelor și culorilor',
-      'Peste 50 de pagini de activități',
-    ],
+      'Învățarea formelor geometrice de bază',
+      'Recunoașterea și numirea culorilor',
+      'Activități de colorat și sortare',
+      'Exerciții de asociere și clasificare',
+      'Peste 50 de pagini de activități'
+    ]
   },
   {
     id: 1,
-    category: 'Pachet Complet',
+    category: 'pachet-complet',
     title: 'PACHET COMPLET',
     pdfFile: 'BonusCertificateDeAbsovire.pdf',
     price: 110,
@@ -81,28 +81,35 @@ const productsData = [
       'Matematică Distractivă - activități matematice',
       'Aventuri în Culori - activități artistice',
       'BONUS: 40 de pagini de colorat foarte interactive și distractive pentru copii',
-      'BONUS: Diplome personalizate pentru fiecare secțiune completată (3 diplome)',
-    ],
-  },
+      'BONUS: Diplome personalizate pentru fiecare secțiune completată (3 diplome)'
+    ]
+  }
 ];
 
 const Products = () => {
+  const { category } = useParams();
+  const navigate = useNavigate();
   const location = useLocation();
-  const [selectedCategory, setSelectedCategory] = useState('Toate produsele');
+  
+  const [selectedCategory, setSelectedCategory] = useState(category || 'Toate produsele');
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [filteredProducts, setFilteredProducts] = useState(productsData);
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const category = params.get('category');
-    if (category === 'alfabet') {
-      setSelectedCategory('Alfabet');
-    } else if (category === 'matematica') {
-      setSelectedCategory('Matematică');
-    } else if (category === 'formesiculori') {
-      setSelectedCategory('Forme și Culori');
+    if (category) {
+      const filtered = productsData.filter(product => product.category === category);
+      setFilteredProducts(filtered);
+      
+      if (filtered.length === 0) {
+        navigate('/produse');
+      }
     } else {
-      setSelectedCategory('Toate produsele');
+      setFilteredProducts(productsData);
     }
-    // Scroll to special offer if hash is present
+  }, [category, navigate]);
+
+  useEffect(() => {
     if (location.hash === '#pachet-complet') {
       setTimeout(() => {
         const section = document.querySelector('section');
@@ -115,14 +122,29 @@ const Products = () => {
     }
   }, [location]);
 
-  const filteredProducts = selectedCategory === 'Toate produsele'
-    ? productsData
-    : productsData.filter(product => product.category === selectedCategory);
+  const handleCategoryClick = (newCategory) => {
+    setSelectedCategory(newCategory);
+    if (newCategory === 'Toate produsele') {
+      setFilteredProducts(productsData);
+      navigate('/produse');
+    } else {
+      const filtered = productsData.filter(product => product.category === newCategory);
+      setFilteredProducts(filtered);
+      navigate(`/produse/${newCategory}`);
+    }
+  };
+
+  const handleProductClick = (product) => {
+    setSelectedProduct(product);
+    setShowModal(true);
+    if (!category) {
+      window.history.replaceState(null, '', `/produse/${product.category}`);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 py-12 md:py-16 lg:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
         <div className="text-center mb-12 md:mb-16">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-4 md:mb-6">
             Produsele Noastre
@@ -132,58 +154,60 @@ const Products = () => {
           </p>
         </div>
 
-        {/* Purchase Steps */}
         <PurchaseSteps />
 
-        {/* Category Filter (Centered) */}
         <div className="mt-10 mb-12">
           <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-row gap-4 md:gap-6 lg:gap-8 justify-center md:justify-center">
             <button
-              onClick={() => setSelectedCategory('Toate produsele')}
+              onClick={() => handleCategoryClick('Toate produsele')}
               className={`col-span-2 px-8 py-3 rounded-full font-semibold transition-colors text-base md:text-lg lg:text-xl ${selectedCategory === 'Toate produsele' ? 'bg-[#FF6B00] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
             >
               Toate produsele
             </button>
             <button
-              onClick={() => setSelectedCategory('Alfabet')}
-              className={`px-8 py-3 rounded-full font-semibold transition-colors text-base md:text-lg lg:text-xl ${selectedCategory === 'Alfabet' ? 'bg-[#FF6B00] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+              onClick={() => handleCategoryClick('alfabet')}
+              className={`px-8 py-3 rounded-full font-semibold transition-colors text-base md:text-lg lg:text-xl ${selectedCategory === 'alfabet' ? 'bg-[#FF6B00] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
             >
               Alfabet
             </button>
             <button
-              onClick={() => setSelectedCategory('Matematică')}
-              className={`px-8 py-3 rounded-full font-semibold transition-colors text-base md:text-lg lg:text-xl ${selectedCategory === 'Matematică' ? 'bg-[#FF6B00] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+              onClick={() => handleCategoryClick('matematica')}
+              className={`px-8 py-3 rounded-full font-semibold transition-colors text-base md:text-lg lg:text-xl ${selectedCategory === 'matematica' ? 'bg-[#FF6B00] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
             >
               Matematică
             </button>
             <button
-              onClick={() => setSelectedCategory('Forme și Culori')}
-              className={`px-8 py-3 rounded-full font-semibold transition-colors text-base md:text-lg lg:text-xl ${selectedCategory === 'Forme și Culori' ? 'bg-[#FF6B00] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+              onClick={() => handleCategoryClick('forme-si-culori')}
+              className={`px-8 py-3 rounded-full font-semibold transition-colors text-base md:text-lg lg:text-xl ${selectedCategory === 'forme-si-culori' ? 'bg-[#FF6B00] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
             >
               Forme și Culori
             </button>
             <button
-              onClick={() => setSelectedCategory('Pachet Complet')}
-              className={`px-8 py-3 rounded-full font-semibold transition-colors text-base md:text-lg lg:text-xl ${selectedCategory === 'Pachet Complet' ? 'bg-[#FF6B00] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
+              onClick={() => handleCategoryClick('pachet-complet')}
+              className={`px-8 py-3 rounded-full font-semibold transition-colors text-base md:text-lg lg:text-xl ${selectedCategory === 'pachet-complet' ? 'bg-[#FF6B00] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}
             >
               Pachet Complet
             </button>
           </div>
         </div>
 
-        {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
           {filteredProducts.map((product) => (
             <div key={product.id} className="bg-white p-6 rounded-xl shadow-lg flex flex-col items-center">
-              <img
-                src={product.image}
-                alt={product.title}
-                className="max-w-xs w-full h-56 object-contain rounded-md mb-4 bg-white mx-auto"
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = '/images/Icon.png'; // Fallback image
-                }}
-              />
+              <div 
+                className="cursor-pointer transition-transform duration-300 hover:scale-105"
+                onClick={() => navigate(`/produs/${product.category}`)}
+              >
+                <img
+                  src={product.image}
+                  alt={product.title}
+                  className="max-w-xs w-full h-56 object-contain rounded-md mb-4 bg-white mx-auto"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = '/images/Icon.png';
+                  }}
+                />
+              </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">{product.title}</h3>
               <p className="text-sm text-gray-500 mb-3">({product.age})</p>
               <p className="text-gray-600 mb-4 text-center">{product.description}</p>
@@ -218,7 +242,6 @@ const Products = () => {
           ))}
         </div>
 
-        {/* Special Offer Section (Pachet Complet) */}
         <section className="bg-gradient-to-r from-[#20BF55] to-[#FF6B00] text-white py-16 rounded-xl shadow-lg">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-8">
@@ -255,7 +278,18 @@ const Products = () => {
               <p className="text-gray-700 text-center text-sm flex items-center justify-center">
                 Plată securizată prin
                 <span className="ml-2" style={{ display: 'inline-flex', alignItems: 'center', height: '24px' }}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 90 90"><g><circle cx="45" cy="45" r="45" fill="#635bff"/><path d="M75 45.417c0-4.267-2.067-7.633-6.017-7.633-3.967 0-6.367 3.367-6.367 7.6 0 5.017 2.833 7.55 6.9 7.55 1.983 0 3.483-.45 4.617-1.083v-3.333C73 49.083 71.7 49.433 70.05 49.433c-1.617 0-3.05-.567-3.233-2.533h8.15c0-.217.033-1.083.033-1.483zM66.767 43.833c0-1.883 1.15-2.667 2.2-2.667 1.017 0 2.1.783 2.1 2.667h-4.3z" fill="#f9f9f9"/><path d="M56.183 37.783c-1.633 0-2.683.767-3.267 1.3l-.217-1.033h-3.667v19.433l4.167-.833.017-4.717c.6.433 1.483 1.05 2.95 1.05 2.983 0 5.7-2.4 5.7-7.683 0-5.017-2.75-7.65-5.667-7.65zm-1 11.484c-.983 0-1.567-.35-1.967-.783l-.017-6.184c.433-.483 1.033-.817 1.983-.817 1.517 0 2.567 1.7 2.567 3.883 0 2.218-1.033 3.883-2.566 3.883z" fill="#f9f9f9"/><polygon points="43.3,36.8 47.48,35.9 47.48,32.52 43.3,33.4" fill="#f9f9f9"/><rect x="43.3" y="38.07" width="4.18" height="14.58" fill="#f9f9f9"/><path d="M38.817 39.3l-.267-1.233h-3.6V52.65h4.167v-9.883c.983-1.283 2.65-1.05 3.167-.867v-3.833c-1.534.1-3.484-.267-4.467 1.533z" fill="#f9f9f9"/><path d="M30.483 34.45l-4.067.867-.017 13.35c0 2.467 1.85 4.283 4.317 4.283 1.367 0 2.367-.25 2.917-.55v-3.383c-.534.866-3.167 1.633-3.167-.834v-5.917h3.167v-3.55h-3.167l-.001-4.566z" fill="#f9f9f9"/><path d="M19.217 42.3c0-.65.533-.9 1.417-.9 1.267 0 2.867.383 4.133 1.067V38.55c-1.383-.55-2.75-.767-4.133-.767-2.017 0-4.267 1.767-4.267 4.717 0 4.6 6.333 3.867 6.333 5.85 0 .767-.667 1.017-1.6 1.017-1.383 0-3.15-.567-4.55-1.333V52c1.55.667 3.117.95 4.55.95 3.467 0 5.85-1.717 5.85-4.7 0-4.967-6.35-4.083-6.35-5.95z" fill="#f9f9f9"/></g></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 90 90">
+                    <g>
+                      <circle cx="45" cy="45" r="45" fill="#635bff"/>
+                      <path d="M75 45.417c0-4.267-2.067-7.633-6.017-7.633-3.967 0-6.367 3.367-6.367 7.6 0 5.017 2.833 7.55 6.9 7.55 1.983 0 3.483-.45 4.617-1.083v-3.333C73 49.083 71.7 49.433 70.05 49.433c-1.617 0-3.05-.567-3.233-2.533h8.15c0-.217.033-1.083.033-1.483zM66.767 43.833c0-1.883 1.15-2.667 2.2-2.667 1.017 0 2.1.783 2.1 2.667h-4.3z" fill="#f9f9f9"/>
+                      <path d="M56.183 37.783c-1.633 0-2.683.767-3.267 1.3l-.217-1.033h-3.667v19.433l4.167-.833.017-4.717c.6.433 1.483 1.05 2.95 1.05 2.983 0 5.7-2.4 5.7-7.683 0-5.017-2.75-7.65-5.667-7.65zm-1 11.484c-.983 0-1.567-.35-1.967-.783l-.017-6.184c.433-.483 1.033-.817 1.983-.817 1.517 0 2.567 1.7 2.567 3.883 0 2.218-1.033 3.883-2.566 3.883z" fill="#f9f9f9"/>
+                      <polygon points="43.3,36.8 47.48,35.9 47.48,32.52 43.3,33.4" fill="#f9f9f9"/>
+                      <rect x="43.3" y="38.07" width="4.18" height="14.58" fill="#f9f9f9"/>
+                      <path d="M38.817 39.3l-.267-1.233h-3.6V52.65h4.167v-9.883c.983-1.283 2.65-1.05 3.167-.867v-3.833c-1.534.1-3.484-.267-4.467 1.533z" fill="#f9f9f9"/>
+                      <path d="M30.483 34.45l-4.067.867-.017 13.35c0 2.467 1.85 4.283 4.317 4.283 1.367 0 2.367-.25 2.917-.55v-3.383c-.534.866-3.167 1.633-3.167-.834v-5.917h3.167v-3.55h-3.167l-.001-4.566z" fill="#f9f9f9"/>
+                      <path d="M19.217 42.3c0-.65.533-.9 1.417-.9 1.267 0 2.867.383 4.133 1.067V38.55c-1.383-.55-2.75-.767-4.133-.767-2.017 0-4.267 1.767-4.267 4.717 0 4.6 6.333 3.867 6.333 5.85 0 .767-.667 1.017-1.6 1.017-1.383 0-3.15-.567-4.55-1.333V52c1.55.667 3.117.95 4.55.95 3.467 0 5.85-1.717 5.85-4.7 0-4.967-6.35-4.083-6.35-5.95z" fill="#f9f9f9"/>
+                    </g>
+                  </svg>
                 </span>
               </p>
             </div>

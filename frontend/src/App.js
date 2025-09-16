@@ -6,6 +6,7 @@ import Loader from './components/Loader';
 import Home from './pages/Home';
 import DespreNoi from './pages/DespreNoi';
 import Products from './pages/Products';
+import ProductDetail from './pages/ProductDetail';
 import Contact from './pages/Contact';
 import TermeniSiConditii from './pages/TermeniSiConditii';
 import PoliticaDeConfidentialitate from './pages/PoliticaDeConfidentialitate';
@@ -17,35 +18,50 @@ import Cancel from './pages/Cancel';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   useEffect(() => {
     let cancelled = false;
 
     async function waitForBackend() {
-      // Fast path: stop loader after 1.2s if backend is already up
       const fallbackTimer = setTimeout(() => {
-        if (!cancelled) setIsLoading(false);
-      }, 1200);
+        if (!cancelled) {
+          setIsLoading(false);
+          setIsInitialLoad(false);
+        }
+      }, 1500); // Increased to 1.5s to ensure smooth animation
 
       try {
-        const apiBase = process.env.REACT_APP_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:10000' : 'https://corcodusa.ro');
-        const deadline = Date.now() + 7000; // up to 7s wait
+        const apiBase = process.env.REACT_APP_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:10000' : 'https://api.corcodusa.ro');
+        const deadline = Date.now() + 5000; // reduced to 5s for better UX
 
         while (!cancelled && Date.now() < deadline) {
           try {
-            const res = await fetch(`${apiBase}/api/health`, { cache: 'no-store' });
+            const res = await fetch(`${apiBase}/api/health`, { 
+              cache: 'no-store',
+              headers: {
+                'Cache-Control': 'no-cache',
+                'Pragma': 'no-cache'
+              }
+            });
             if (res.ok) {
               clearTimeout(fallbackTimer);
-              if (!cancelled) setIsLoading(false);
+              if (!cancelled) {
+                setIsLoading(false);
+                setIsInitialLoad(false);
+              }
               return;
             }
           } catch (_) {
             // ignore and retry
           }
-          await new Promise(r => setTimeout(r, 400));
+          await new Promise(r => setTimeout(r, 300)); // reduced retry interval
         }
       } finally {
-        if (!cancelled) setIsLoading(false);
+        if (!cancelled) {
+          setIsLoading(false);
+          setIsInitialLoad(false);
+        }
       }
     }
 
@@ -63,6 +79,8 @@ if (isLoading) return <Loader title="Corcodusa.ro" subtitle="Se încarcă..." />
           <Route path="/" element={<Home />} />
           <Route path="/despre-noi" element={<DespreNoi />} />
           <Route path="/produse" element={<Products />} />
+          <Route path="/produse/:category" element={<Products />} />
+          <Route path="/produs/:productId" element={<ProductDetail />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/termeni-si-conditii" element={<TermeniSiConditii />} />
           <Route path="/politica-de-confidentialitate" element={<PoliticaDeConfidentialitate />} />
