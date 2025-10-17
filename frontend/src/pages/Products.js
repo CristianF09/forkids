@@ -9,7 +9,7 @@ const productsData = [
     category: 'alfabet',
     title: 'ALFABETUL',
     pdfFile: 'Alfabetul .pdf',
-    price: 49,
+    price: 59,
     image: '/images/Alfabetul .jpg',
     priceId: 'price_1RxRzjK6Qc2WK3kdz8eAiQjD',
     productId: 'prod_Sg7FSlYGXYLqIx',
@@ -30,7 +30,7 @@ const productsData = [
     category: 'matematica',
     title: 'NUMERE',
     pdfFile: 'Numere.pdf',
-    price: 49,
+    price: 59,
     image: '/images/Numere.jpg',
     priceId: 'price_1RxS3KK6Qc2WK3kd97xe4ihN',
     productId: 'prod_Sg7Fm0E2S5Hm1k',
@@ -50,7 +50,7 @@ const productsData = [
     category: 'forme-si-culori',
     title: 'FORME SI CULORI',
     pdfFile: 'FormeSiCulori.pdf',
-    price: 49,
+    price: 59,
     image: '/images/Forme si culori.jpg',
     priceId: 'price_1RxS42K6Qc2WK3kdWE7DjklP',
     productId: 'prod_Sg7GhD6zkyA7lA',
@@ -67,24 +67,25 @@ const productsData = [
     ]
   },
   {
-    id: 5,
-    category: 'colorat',
-    title: 'PAGINI DE COLORAT',
-    pdfFile: 'PaginiColorat.pdf',
-    price: 39,
-    image: '/images/Bonus - Fise de colorat.jpg',
-    priceId: 'your_stripe_price_id',
-    productId: 'your_stripe_product_id',
-    stripeLink: 'your_stripe_link',
+    id: 1,
+    category: 'pachet-complet',
+    title: 'PACHET STANDARD',
+    pdfFile: 'BonusCertificateDeAbsovire.pdf',
+    price: 145,
+    originalPrice: 226,
+    image: '/images/Pachet Standard.png',
+    priceId: 'price_1RxRyVK6Qc2WK3kdnE1H9PkY',
+    productId: 'prod_Sg7FB1xJVJc2MV',
+    stripeLink: 'https://buy.stripe.com/28E3cwc3ceav0OD5hWeZ203',
     age: '3-7 ani',
-    shortDescription: 'Stimulează creativitatea prin pagini de colorat interactive.',
-    description: 'Colecție bogată de pagini de colorat special create pentru dezvoltarea creativității și îmbunătățirea coordonării mână-ochi. Include imagini variate și atractive pentru copii.',
+    shortDescription: 'Pachetul complet cu toate resursele educaționale.',
+    description: 'Obține toate cele 3 cărți la un preț special, cu peste 150 de pagini de activități educative și distractive pentru copilul tău.',
     features: [
-      'Imagini variate și atractive',
-      'Dezvoltă coordonarea mână-ochi',
-      'Stimulează creativitatea',
-      'Activități relaxante și educative',
-      'Peste 40 de pagini de colorat'
+      'Alfabetul în Joacă - activități de alfabetizare',
+      'Matematică Distractivă - activități matematice',
+      'Aventuri în Culori - activități artistice',
+      'BONUS: 40 de pagini de colorat foarte interactive și distractive pentru copii',
+      'BONUS: Diplome personalizate pentru fiecare secțiune completată (3 diplome)'
     ]
   },
   {
@@ -92,8 +93,8 @@ const productsData = [
     category: 'labirinturi',
     title: 'LABIRINTURI MAGICE',
     pdfFile: 'LabirinturiMagice.pdf',
-    price: 45,
-    image: '/images/labirinturi.jpg',
+    price: 59,
+    image: '/images/Labirinturi Magice.png',
     priceId: 'your_stripe_price_id',
     productId: 'your_stripe_product_id',
     stripeLink: 'your_stripe_link',
@@ -113,8 +114,8 @@ const productsData = [
     category: 'jocuri-educative',
     title: 'JOCURI ȘI ACTIVITĂȚI EDUCATIVE',
     pdfFile: 'JocuriEducative.pdf',
-    price: 55,
-    image: '/images/jocuri-educative.jpg',
+    price: 59,
+    image: '/images/Jocuri si Activitati Distractive.png',
     priceId: 'your_stripe_price_id',
     productId: 'your_stripe_product_id',
     stripeLink: 'your_stripe_link',
@@ -130,35 +131,34 @@ const productsData = [
     ]
   },
   {
-    id: 1,
-    category: 'pachet-complet',
-    title: 'PACHET COMPLET',
-    pdfFile: 'BonusCertificateDeAbsovire.pdf',
-    price: 110,
-    originalPrice: 147,
-    image: '/images/Pachet Promo.jpg',
-    priceId: 'price_1RxRyVK6Qc2WK3kdnE1H9PkY',
-    productId: 'prod_Sg7FB1xJVJc2MV',
-    stripeLink: 'https://buy.stripe.com/28E3cwc3ceav0OD5hWeZ203',
+    id: 5,
+    category: 'colorat',
+    title: 'CARTE DE COLORAT',
+    pdfFile: 'CarteDeColorat.pdf',
+    price: 49,
+    image: '/images/Carte de Colorat.png',
+    priceId: 'your_stripe_price_id',
+    productId: 'your_stripe_product_id',
+    stripeLink: 'your_stripe_link',
     age: '3-7 ani',
-    shortDescription: 'Pachetul complet cu toate resursele educaționale.',
-    description: 'Obține toate cele 3 cărți la un preț special, cu peste 150 de pagini de activități educative și distractive pentru copilul tău.',
+    shortDescription: 'Carte completă de colorat cu activități interactive.',
+    description: 'Carte completă de colorat cu activități interactive special create pentru dezvoltarea creativității și îmbunătățirea coordonării mână-ochi. Include imagini variate și atractive pentru copii.',
     features: [
-      'Alfabetul în Joacă - activități de alfabetizare',
-      'Matematică Distractivă - activități matematice',
-      'Aventuri în Culori - activități artistice',
-      'BONUS: 40 de pagini de colorat foarte interactive și distractive pentru copii',
-      'BONUS: Diplome personalizate pentru fiecare secțiune completată (3 diplome)'
+      'Carte completă de colorat',
+      'Activități interactive',
+      'Dezvoltă coordonarea mână-ochi',
+      'Stimulează creativitatea',
+      'Activități relaxante și educative'
     ]
   },
   {
     id: 8,
     category: 'pachet-standard',
-    title: 'PACHET STANDARD',
+    title: 'PACHET PROMO',
     pdfFile: 'PachetStandard.pdf',
-    price: 89,
+    price: 99,
     originalPrice: 120,
-    image: '/images/pachet-standard.jpg',
+    image: '/images/Pachet Promo.png',
     priceId: 'your_stripe_price_id',
     productId: 'your_stripe_product_id',
     stripeLink: 'your_stripe_link',
@@ -264,8 +264,8 @@ const Products = () => {
             <div className="flex flex-wrap gap-4 justify-center">
               {renderCategoryButton('labirinturi', 'Labirinturi Magice')}
               {renderCategoryButton('jocuri-educative', 'Jocuri Educative')}
-              {renderCategoryButton('pachet-standard', 'Pachet Standard')}
-              {renderCategoryButton('pachet-complet', 'Pachet Complet')}
+              {renderCategoryButton('pachet-standard', 'Pachet Promo')}
+              {renderCategoryButton('pachet-complet', 'Pachet Standard')}
             </div>
           </div>
         </div>
@@ -276,8 +276,8 @@ const Products = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               {filteredProducts.map((product) => (
                 <div key={product.id} className="bg-white p-4 sm:p-6 rounded-xl shadow-lg flex flex-col items-center">
-                  <div 
-                    className="w-full cursor-pointer transition-transform duration-300 hover:scale-105"
+                  <div
+                    className="w-full cursor-pointer transition-transform duration-300 hover:scale-105 relative"
                     onClick={() => navigate(`/produs/${product.category}`)}
                   >
                     <img
@@ -289,6 +289,13 @@ const Products = () => {
                         e.target.src = '/images/Icon.png';
                       }}
                     />
+                    {(product.id === 5 || product.id === 6 || product.id === 7 || product.id === 8) && (
+                      <img
+                        src="/images/new-icon.svg"
+                        alt="NEW"
+                        className="absolute top-1 left-1 right-1 h-20 object-contain drop-shadow-lg"
+                      />
+                    )}
                   </div>
                   <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-2 text-center">{product.title}</h3>
                   <p className="text-gray-600 mb-4 text-center text-sm">{product.shortDescription}</p>
