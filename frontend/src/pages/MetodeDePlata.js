@@ -27,10 +27,9 @@ const MetodeDePlata = () => {
               <p className="mb-3">➡️ Datele cardului <span className="font-semibold">NU</span> sunt stocate de Corcodusa.ro și sunt transmise criptat direct către banca procesatoare, prin conexiune securizată.</p>
               <p>Toate plățile se efectuează în LEI, la cursul de schimb stabilit de banca emitentă. Tranzacțiile vor apărea pe extrasul de cont sub denumirea <span className="font-semibold">Corcodusa.ro</span>.</p>
               <div className="flex space-x-4 mt-4">
-                <img 
-                  src="/images/stripe-circle-round-blue-logo-19777.png" 
-                  alt="Stripe" 
-                  className="h-12 w-auto" 
+                <img
+                  src="/images/iconstripe.png"
+                  alt="Stripe"
                   loading="lazy"
                   decoding="async"
                 />
@@ -57,4 +56,4 @@ const MetodeDePlata = () => {
   );
 };
 
-export default MetodeDePlata; 
+export default MetodeDePlata;
