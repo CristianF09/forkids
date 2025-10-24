@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Loader from './components/Loader';
+import QRCodeComponent from './components/QRCode';
 import Home from './pages/Home';
 import DespreNoi from './pages/DespreNoi';
 import Products from './pages/Products';
@@ -18,7 +19,6 @@ import Cancel from './pages/Cancel';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   useEffect(() => {
     let cancelled = false;
@@ -27,7 +27,6 @@ function App() {
       const fallbackTimer = setTimeout(() => {
         if (!cancelled) {
           setIsLoading(false);
-          setIsInitialLoad(false);
         }
       }, 1500); // Increased to 1.5s to ensure smooth animation
 
@@ -48,7 +47,6 @@ function App() {
               clearTimeout(fallbackTimer);
               if (!cancelled) {
                 setIsLoading(false);
-                setIsInitialLoad(false);
               }
               return;
             }
@@ -60,7 +58,6 @@ function App() {
       } finally {
         if (!cancelled) {
           setIsLoading(false);
-          setIsInitialLoad(false);
         }
       }
     }
@@ -89,6 +86,7 @@ if (isLoading) return <Loader title="Corcodusa.ro" subtitle="Se încarcă..." />
           <Route path="/intrebari-frecvente" element={<FAQ />} />
           <Route path="/success" element={<Success />} />
           <Route path="/cancel" element={<Cancel />} />
+          <Route path="/qr-code" element={<QRCodeComponent />} />
         </Routes>
       </main>
       <Footer />

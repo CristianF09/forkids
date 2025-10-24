@@ -181,8 +181,6 @@ const Products = () => {
   const location = useLocation();
   
   const [selectedCategory, setSelectedCategory] = useState(category || 'Toate produsele');
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const [showModal, setShowModal] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState(productsData);
 
   useEffect(() => {
@@ -396,42 +394,77 @@ const Products = () => {
 
         {/* Special Offer Section */}
         <section className="bg-gradient-to-r from-[#20BF55] to-[#FF6B00] text-white py-16 rounded-xl shadow-lg">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-8">
-              Oferta Specială: Pachet Complet
+              Oferte Speciale: Pachete Educative
             </h2>
-            <div className="bg-white text-gray-800 rounded-xl shadow-xl p-8 relative border-4 border-[#FF6B00] transform transition-transform duration-300 hover:scale-105">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#FF6B00] text-white text-sm font-bold px-4 py-1 rounded-full shadow-md">
-                Cea mai bună ofertă
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+              {/* Pachet Standard Card */}
+              <div className="bg-white text-gray-800 rounded-xl shadow-xl p-8 relative border-4 border-[#FF6B00] transform transition-transform duration-300 hover:scale-105">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#FF6B00] text-white text-sm font-bold px-4 py-1 rounded-full shadow-md">
+                  Cea mai bună ofertă
+                </div>
+                <h3 className="text-2xl font-bold mb-4">Pachet Standard</h3>
+                <p className="text-sm text-gray-500 mb-3">3-7 ani</p>
+                <p className="text-gray-600 mb-4">
+                  Obține toate cele 3 cărți la un preț special, cu peste 150 de pagini de activități educative și distractive pentru copilul tău.
+                </p>
+                <ul className="space-y-3 text-left mb-8">
+                  <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> Alfabetul în Joacă - activități de alfabetizare</li>
+                  <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> Matematică Distractivă - activități matematice</li>
+                  <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> Aventuri în Culori - activități artistice</li>
+                  <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> BONUS: 40 de pagini de colorat foarte interactive și distractive pentru copii</li>
+                  <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> BONUS: Diplome personalizate pentru fiecare secțiune completată (3 diplome)</li>
+                </ul>
+                <div className="flex justify-center items-center mb-6 space-x-4">
+                  <span className="text-5xl font-bold text-[#20BF55]">145 Lei</span>
+                  <span className="text-2xl line-through text-gray-500">177 Lei</span>
+                </div>
+                <button
+                  onClick={() => {
+                    window.open('https://buy.stripe.com/28E3cwc3ceav0OD5hWeZ203', '_blank');
+                  }}
+                  className="w-full bg-[#FF6B00] text-white py-3 rounded-md text-lg font-semibold hover:bg-[#E05C00] transition-colors shadow-lg inline-block mb-4"
+                >
+                  Cumpără pachetul standard
+                </button>
+                <p className="text-gray-700 text-center text-sm flex items-center justify-center">
+                  Plată securizată prin
+                  <img src="/images/iconstripe.png" alt="Stripe" className="ml-2" />
+                </p>
               </div>
-              <h3 className="text-2xl font-bold mb-4">Pachet Complet - Toate cărțile</h3>
-              <p className="text-sm text-gray-500 mb-3">3-7 ani</p>
-              <p className="text-gray-600 mb-4">
-                Obține toate cele 3 cărți la un preț special, cu peste 150 de pagini de activități educative și distractive pentru copilul tău.
-              </p>
-              <ul className="space-y-3 text-left mb-8 inline-block">
-                <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> Alfabetul în Joacă - activități de alfabetizare</li>
-                <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> Matematică Distractivă - activități matematice</li>
-                <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> Aventuri în Culori - activități artistice</li>
-                <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> BONUS: 40 de pagini de colorat foarte interactive și distractive pentru copii</li>
-                <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> BONUS: Diplome personalizate pentru fiecare secțiune completată (3 diplome)</li>
-              </ul>
-              <div className="flex justify-center items-center mb-6 space-x-4">
-                <span className="text-5xl font-bold text-[#20BF55]">110 Lei</span>
-                <span className="text-2xl line-through text-gray-500">147 Lei</span>
+
+              {/* Pachet Promo Card */}
+              <div className="bg-orange-100 text-gray-800 rounded-xl shadow-xl p-8 relative transform transition-transform duration-300 hover:scale-105">
+                <h3 className="text-2xl font-bold mb-4">Pachet Promo</h3>
+                <p className="text-sm text-gray-500 mb-3">3-7 ani</p>
+                <p className="text-gray-600 mb-4">
+                  Pachet esențial cu selecție atent aleasă de activități educative care acoperă principalele arii de dezvoltare.
+                </p>
+                <ul className="space-y-3 text-left mb-8">
+                  <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> Pagini de colorat selectate</li>
+                  <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> Labirinturi interactive</li>
+                  <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> Jocuri educative esențiale</li>
+                  <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> Activități de dezvoltare cognitivă</li>
+                  <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> BONUS: Diplomă de participare personalizată</li>
+                </ul>
+                <div className="flex justify-center items-center mb-6 space-x-4">
+                  <span className="text-5xl font-bold text-[#20BF55]">99 Lei</span>
+                  <span className="text-2xl line-through text-gray-500">120 Lei</span>
+                </div>
+                <button
+                  onClick={() => {
+                    window.open('https://buy.stripe.com/your_promo_stripe_link', '_blank');
+                  }}
+                  className="w-full bg-[#FF6B00] text-white py-3 rounded-md text-lg font-semibold hover:bg-[#E05C00] transition-colors shadow-lg inline-block mb-4"
+                >
+                  Cumpără pachetul promo
+                </button>
+                <p className="text-gray-700 text-center text-sm flex items-center justify-center">
+                  Plată securizată prin
+                  <img src="/images/iconstripe.png" alt="Stripe" className="ml-2" />
+                </p>
               </div>
-              <button
-                onClick={() => {
-                  window.open('https://buy.stripe.com/28E3cwc3ceav0OD5hWeZ203', '_blank');
-                }}
-                className="w-full bg-[#FF6B00] text-white py-3 rounded-md text-lg font-semibold hover:bg-[#E05C00] transition-colors shadow-lg inline-block mb-4"
-              >
-                Cumpără pachetul complet
-              </button>
-              <p className="text-gray-700 text-center text-sm flex items-center justify-center">
-                Plată securizată prin
-                <img src="/images/iconstripe.png" alt="Stripe" className="ml-2" />
-              </p>
             </div>
           </div>
         </section>
