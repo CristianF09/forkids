@@ -25,7 +25,7 @@ const PurchaseSteps = () => {
   ];
 
   return (
-    <section className="bg-white py-12 px-4 md:px-12">
+    <section className="bg-white py-12 px-4 md:px-12 max-w-6xl mx-auto">
       <h2 className="text-3xl font-bold text-center mb-10 text-gray-800">Proces simplu și rapid</h2>
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
         {steps.map((step, index) => (
@@ -43,4 +43,4 @@ const PurchaseSteps = () => {
   );
 };
 
-export default PurchaseSteps; 
+export default PurchaseSteps;

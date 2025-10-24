@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ChevronUp } from 'lucide-react';
 
 const Footer = () => {
   const [showScrollToTop, setShowScrollToTop] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -88,7 +89,20 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Informații</h3>
             <ul className="space-y-2">
               <li><Link to="/despre-noi" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Despre Noi</Link></li>
-              <li><Link to="/intrebari-frecvente" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Întrebări Frecvente</Link></li>
+              <li>
+                {location.pathname === '/' ? (
+                  <button
+                    onClick={() => document.getElementById('faq-section')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="text-gray-400 hover:text-white transition-colors text-left"
+                  >
+                    Întrebări Frecvente
+                  </button>
+                ) : (
+                  <Link to="/intrebari-frecvente" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                    Întrebări Frecvente
+                  </Link>
+                )}
+              </li>
               <li><Link to="/contact" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Contact</Link></li>
             </ul>
           </div>

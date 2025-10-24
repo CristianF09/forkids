@@ -39,7 +39,7 @@ const Header = () => {
         ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100'
         : 'bg-white/90 backdrop-blur-sm'
     }`}>
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3 group">
@@ -75,7 +75,7 @@ const Header = () => {
                     : 'text-gray-700 hover:text-[#FF6B00] hover:bg-[#FF6B00]/5'
                 }`}
               >
-                {item.label}
+                <span>{item.label}</span>
                 {location.pathname === item.to && (
                   <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-[#FF6B00] rounded-full"></div>
                 )}
@@ -119,12 +119,10 @@ const Header = () => {
                 }}
                 onClick={toggleMenu}
               >
-                <div className="flex items-center justify-between">
-                  <span>{item.label}</span>
-                  {location.pathname === item.to && (
-                    <div className="w-2 h-2 bg-[#FF6B00] rounded-full"></div>
-                  )}
-                </div>
+                <span>{item.label}</span>
+                {location.pathname === item.to && (
+                  <div className="w-2 h-2 bg-[#FF6B00] rounded-full ml-auto"></div>
+                )}
               </Link>
             ))}
           </div>
