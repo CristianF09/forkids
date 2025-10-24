@@ -103,8 +103,22 @@ const Home = () => {
               Învățare distractivă pentru copii 3-7 ani
             </h1>
             <p className="text-lg sm:text-xl md:text-2xl mb-8 max-w-4xl mx-auto opacity-90 leading-relaxed">
-              <span className="bg-gradient-to-r from-[#2C5F7A] to-[#0A4D68] bg-clip-text text-transparent font-semibold">Descoperă</span> cărțile noastre interactive în <span className="bg-gradient-to-r from-[#2C5F7A] to-[#0A4D68] bg-clip-text text-transparent font-semibold">format PDF</span> care transformă <span className="bg-gradient-to-r from-[#2C5F7A] to-[#0A4D68] bg-clip-text text-transparent font-semibold">educația în joacă</span> și dezvoltă abilitățile <span className="bg-gradient-to-r from-[#2C5F7A] to-[#0A4D68] bg-clip-text text-transparent font-semibold">copilului tău</span> într-un mod creativ și captivant!
+              Bun venit în lumea magică a educației distractive! <span className="bg-gradient-to-r from-[#2C5F7A] to-[#0A4D68] bg-clip-text text-transparent font-semibold">Descoperă</span> cărțile noastre interactive în <span className="bg-gradient-to-r from-[#2C5F7A] to-[#0A4D68] bg-clip-text text-transparent font-semibold">format PDF</span> care transformă <span className="bg-gradient-to-r from-[#2C5F7A] to-[#0A4D68] bg-clip-text text-transparent font-semibold">educația în joacă</span> și dezvoltă abilitățile <span className="bg-gradient-to-r from-[#2C5F7A] to-[#0A4D68] bg-clip-text text-transparent font-semibold">copilului tău</span> într-un mod creativ și captivant!
             </p>
+            <div className="flex flex-wrap justify-center gap-4 mb-8">
+              <div className="bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 text-white font-semibold">
+                ⭐ 5/5 Rating
+              </div>
+              <div className="bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 text-white font-semibold">
+                📚 150+ Pagini de Activități
+              </div>
+              <div className="bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 text-white font-semibold">
+                🎨 100% Interactive
+              </div>
+              <div className="bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 text-white font-semibold">
+                ❤️ Recomandat de Părinți
+              </div>
+            </div>
 
             {/* Benefits */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
@@ -125,59 +139,79 @@ const Home = () => {
               </div>
             </div>
 
-            {/* Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-              <button
-                onClick={() => setIsDownloadModalOpen(true)}
-                className="bg-white text-[#FF6B00] hover:bg-gray-50 px-8 py-4 rounded-2xl text-lg font-bold transition-all duration-300 shadow-xl transform hover:scale-105 inline-flex items-center group"
-              >
-                🎃 Descarcă GRATUIT E-book-ul 🎃
-                <Download className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform" />
-              </button>
-              <Link
-                to="/produse"
-                className="bg-[#FF6B00] text-white hover:bg-[#E05C00] px-8 py-4 rounded-2xl text-lg font-semibold transition-all duration-300 shadow-xl hover:shadow-2xl inline-flex items-center group"
-              >
-                Vezi produsele
-                <span className="ml-3 group-hover:translate-x-1 transition-transform">→</span>
-              </Link>
+            {/* Primary CTA - Free E-book */}
+            <div className="mb-16">
+              <div className="flex justify-center mb-8">
+                <button
+                  onClick={() => setIsDownloadModalOpen(true)}
+                  className="bg-gradient-to-r from-[#FFD700] to-[#FF6B00] text-white hover:from-[#FFE55C] hover:to-[#FF8C33] px-12 py-6 rounded-3xl text-2xl font-black transition-all duration-500 shadow-2xl transform hover:scale-110 inline-flex items-center group animate-pulse"
+                >
+                  🎁 DESCARCĂ GRATUIT E-BOOK-UL ACUM 🎁
+                  <Download className="ml-4 w-8 h-8 group-hover:translate-x-2 transition-transform" />
+                </button>
+              </div>
+              <p className="text-center text-white/80 text-lg mb-8 max-w-2xl mx-auto">
+                📖 Ghid complet cu 50+ pagini de activități gratuite pentru dezvoltarea copilului tău!
+              </p>
             </div>
           </div>
 
-          {/* Carousel Section */}
-          <div className="bg-gradient-to-r from-[#2C5F7A]/80 to-[#0A4D68]/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 text-center">
-              Activități și materiale interactive
-            </h2>
+          {/* Impactful Carousel Section */}
+          <div className="bg-gradient-to-r from-[#2C5F7A]/90 to-[#0A4D68]/90 backdrop-blur-md rounded-3xl p-10 shadow-2xl border-4 border-white/20 mb-12">
+            <div className="text-center mb-10">
+              <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
+                Descoperă Activitățile Noastre
+              </h2>
+              <p className="text-xl text-white/90 max-w-3xl mx-auto">
+                Fiecare imagine reprezintă o aventură educațională unică care va captiva imaginația copilului tău
+              </p>
+            </div>
             <Swiper
               modules={[Navigation, Pagination, Autoplay]}
               navigation
               pagination={{ clickable: true }}
-              autoplay={{ delay: 3000, disableOnInteraction: false }}
-              spaceBetween={20}
+              autoplay={{ delay: 2500, disableOnInteraction: false }}
+              spaceBetween={30}
               slidesPerView={1}
+              centeredSlides={true}
               breakpoints={{
-                640: { slidesPerView: 2 },
-                768: { slidesPerView: 3 },
-                1024: { slidesPerView: 4 },
+                640: { slidesPerView: 2, centeredSlides: false },
+                768: { slidesPerView: 3, centeredSlides: false },
+                1024: { slidesPerView: 4, centeredSlides: false },
               }}
               className="w-full"
             >
               {carouselImages.map((img, index) => (
                 <SwiperSlide key={index}>
-                  <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 p-4 flex flex-col items-center">
-                    <div className="relative w-full h-48 mb-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl flex items-center justify-center overflow-hidden">
+                  <div className="bg-white rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-110 p-6 flex flex-col items-center border-4 border-gradient-to-r from-[#2C5F7A] to-[#0A4D68]">
+                    <div className="relative w-full h-56 mb-6 bg-gradient-to-br from-[#2C5F7A]/10 to-[#0A4D68]/10 rounded-2xl flex items-center justify-center overflow-hidden border-2 border-white/50">
                       <img
                         src={`/images/carousel/${img}`}
                         alt={`Activitate ${index + 1}`}
-                        className="max-w-full w-full h-full object-contain rounded-xl transition-opacity duration-300"
+                        className="max-w-full w-full h-full object-contain rounded-xl transition-all duration-500 hover:scale-105"
                         loading="lazy"
                       />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
+                    </div>
+                    <div className="text-center">
+                      <span className="inline-block bg-gradient-to-r from-[#2C5F7A] to-[#0A4D68] text-white text-sm font-bold px-3 py-1 rounded-full">
+                        Activitate {index + 1}
+                      </span>
                     </div>
                   </div>
                 </SwiperSlide>
               ))}
             </Swiper>
+          </div>
+
+          {/* Secondary CTA - Products */}
+          <div className="text-center">
+            <Link
+              to="/produse"
+              className="inline-block bg-white text-[#FF6B00] hover:bg-gray-50 px-10 py-5 rounded-2xl text-xl font-bold transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 border-4 border-[#FF6B00]"
+            >
+              VEZI TOATE PRODUSELE
+            </Link>
           </div>
         </div>
       </section>
@@ -290,7 +324,7 @@ const Home = () => {
             <p className="text-xl md:text-2xl lg:text-3xl mb-8 max-w-5xl mx-auto font-light leading-relaxed text-white">
               Pregătit să oferi copilului tău o experiență educațională de neuitat?<br />
               <span className="font-semibold bg-gradient-to-r from-[#2C5F7A] to-[#0A4D68] bg-clip-text text-transparent">Fișele educative Corcodușa</span> dezvoltă logica, atenția și creativitatea copiilor.<br />
-              <span className="bg-gradient-to-r from-[#2C5F7A] to-[#0A4D68] bg-clip-text text-transparent font-bold">📥 Descarcă-le acum în format PDF</span> și oferă-i copilului tău o experiență educațională care îl va face să iubească învățarea!
+              <span className="bg-gradient-to-r from-[#2C5F7A] to-[#0A4D68] bg-clip-text text-transparent font-bold">Descarcă-le acum în format PDF</span> și oferă-i copilului tău o experiență educațională care îl va face să iubească învățarea!
             </p>
           </div>
 
@@ -502,10 +536,10 @@ const Home = () => {
       <section className="py-16 md:py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6 text-center">
-            📘 Întrebări Frecvente
+            Întrebări Frecvente
           </h2>
           <p className="text-lg text-gray-600 mb-12 text-center">
-            Ai întrebări? Iată răspunsurile la cele mai comune întrebări despre Corcodușa.ro și fișele educative digitale.
+            Întrebări? Iată răspunsurile la cele mai comune întrebări despre Corcodușa.ro și fișele educative digitale.
           </p>
           <div className="space-y-4">
             {faqs.map((faq, index) => (

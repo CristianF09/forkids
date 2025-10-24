@@ -398,72 +398,145 @@ const Products = () => {
             <h2 className="text-3xl md:text-4xl font-bold mb-8">
               Oferte Speciale: Pachete Educative
             </h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-stretch">
               {/* Pachet Standard Card */}
-              <div className="bg-white text-gray-800 rounded-xl shadow-xl p-8 relative border-4 border-[#FF6B00] transform transition-transform duration-300 hover:scale-105">
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#FF6B00] text-white text-sm font-bold px-4 py-1 rounded-full shadow-md">
-                  Cea mai bună ofertă
+              <div className="group relative">
+                <div className="absolute -inset-1 bg-gradient-to-r from-[#25B838] via-[#FF6B00] to-[#FFD700] rounded-3xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+                <div className="relative bg-white rounded-3xl shadow-2xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:shadow-3xl border-4 border-[#25B838]">
+                  <div className="absolute -top-1 left-1/2 -translate-x-1/2 bg-[#FF6B00] text-white text-sm font-bold px-4 py-1 rounded-full shadow-lg z-20 border-2 border-white">
+                    Cel mai bine vândut
+                  </div>
+
+                  <div className="bg-gradient-to-r from-[#2C5F7A] to-[#0A4D68] p-8 text-white pt-16">
+                    <div className="text-center">
+                      <h3 className="text-3xl lg:text-4xl font-black tracking-tight">PACHET STANDARD</h3>
+                    </div>
+                  </div>
+
+                  <div className="p-8">
+                    <ul className="space-y-4 mb-8">
+                      <li className="flex items-start text-gray-700">
+                        <div className="bg-[#FF6B00] rounded-full p-1 mr-3 mt-0.5">
+                          <Check className="w-3 h-3 text-white" />
+                        </div>
+                        <span className="text-sm font-medium">Alfabetul în Joacă - activități de alfabetizare</span>
+                      </li>
+                      <li className="flex items-start text-gray-700">
+                        <div className="bg-[#FF6B00] rounded-full p-1 mr-3 mt-0.5">
+                          <Check className="w-3 h-3 text-white" />
+                        </div>
+                        <span className="text-sm font-medium">Matematică Distractivă - activități matematice</span>
+                      </li>
+                      <li className="flex items-start text-gray-700">
+                        <div className="bg-[#FF6B00] rounded-full p-1 mr-3 mt-0.5">
+                          <Check className="w-3 h-3 text-white" />
+                        </div>
+                        <span className="text-sm font-medium">Aventuri în Culori - activități artistice</span>
+                      </li>
+                      <li className="flex items-start text-gray-700">
+                        <div className="bg-[#FF6B00] rounded-full p-1 mr-3 mt-0.5">
+                          <Check className="w-3 h-3 text-white" />
+                        </div>
+                        <span className="text-sm font-medium">🎨 BONUS: 40 de pagini de colorat interactive</span>
+                      </li>
+                      <li className="flex items-start text-gray-700">
+                        <div className="bg-[#FF6B00] rounded-full p-1 mr-3 mt-0.5">
+                          <Check className="w-3 h-3 text-white" />
+                        </div>
+                        <span className="text-sm font-medium">🏆 BONUS: 3 diplome personalizate</span>
+                      </li>
+                    </ul>
+
+                    <div className="text-center mb-6">
+                      <div className="text-5xl lg:text-6xl font-black text-[#FF6B00] mb-2">
+                        145 LEI
+                      </div>
+                      <div className="text-2xl line-through text-gray-400">177 Lei</div>
+                    </div>
+
+                    <button
+                      onClick={() => window.open('https://buy.stripe.com/28E3cwc3ceav0OD5hWeZ203', '_blank')}
+                      className="w-full bg-[#FF6B00] text-white py-4 px-8 rounded-2xl text-xl font-bold hover:bg-[#E05C00] transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 mb-6"
+                    >
+                      Cumpără pachetul
+                    </button>
+
+                    <div className="text-center">
+                      <p className="text-gray-600 text-sm flex items-center justify-center">
+                        <span className="mr-2">🔒</span>
+                        Plată securizată prin
+                        <img src="/images/iconstripe.png" alt="Stripe" className="ml-2 h-4" />
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <h3 className="text-2xl font-bold mb-4">Pachet Standard</h3>
-                <p className="text-sm text-gray-500 mb-3">3-7 ani</p>
-                <p className="text-gray-600 mb-4">
-                  Obține toate cele 3 cărți la un preț special, cu peste 150 de pagini de activități educative și distractive pentru copilul tău.
-                </p>
-                <ul className="space-y-3 text-left mb-8">
-                  <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> Alfabetul în Joacă - activități de alfabetizare</li>
-                  <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> Matematică Distractivă - activități matematice</li>
-                  <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> Aventuri în Culori - activități artistice</li>
-                  <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> BONUS: 40 de pagini de colorat foarte interactive și distractive pentru copii</li>
-                  <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> BONUS: Diplome personalizate pentru fiecare secțiune completată (3 diplome)</li>
-                </ul>
-                <div className="flex justify-center items-center mb-6 space-x-4">
-                  <span className="text-5xl font-bold text-[#20BF55]">145 Lei</span>
-                  <span className="text-2xl line-through text-gray-500">177 Lei</span>
-                </div>
-                <button
-                  onClick={() => {
-                    window.open('https://buy.stripe.com/28E3cwc3ceav0OD5hWeZ203', '_blank');
-                  }}
-                  className="w-full bg-[#FF6B00] text-white py-3 rounded-md text-lg font-semibold hover:bg-[#E05C00] transition-colors shadow-lg inline-block mb-4"
-                >
-                  Cumpără pachetul standard
-                </button>
-                <p className="text-gray-700 text-center text-sm flex items-center justify-center">
-                  Plată securizată prin
-                  <img src="/images/iconstripe.png" alt="Stripe" className="ml-2" />
-                </p>
               </div>
 
               {/* Pachet Promo Card */}
-              <div className="bg-orange-100 text-gray-800 rounded-xl shadow-xl p-8 relative transform transition-transform duration-300 hover:scale-105">
-                <h3 className="text-2xl font-bold mb-4">Pachet Promo</h3>
-                <p className="text-sm text-gray-500 mb-3">3-7 ani</p>
-                <p className="text-gray-600 mb-4">
-                  Pachet esențial cu selecție atent aleasă de activități educative care acoperă principalele arii de dezvoltare.
-                </p>
-                <ul className="space-y-3 text-left mb-8">
-                  <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> Pagini de colorat selectate</li>
-                  <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> Labirinturi interactive</li>
-                  <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> Jocuri educative esențiale</li>
-                  <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> Activități de dezvoltare cognitivă</li>
-                  <li className="flex items-start text-gray-700"><Check className="w-5 h-5 text-[#20BF55] mr-2" /> BONUS: Diplomă de participare personalizată</li>
-                </ul>
-                <div className="flex justify-center items-center mb-6 space-x-4">
-                  <span className="text-5xl font-bold text-[#20BF55]">99 Lei</span>
-                  <span className="text-2xl line-through text-gray-500">120 Lei</span>
+              <div className="group relative">
+                <div className="absolute -inset-1 bg-gradient-to-r from-[#FF6B00] via-[#FFD700] to-[#25B838] rounded-3xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+                <div className="relative bg-white rounded-3xl shadow-2xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:shadow-3xl">
+                  <div className="bg-gradient-to-r from-[#2C5F7A] to-[#0A4D68] p-8 text-white">
+                    <div className="text-center">
+                      <h3 className="text-3xl lg:text-4xl font-black tracking-tight">PACHET PROMO</h3>
+                    </div>
+                  </div>
+
+                  <div className="p-8">
+                    <ul className="space-y-4 mb-8">
+                      <li className="flex items-start text-gray-700">
+                        <div className="bg-[#FFD700] rounded-full p-1 mr-3 mt-0.5">
+                          <Check className="w-3 h-3 text-gray-800" />
+                        </div>
+                        <span className="text-sm font-medium">Pagini de colorat selectate</span>
+                      </li>
+                      <li className="flex items-start text-gray-700">
+                        <div className="bg-[#FFD700] rounded-full p-1 mr-3 mt-0.5">
+                          <Check className="w-3 h-3 text-gray-800" />
+                        </div>
+                        <span className="text-sm font-medium">Labirinturi interactive</span>
+                      </li>
+                      <li className="flex items-start text-gray-700">
+                        <div className="bg-[#FFD700] rounded-full p-1 mr-3 mt-0.5">
+                          <Check className="w-3 h-3 text-gray-800" />
+                        </div>
+                        <span className="text-sm font-medium">Jocuri educative esențiale</span>
+                      </li>
+                      <li className="flex items-start text-gray-700">
+                        <div className="bg-[#FFD700] rounded-full p-1 mr-3 mt-0.5">
+                          <Check className="w-3 h-3 text-gray-800" />
+                        </div>
+                        <span className="text-sm font-medium">Activități de dezvoltare cognitivă</span>
+                      </li>
+                      <li className="flex items-start text-gray-700">
+                        <div className="bg-[#FFD700] rounded-full p-1 mr-3 mt-0.5">
+                          <Check className="w-3 h-3 text-gray-800" />
+                        </div>
+                        <span className="text-sm font-medium">🏆 BONUS: Diplomă personalizată</span>
+                      </li>
+                    </ul>
+
+                    <div className="text-center mb-6">
+                      <div className="text-5xl lg:text-6xl font-black text-[#FFD700] mb-2">99 LEI</div>
+                      <div className="text-2xl line-through text-gray-400">120 Lei</div>
+                    </div>
+
+                    <button
+                      onClick={() => window.open('https://buy.stripe.com/your_promo_stripe_link', '_blank')}
+                      className="w-full bg-[#FFD700] text-gray-800 py-4 px-8 rounded-2xl text-xl font-bold hover:bg-[#E6C300] transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 mb-6"
+                    >
+                      Cumpără pachetul
+                    </button>
+
+                    <div className="text-center">
+                      <p className="text-gray-600 text-sm flex items-center justify-center">
+                        <span className="mr-2">🔒</span>
+                        Plată securizată prin
+                        <img src="/images/iconstripe.png" alt="Stripe" className="ml-2 h-4" />
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <button
-                  onClick={() => {
-                    window.open('https://buy.stripe.com/your_promo_stripe_link', '_blank');
-                  }}
-                  className="w-full bg-[#FF6B00] text-white py-3 rounded-md text-lg font-semibold hover:bg-[#E05C00] transition-colors shadow-lg inline-block mb-4"
-                >
-                  Cumpără pachetul promo
-                </button>
-                <p className="text-gray-700 text-center text-sm flex items-center justify-center">
-                  Plată securizată prin
-                  <img src="/images/iconstripe.png" alt="Stripe" className="ml-2" />
-                </p>
               </div>
             </div>
           </div>
