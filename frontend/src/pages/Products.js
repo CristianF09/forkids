@@ -7,13 +7,13 @@ const productsData = [
   {
     id: 2,
     category: 'alfabet',
-    title: 'ALFABETUL',
-    pdfFile: 'Alfabetul .pdf',
+    title: 'Alfabetul',
+    pdfFile: 'Alfabetul.pdf',
     price: 59,
     image: '/images/Alfabetul .jpg',
-    priceId: 'price_1RxRzjK6Qc2WK3kdz8eAiQjD',
+    priceId: 'price_1SNBBrK6Qc2WK3kdE86Rm9w4',
     productId: 'prod_Sg7FSlYGXYLqIx',
-    stripeLink: 'https://buy.stripe.com/14AaEY8R02rNfJxh0EeZ202',
+    stripeLink: 'https://buy.stripe.com/3cIfZiaZ8aYjgNB39OeZ209',
     age: '3-7 ani',
     shortDescription: 'Învățarea literelor alfabetului prin activități captivante.',
     description: 'Această carte educativă îi ajută pe cei mici să descopere literele alfabetului printr-o serie de activități captivante și jocuri distractive. Peste 50 de pagini de activități.',
@@ -28,13 +28,13 @@ const productsData = [
   {
     id: 3,
     category: 'matematica',
-    title: 'NUMERE',
+    title: 'Numere',
     pdfFile: 'Numere.pdf',
     price: 59,
     image: '/images/Numere.jpg',
-    priceId: 'price_1RxS3KK6Qc2WK3kd97xe4ihN',
+    priceId: 'price_1SNC1IK6Qc2WK3kdB3AIEUYP',
     productId: 'prod_Sg7Fm0E2S5Hm1k',
-    stripeLink: 'https://buy.stripe.com/fZu8wQ8R0c2n2WLh0EeZ201',
+    stripeLink: 'https://buy.stripe.com/fZu00k9V4eavapd8u8eZ20b',
     age: '3-7 ani',
     shortDescription: 'Dezvoltă abilități matematice prin jocuri interactive.',
     description: 'Cărțile de numere sunt un instrument excelent pentru dezvoltarea abilităților matematice și logice a copiilor. Peste 50 de pagini de activități.',
@@ -48,13 +48,13 @@ const productsData = [
   {
     id: 4,
     category: 'forme-si-culori',
-    title: 'FORME SI CULORI',
+    title: 'Forme și Culori',
     pdfFile: 'FormeSiCulori.pdf',
     price: 59,
     image: '/images/Forme si culori.jpg',
-    priceId: 'price_1RxS42K6Qc2WK3kdWE7DjklP',
-    productId: 'prod_Sg7GhD6zkyA7lA',
-    stripeLink: 'https://buy.stripe.com/00geVa4AKayf2WL7swiN201',
+    priceId: 'price_1SNC2uK6Qc2WK3kdxNwaWzy9',
+    productId: 'prod_Sg7FLP5uIieb7r',
+    stripeLink: 'https://buy.stripe.com/6oU7sMaZ84zVeFt6m0eZ20a',
     age: '3-7 ani',
     shortDescription: 'Descoperă lumea formelor și culorilor în mod creativ.',
     description: 'Cunoașterea formelor și a culorilor este esențială în dezvoltarea cognitivă timpurie a copiilor. Peste 50 de pagini de activități.',
@@ -69,21 +69,21 @@ const productsData = [
   {
     id: 1,
     category: 'pachet-complet',
-    title: 'PACHET STANDARD',
+    title: 'Pachet Standard',
     pdfFile: 'BonusCertificateDeAbsovire.pdf',
     price: 145,
     originalPrice: 226,
     image: '/images/Pachet Standard.png',
-    priceId: 'price_1RxRyVK6Qc2WK3kdnE1H9PkY',
+    priceId: 'price_1SNBAgK6Qc2WK3kdgRGn5eW2',
     productId: 'prod_Sg7FB1xJVJc2MV',
-    stripeLink: 'https://buy.stripe.com/28E3cwc3ceav0OD5hWeZ203',
+    stripeLink: 'https://buy.stripe.com/bJe9AUc3c3vR2WLcKoeZ20c',
     age: '3-7 ani',
     shortDescription: 'Pachetul complet cu toate resursele educaționale.',
     description: 'Obține toate cele 3 cărți la un preț special, cu peste 150 de pagini de activități educative și distractive pentru copilul tău.',
     features: [
-      'Alfabetul în Joacă - activități de alfabetizare',
-      'Matematică Distractivă - activități matematice',
-      'Aventuri în Culori - activități artistice',
+      'Alfabetul - activități de alfabetizare',
+      'Numere - activități matematice',
+      'Forme și Culori - activități artistice',
       'BONUS: 40 de pagini de colorat foarte interactive și distractive pentru copii',
       'BONUS: Diplome personalizate pentru fiecare secțiune completată (3 diplome)'
     ]
@@ -91,13 +91,13 @@ const productsData = [
   {
     id: 6,
     category: 'labirinturi',
-    title: 'LABIRINTURI MAGICE',
-    pdfFile: 'LabirinturiMagice.pdf',
+    title: 'Labirinturi Magice',
+    pdfFile: 'Labirinturi Magice.pdf',
     price: 59,
     image: '/images/Labirinturi Magice.png',
-    priceId: 'your_stripe_price_id',
-    productId: 'your_stripe_product_id',
-    stripeLink: 'your_stripe_link',
+    priceId: 'price_1SNCfLK6Qc2WK3kdVbZ9T85H',
+    productId: 'prod_TJqMYITWTkXrqm',
+    stripeLink: 'https://buy.stripe.com/4gM4gA4AKd6rdBpeSweZ205',
     age: '4-7 ani',
     shortDescription: 'Explorează labirinturi magice pentru dezvoltare cognitivă.',
     description: 'Jocuri creative cu labirinturi care dezvoltă gândirea logică, capacitatea de rezolvare a problemelor și coordonarea. Fiecare labirint oferă o nouă aventură de învățare.',
@@ -112,13 +112,13 @@ const productsData = [
   {
     id: 7,
     category: 'jocuri-educative',
-    title: 'JOCURI ȘI ACTIVITĂȚI EDUCATIVE',
-    pdfFile: 'JocuriEducative.pdf',
+    title: 'Jocuri și Activități Educative',
+    pdfFile: 'JocuriSiActivitatiEducative.pdf',
     price: 59,
     image: '/images/Jocuri si Activitati Distractive.png',
-    priceId: 'your_stripe_price_id',
-    productId: 'your_stripe_product_id',
-    stripeLink: 'your_stripe_link',
+    priceId: 'price_1SNCYSK6Qc2WK3kd1YKIoyo9',
+    productId: 'prod_TJqEqowI96zqa3',
+    stripeLink: 'https://buy.stripe.com/9B69AU0ku5DZ2WL4dSeZ206',
     age: '3-7 ani',
     shortDescription: 'Colecție variată de jocuri și activități interactive.',
     description: 'O colecție completă de jocuri și activități educative care acoperă multiple arii de dezvoltare. Include puzzle-uri, jocuri de memorie, activități de potrivire și multe altele.',
@@ -133,13 +133,13 @@ const productsData = [
   {
     id: 5,
     category: 'colorat',
-    title: 'CARTE DE COLORAT',
+    title: 'Carte de Colorat',
     pdfFile: 'CarteDeColorat.pdf',
     price: 49,
     image: '/images/Carte de Colorat.png',
-    priceId: 'your_stripe_price_id',
-    productId: 'your_stripe_product_id',
-    stripeLink: 'your_stripe_link',
+    priceId: 'price_1SNCDvK6Qc2WK3kdR7PskNbO',
+    productId: 'prod_TJpts2v6oxXec2',
+    stripeLink: 'https://buy.stripe.com/8x2cN6c3c8QbeFt9yceZ207',
     age: '3-7 ani',
     shortDescription: 'Carte completă de colorat cu activități interactive.',
     description: 'Carte completă de colorat cu activități interactive special create pentru dezvoltarea creativității și îmbunătățirea coordonării mână-ochi. Include imagini variate și atractive pentru copii.',
@@ -154,17 +154,17 @@ const productsData = [
   {
     id: 8,
     category: 'pachet-standard',
-    title: 'PACHET PROMO',
-    pdfFile: 'PachetStandard.pdf',
+    title: 'Pachet Promo',
+    pdfFile: 'PachetPromo.pdf',
     price: 99,
     originalPrice: 120,
     image: '/images/Pachet Promo.png',
-    priceId: 'your_stripe_price_id',
-    productId: 'your_stripe_product_id',
-    stripeLink: 'your_stripe_link',
+    priceId: 'price_1SNCw4K6Qc2WK3kdOLmO6qpp',
+    productId: 'prod_TJqdmBiCDbNA9I',
+    stripeLink: 'https://buy.stripe.com/aFa9AU3wG4zVgNB6m0eZ204',
     age: '3-7 ani',
     shortDescription: 'Pachet esențial pentru dezvoltare completă.',
-    description: 'Pachetul Standard include o selecție atent aleasă de activități educative care acoperă principalele arii de dezvoltare ale copilului tău.',
+    description: 'Pachetul Promo include o selecție atent aleasă de activități educative care acoperă principalele arii de dezvoltare ale copilului tău.',
     features: [
       'Pagini de colorat selectate',
       'Labirinturi interactive',
@@ -419,25 +419,25 @@ const Products = () => {
                         <div className="bg-[#FF6B00] rounded-full p-1 mr-3 mt-0.5">
                           <Check className="w-3 h-3 text-white" />
                         </div>
-                        <span className="text-sm font-medium">Alfabetul în Joacă - activități de alfabetizare</span>
+                        <span className="text-sm font-medium">Alfabetul - activități de alfabetizare</span>
                       </li>
                       <li className="flex items-start text-gray-700">
                         <div className="bg-[#FF6B00] rounded-full p-1 mr-3 mt-0.5">
                           <Check className="w-3 h-3 text-white" />
                         </div>
-                        <span className="text-sm font-medium">Matematică Distractivă - activități matematice</span>
+                        <span className="text-sm font-medium">Numere - activități matematice</span>
                       </li>
                       <li className="flex items-start text-gray-700">
                         <div className="bg-[#FF6B00] rounded-full p-1 mr-3 mt-0.5">
                           <Check className="w-3 h-3 text-white" />
                         </div>
-                        <span className="text-sm font-medium">Aventuri în Culori - activități artistice</span>
+                        <span className="text-sm font-medium">Forme și Culori - activități artistice</span>
                       </li>
                       <li className="flex items-start text-gray-700">
                         <div className="bg-[#FF6B00] rounded-full p-1 mr-3 mt-0.5">
                           <Check className="w-3 h-3 text-white" />
                         </div>
-                        <span className="text-sm font-medium">🎨 BONUS: 40 de pagini de colorat interactive</span>
+                        <span className="text-sm font-medium">🎨 BONUS: Carte de Colorat completă</span>
                       </li>
                       <li className="flex items-start text-gray-700">
                         <div className="bg-[#FF6B00] rounded-full p-1 mr-3 mt-0.5">
@@ -451,11 +451,11 @@ const Products = () => {
                       <div className="text-5xl lg:text-6xl font-black text-[#FF6B00] mb-2">
                         145 LEI
                       </div>
-                      <div className="text-2xl line-through text-gray-400">177 Lei</div>
+                      <div className="text-2xl line-through text-gray-400">226 Lei</div>
                     </div>
 
                     <button
-                      onClick={() => window.open('https://buy.stripe.com/28E3cwc3ceav0OD5hWeZ203', '_blank')}
+                      onClick={() => window.open('https://buy.stripe.com/bJe9AUc3c3vR2WLcKoeZ20c', '_blank')}
                       className="w-full bg-[#FF6B00] text-white py-4 px-8 rounded-2xl text-xl font-bold hover:bg-[#E05C00] transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 mb-6"
                     >
                       Cumpără pachetul
@@ -522,7 +522,7 @@ const Products = () => {
                     </div>
 
                     <button
-                      onClick={() => window.open('https://buy.stripe.com/your_promo_stripe_link', '_blank')}
+                      onClick={() => window.open('https://buy.stripe.com/aFa9AU3wG4zVgNB6m0eZ204', '_blank')}
                       className="w-full bg-[#FFD700] text-gray-800 py-4 px-8 rounded-2xl text-xl font-bold hover:bg-[#E6C300] transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 mb-6"
                     >
                       Cumpără pachetul

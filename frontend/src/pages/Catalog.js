@@ -5,51 +5,99 @@ import { Search, ShoppingCart, CheckCircle2, ArrowRight, Gift } from 'lucide-rea
 const products = [
   {
     id: 'prod_Sg7FB1xJVJc2MV',
-    title: 'Pachet Complet',
+    title: 'Pachet Standard',
     ageRangeDisplay: '3-7 ani',
     description: 'Obține toate cele 3 cărți la un preț special, cu peste 150 de pagini de activități educative și distractive.',
-    price: 110,
-    image: '/images/Pachet Promo.jpg',
+    price: 145,
+    image: '/images/Pachet Standard.png',
     category: 'all',
-    stripeLink: 'https://buy.stripe.com/28E3cwc3ceav0OD5hWeZ203',
-    priceId: 'price_1RxRyVK6Qc2WK3kdnE1H9PkY',
+    stripeLink: 'https://buy.stripe.com/bJe9AUc3c3vR2WLcKoeZ20c',
+    priceId: 'price_1SNBAgK6Qc2WK3kdgRGn5eW2',
     imageBgColor: 'bg-gradient-to-r from-[#20BF55] to-[#01BAEF]'
   },
   {
     id: 'prod_Sg7FSlYGXYLqIx',
-    title: 'Alfabetul în Joacă',
+    title: 'Alfabetul',
     ageRangeDisplay: '3-5 ani',
     description: 'Învață literele și scrisul de mână prin activități captivante și jocuri interactive.',
-    price: 49,
+    price: 59,
     image: '/images/Alfabetul .jpg',
     category: 'alfabet',
-    stripeLink: 'https://buy.stripe.com/14AaEY8R02rNfJxh0EeZ202',
-    priceId: 'price_1RxRzjK6Qc2WK3kdz8eAiQjD',
+    stripeLink: 'https://buy.stripe.com/3cIfZiaZ8aYjgNB39OeZ209',
+    priceId: 'price_1SNBBrK6Qc2WK3kdE86Rm9w4',
     imageBgColor: 'bg-[#2680EB]'
   },
   {
     id: 'prod_Sg7Fm0E2S5Hm1k',
-    title: 'Matematică Distractivă',
+    title: 'Numere',
     ageRangeDisplay: '4-6 ani',
     description: 'Descoperă cifrele, număratul și operații matematice simple prin jocuri și activități interactive.',
-    price: 49,
+    price: 59,
     image: '/images/Numere.jpg',
     category: 'numere',
-    stripeLink: 'https://buy.stripe.com/fZu8wQ8R0c2n2WLh0EeZ201',
-    priceId: 'price_1RxS3KK6Qc2WK3kd97xe4ihN',
+    stripeLink: 'https://buy.stripe.com/fZu00k9V4eavapd8u8eZ20b',
+    priceId: 'price_1SNC1IK6Qc2WK3kdB3AIEUYP',
     imageBgColor: 'bg-[#20BF55]'
   },
   {
     id: 'prod_Sg7FLP5uIieb7r',
-    title: 'Aventuri în Culori',
+    title: 'Forme și Culori',
     ageRangeDisplay: '3-7 ani',
     description: 'Planșe de colorat, activități de desen și jocuri care dezvoltă creativitatea și motricitatea fină.',
-    price: 49,
+    price: 59,
     image: '/images/Forme si culori.jpg',
     category: 'culori',
-    stripeLink: 'https://buy.stripe.com/eVqdRaffo2rNfJxbGkeZ200',
-    priceId: 'price_1RxS3hK6Qc2WK3kdTL15dECJ',
+    stripeLink: 'https://buy.stripe.com/6oU7sMaZ84zVeFt6m0eZ20a',
+    priceId: 'price_1SNC2uK6Qc2WK3kdxNwaWzy9',
     imageBgColor: 'bg-[#FFD100]'
+  },
+  {
+    id: 'prod_TJqEqowI96zqa3',
+    title: 'Jocuri și Activități Educative',
+    ageRangeDisplay: '3-7 ani',
+    description: 'Colecție variată de jocuri și activități interactive care acoperă multiple arii de dezvoltare.',
+    price: 59,
+    image: '/images/Jocuri si Activitati Distractive.png',
+    category: 'jocuri',
+    stripeLink: 'https://buy.stripe.com/9B69AU0ku5DZ2WL4dSeZ206',
+    priceId: 'price_1SNCYSK6Qc2WK3kd1YKIoyo9',
+    imageBgColor: 'bg-[#FF6B00]'
+  },
+  {
+    id: 'prod_TJpts2v6oxXec2',
+    title: 'Carte de Colorat',
+    ageRangeDisplay: '3-7 ani',
+    description: 'Carte completă de colorat cu activități interactive pentru dezvoltarea creativității.',
+    price: 49,
+    image: '/images/Carte de Colorat.png',
+    category: 'colorat',
+    stripeLink: 'https://buy.stripe.com/8x2cN6c3c8QbeFt9yceZ207',
+    priceId: 'price_1SNCDvK6Qc2WK3kdR7PskNbO',
+    imageBgColor: 'bg-[#FFD100]'
+  },
+  {
+    id: 'prod_TJqMYITWTkXrqm',
+    title: 'Labirinturi Magice',
+    ageRangeDisplay: '4-7 ani',
+    description: 'Explorează labirinturi magice pentru dezvoltare cognitivă și gândire logică.',
+    price: 59,
+    image: '/images/Labirinturi Magice.png',
+    category: 'labirinturi',
+    stripeLink: 'https://buy.stripe.com/4gM4gA4AKd6rdBpeSweZ205',
+    priceId: 'price_1SNCfLK6Qc2WK3kdVbZ9T85H',
+    imageBgColor: 'bg-[#20BF55]'
+  },
+  {
+    id: 'prod_TJqdmBiCDbNA9I',
+    title: 'Pachet Promo',
+    ageRangeDisplay: '3-7 ani',
+    description: 'Pachet esențial cu selecție atent aleasă de activități pentru dezvoltare completă.',
+    price: 99,
+    image: '/images/Pachet Promo.png',
+    category: 'pachet-promo',
+    stripeLink: 'https://buy.stripe.com/aFa9AU3wG4zVgNB6m0eZ204',
+    priceId: 'price_1SNCw4K6Qc2WK3kdOLmO6qpp',
+    imageBgColor: 'bg-gradient-to-r from-[#FF6B00] to-[#FFD700]'
   }
 ];
 
@@ -170,13 +218,13 @@ const Catalog = () => {
         {/* Promo Package Section (Large Banner) */}
         <div className="promo-package relative bg-[#E0FFE0] rounded-2xl p-4 sm:p-8 shadow-lg mt-8"> {/* Responsive padding, margin-top for spacing */}
           <div className="text-center mb-6 sm:mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-800">Ofertă Specială: Pachet Complet</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-800">Ofertă Specială: Pachet Standard</h2>
           </div>
           <div className="product-card flex flex-col md:flex-row items-center gap-6 md:gap-8">
             <div className="w-full md:w-1/2 h-40 xs:h-56 sm:h-64 relative rounded-xl overflow-hidden mb-4 md:mb-0">
               <img
-                src={promoPackageBannerImage}
-                alt="Pachet complet"
+                src="/images/Pachet Standard.png"
+                alt="Pachet Standard"
                 className="max-w-full w-full h-full object-contain rounded-md bg-white mx-auto"
               />
             </div>
@@ -184,18 +232,18 @@ const Catalog = () => {
               <span className="age-range absolute top-3 left-1/2 -translate-x-1/2 bg-[#FF6B00] text-white px-3 py-1 rounded-full text-xs font-bold w-fit">
                 3-7 ani
               </span>
-              <h3 className="text-lg sm:text-2xl font-bold text-gray-800 mt-8 mb-2">Pachet Complet – Toate cărțile</h3>
+              <h3 className="text-lg sm:text-2xl font-bold text-gray-800 mt-8 mb-2">Pachet Standard – Toate cărțile</h3>
               <p className="text-gray-600 text-xs sm:text-sm mb-4">
                 Obține toate cele 3 cărți la un preț special, cu peste 150 de pagini de activități educative și distractive.
               </p>
               <div className="price flex items-center gap-2 sm:gap-4 mb-4 sm:mb-6 justify-center">
-                  <span className="promo text-2xl sm:text-3xl font-bold text-[#FF6B00]">110 Lei</span>
-                  <span className="original text-base sm:text-lg text-gray-400 line-through">117 Lei</span>
+                  <span className="promo text-2xl sm:text-3xl font-bold text-[#FF6B00]">145 Lei</span>
+                  <span className="original text-base sm:text-lg text-gray-400 line-through">226 Lei</span>
               </div>
               <div className="text-center">
                 <button
                   onClick={() => {
-                    window.open('https://buy.stripe.com/28E3cwc3ceav0OD5hWeZ203', '_blank');
+                    window.open('https://buy.stripe.com/bJe9AUc3c3vR2WLcKoeZ20c', '_blank');
                   }}
                   className="buy-button inline-flex items-center gap-2 bg-[#FF6B00] text-white px-4 py-2 sm:px-6 sm:py-3 rounded-xl font-bold hover:bg-[#FF6B00]/90 transition-colors text-sm sm:text-base"
                 >
@@ -220,7 +268,7 @@ const Catalog = () => {
           <div className="flex flex-col md:flex-row justify-center gap-8">
             <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
               <h3 className="text-2xl font-bold text-gray-800 mb-4">Cărți Individuale</h3>
-              <p className="text-4xl font-bold text-[#20BF55] mb-4">49 <span className="text-xl">Lei/carte</span></p>
+              <p className="text-4xl font-bold text-[#20BF55] mb-4">49-59 <span className="text-xl">Lei/carte</span></p>
               <ul className="space-y-3 mb-6 text-left">
                 <li className="flex items-center">
                   <CheckCircle2 className="w-5 h-5 text-[#20BF55] mr-2" />
@@ -247,13 +295,13 @@ const Catalog = () => {
               <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#FF6B00] text-white px-4 py-1 rounded-full text-sm font-bold">
                 Cea mai bună ofertă
               </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4 mt-6">Pachet Complet</h3>
-              <p className="text-4xl font-bold text-[#FF6B00] mb-4">110 <span className="text-xl">Lei</span></p>
-              <p className="text-lg text-gray-400 line-through mb-4">117 Lei</p>
+              <h3 className="text-2xl font-bold text-gray-800 mb-4 mt-6">Pachet Standard</h3>
+              <p className="text-4xl font-bold text-[#FF6B00] mb-4">145 <span className="text-xl">Lei</span></p>
+              <p className="text-lg text-gray-400 line-through mb-4">226 Lei</p>
               <ul className="space-y-3 mb-6 text-left">
                 <li className="flex items-center">
                   <CheckCircle2 className="w-5 h-5 text-[#20BF55] mr-2" />
-                  <span className="text-gray-600">Toate cele 3 cărți</span>
+                  <span className="text-gray-600">Toate cele 3 cărți principale</span>
                 </li>
                 <li className="flex items-center">
                   <CheckCircle2 className="w-5 h-5 text-[#20BF55] mr-2" />
@@ -265,20 +313,20 @@ const Catalog = () => {
                 </li>
                 <li className="flex items-center">
                   <CheckCircle2 className="w-5 h-5 text-[#FF6B00] mr-2" />
-                  <span className="text-gray-600 font-semibold">BONUS: Jocuri educative extra</span>
+                  <span className="text-gray-600 font-semibold">BONUS: Carte de colorat completă</span>
                 </li>
                 <li className="flex items-center">
                   <CheckCircle2 className="w-5 h-5 text-[#FF6B00] mr-2" />
-                  <span className="text-gray-600 font-semibold">BONUS: Diplome speciale</span>
+                  <span className="text-gray-600 font-semibold">BONUS: 3 diplome personalizate</span>
                 </li>
               </ul>
               <button
                 onClick={() => {
-                  window.open('https://buy.stripe.com/28E3cwc3ceav0OD5hWeZ203', '_blank');
+                  window.open('https://buy.stripe.com/bJe9AUc3c3vR2WLcKoeZ20c', '_blank');
                 }}
                 className="inline-flex items-center gap-2 bg-[#FF6B00] text-white px-6 py-3 rounded-xl font-bold hover:bg-[#FF6B00]/90 transition-colors"
               >
-                Cumpără pachetul complet
+                Cumpără pachetul standard
               </button>
             </div>
           </div>
@@ -288,4 +336,4 @@ const Catalog = () => {
   );
 };
 
-export default Catalog; 
+export default Catalog;

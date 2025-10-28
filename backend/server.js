@@ -4,21 +4,22 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
 
-// Import rute
+// Import rute existente
 const pdfRoutes = require('./routes/pdfs');
 const paymentRoutes = require('./routes/payments');
 const contactRoutes = require('./routes/contact');
 const checkoutRoutes = require('./routes/checkout');
 const successRoutes = require('./routes/success');
 const webhookRoutes = require('./routes/webhook');
-// const emailTestRoutes = require('./routes/emailTest'); // Test route removed
 const productsRoutes = require('./routes/products');
-const downloadRoutes = require('./routes/download');
 const testRoutes = require('./routes/test');
+
+// ✅ Ruta pentru Ebook Leads
+const ebookLeadsRoutes = require('./routes/ebookLeads');
 
 const app = express();
 
-// Middleware generale
+// === Middleware generale ===
 const defaultAllowedOrigins = [
   'http://localhost:3000',
   'http://localhost:10000',
@@ -36,53 +37,121 @@ const allowedOrigins = Array.from(new Set([...defaultAllowedOrigins, ...envAllow
 
 app.use(cors({
   origin: function(origin, callback) {
-    if (!origin) return callback(null, true); // allow non-browser or same-origin
+    if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin)) return callback(null, true);
+    console.log('❌ CORS blocked for origin:', origin);
     return callback(new Error('Not allowed by CORS'));
   },
   credentials: true
 }));
 
-// Stripe webhook must be mounted BEFORE express.json(), with express.raw()
+// Stripe webhook trebuie montat înainte de express.json()
 app.use('/api/webhook', express.raw({ type: 'application/json' }), webhookRoutes);
 
-// Now parse JSON for all other routes
+// Parse JSON pentru toate celelalte rute
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Conectare MongoDB - folosim direct MONGODB_URI din .env
+// === ✅ CONECTARE MONGODB CU DEBUG ===
 const mongoUri = process.env.MONGODB_URI;
 
-// MongoDB connection (optional for development)
+// Debug MongoDB connection
+console.log('🔍 MongoDB Configuration:');
+console.log('📦 Database:', mongoUri ? mongoUri.split('/').pop().split('?')[0] : 'Not set');
+console.log('👤 User:', mongoUri ? mongoUri.split('//')[1].split(':')[0] : 'Not set');
+
 if (mongoUri) {
-  mongoose.connect(mongoUri)
-    .then(() => console.log('✅ Conectat la MongoDB'))
+  mongoose.connect(mongoUri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 5000,
+    socketTimeoutMS: 45000,
+  })
+    .then(() => {
+      console.log('✅ Conectat la MongoDB - ebookhalloween database');
+      
+      // Listează toate colecțiile pentru debug
+      mongoose.connection.db.listCollections().toArray((err, collections) => {
+        if (err) {
+          console.log('❌ Eroare la listarea colecțiilor:', err);
+          return;
+        }
+        console.log('📁 Colecții în baza de date:');
+        collections.forEach(collection => {
+          console.log(`   - ${collection.name}`);
+        });
+      });
+    })
     .catch(err => {
       console.error('❌ Eroare conectare MongoDB:', err.message);
-      console.log('⚠️ Serverul va rula fără MongoDB pentru testare');
+      console.log('🔧 Verifică:');
+      console.log('   1. MongoDB URI în .env');
+      console.log('   2. Parola pentru user');
+      console.log('   3. IP-ul este whitelisted în MongoDB Atlas');
     });
 } else {
-  console.log('⚠️ MONGODB_URI nu este setat - serverul va rula fără MongoDB');
+  console.log('❌ MONGODB_URI nu este setat în .env');
 }
 
-// Folosim rutele definite
+// Event listeners pentru MongoDB
+mongoose.connection.on('connected', () => {
+  console.log('✅ MongoDB connected successfully');
+});
+
+mongoose.connection.on('error', (err) => {
+  console.log('❌ MongoDB connection error:', err);
+});
+
+// === Folosim rutele definite ===
 app.use('/api/pdfs', pdfRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/checkout', checkoutRoutes);
-app.use('/api', successRoutes); // <-- aici
-// app.use('/api', emailTestRoutes); // Email test routes - removed
-app.use('/api/products', productsRoutes); // Products routes
-app.use('/api/download', downloadRoutes); // Download routes for PDFs
-app.use('/api/test', testRoutes); // Local test routes (guarded by env)
+app.use('/api', successRoutes);
+app.use('/api/products', productsRoutes);
+app.use('/api/test', testRoutes);
 
-// Health check route
-app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
+// ✅ Ruta pentru Ebook Leads
+app.use('/api/ebook-leads', ebookLeadsRoutes);
 
-// Servește frontendul (din folderul backend/frontend)
+// === ✅ Health check cu status MongoDB ===
+app.get('/api/health', (req, res) => {
+  const mongoStatus = mongoose.connection.readyState === 1 ? 'connected' : 'disconnected';
+  
+  res.json({ 
+    status: 'ok', 
+    mongodb: mongoStatus,
+    database: 'ebookhalloween',
+    timestamp: new Date().toISOString()
+  });
+});
+
+// === ✅ Test route pentru ebook leads ===
+app.get('/api/debug/ebook-leads', async (req, res) => {
+  try {
+    const EbookLead = require('./models/EbookLead');
+    const leadCount = await EbookLead.countDocuments();
+    
+    res.json({
+      success: true,
+      collection: 'ebookleads',
+      totalLeads: leadCount,
+      database: 'ebookhalloween',
+      mongoStatus: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      error: error.message,
+      database: 'ebookhalloween',
+      mongoStatus: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
+    });
+  }
+});
+
+// === Servește frontendul ===
 const frontendBuildPath = path.join(__dirname, 'frontend');
 if (require('fs').existsSync(frontendBuildPath)) {
-  // Servește frontendul cu cache control pentru index.html
   app.use(express.static(frontendBuildPath, {
     setHeaders: (res) => {
       res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
@@ -91,7 +160,6 @@ if (require('fs').existsSync(frontendBuildPath)) {
     }
   }));
 
-  // Servește index.html pentru orice altă rută neidentificată (SPA routing)
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(frontendBuildPath, 'index.html'), {
       headers: {
@@ -106,19 +174,19 @@ if (require('fs').existsSync(frontendBuildPath)) {
   console.log('⚠️ Frontend build nu a fost găsit la:', frontendBuildPath);
 }
 
-// Middleware pentru prinderea erorilor
+// === Middleware erori ===
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ message: 'A apărut o eroare pe server!' });
 });
-  
-// Pornire server
+
+// === Pornire server ===
 const PORT = process.env.PORT || 10000;
 const server = app.listen(PORT, () => {
   console.log(`🚀 Server rulează pe portul ${PORT}`);
 });
 
-// Dacă portul este ocupat, încearcă portul următor
+// === Dacă portul e ocupat, încearcă următorul ===
 server.on('error', (err) => {
   if (err.code === 'EADDRINUSE') {
     const nextPort = parseInt(PORT) + 1;
@@ -130,8 +198,3 @@ server.on('error', (err) => {
     console.error('❌ Eroare la pornirea serverului:', err);
   }
 });
-
-if (mongoUri) {
-  const masked = mongoUri.replace(/:[^@]+@/, ':****@');
-  console.log('🔍 mongoUri configurat:', masked);
-}

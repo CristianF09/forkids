@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Download, Mail, Phone, User, FileText } from 'lucide-react';
+import { X, Download, Mail, Phone, User } from 'lucide-react';
 
 const DownloadModal = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
@@ -63,50 +63,102 @@ const DownloadModal = ({ isOpen, onClose }) => {
     setIsSubmitting(true);
 
     try {
-      // Optional: Send form data to backend for lead collection
-      // You can uncomment and modify this if you want to collect leads
-      /*
-      const response = await fetch('/api/contact', {
+      console.log('📤 Trimitem datele către backend:', formData);
+      
+      // ✅ CORECT: Folosește URL-ul absolut către backend-ul tău REAL
+      const API_URL = window.location.hostname === 'localhost' 
+        ? 'http://localhost:10000/api/ebook-leads/download-halloween-ebook' // Development
+        : 'https://corcodusa.ro/api/ebook-leads/download-halloween-ebook'; // Production
+      
+      console.log('🔗 Folosim URL:', API_URL);
+      
+      const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          name: `${formData.firstName} ${formData.lastName}`,
-          email: formData.email,
-          phone: formData.phone,
-          message: 'Lead from Halloween E-book download',
-          subject: 'Halloween E-book Download Lead'
-        }),
+        body: JSON.stringify(formData),
       });
 
+      console.log('📥 Răspuns primit - Status:', response.status);
+
+      // Verifică dacă request-ul a eșuat
       if (!response.ok) {
-        throw new Error('Failed to submit form');
+        let errorMessage = `Eroare server: ${response.status}`;
+        
+        try {
+          const errorText = await response.text();
+          console.error('❌ Eroare server - Detalii:', errorText);
+          
+          if (errorText) {
+            // Încearcă să parsezi ca JSON
+            try {
+              const errorResult = JSON.parse(errorText);
+              errorMessage = errorResult.message || errorMessage;
+            } catch {
+              // Dacă nu e JSON, folosește textul direct
+              if (errorText.includes('<!DOCTYPE')) {
+                errorMessage = 'Serverul a returnat o pagină HTML în loc de răspuns API';
+              } else {
+                errorMessage = errorText.substring(0, 100);
+              }
+            }
+          }
+        } catch (textError) {
+          console.error('❌ Nu s-a putut citi răspunsul de eroare:', textError);
+        }
+        
+        throw new Error(errorMessage);
       }
-      */
 
-      // Trigger download
-      const link = document.createElement('a');
-      link.href = '/api/download/Corcodusa%20Halloween%20.pdf';
-      link.download = 'Corcodusa Halloween.pdf';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      // Procesează răspunsul ca fișier PDF
+      const blob = await response.blob();
+      console.log('📄 Tipul fișierului primit:', blob.type);
+      console.log('📏 Mărimea fișierului:', blob.size, 'bytes');
+      
+      // Verifică dacă este PDF
+      if (blob.type === 'application/pdf' && blob.size > 1000) {
+        console.log('✅ Primim fișier PDF valid - începem download...');
+        
+        // Creează download
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'Corcodusa-Halloween-Ebook-Gratuit.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
 
-      // Close modal after successful download
-      setTimeout(() => {
-        onClose();
-        setFormData({
-          firstName: '',
-          lastName: '',
-          email: '',
-          phone: ''
-        });
-      }, 1000);
+        console.log('✅ Download reușit pentru:', formData.email);
+
+        // Închide modal și resetează formularul
+        setTimeout(() => {
+          onClose();
+          setFormData({ firstName: '', lastName: '', email: '', phone: '' });
+          alert('🎃 Mulțumim! E-book-ul s-a descărcat cu succes!');
+        }, 1000);
+      } 
+      else {
+        // Poate fi un mesaj JSON de eroare
+        const text = await blob.text();
+        console.log('📄 Conținutul răspunsului:', text.substring(0, 200));
+        
+        try {
+          const result = JSON.parse(text);
+          if (result.success) {
+            alert('✅ Datele au fost salvate cu succes!');
+          } else {
+            throw new Error(result.message || 'Eroare la procesarea datelor');
+          }
+        } catch (parseError) {
+          throw new Error(`Răspuns neașteptat de la server: ${text.substring(0, 100)}`);
+        }
+      }
 
     } catch (error) {
-      console.error('Error submitting form:', error);
-      alert('A apărut o eroare. Vă rugăm să încercați din nou.');
+      console.error('❌ Eroare completă la submit:', error);
+      alert('❌ ' + error.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -154,6 +206,7 @@ const DownloadModal = ({ isOpen, onClose }) => {
                   errors.firstName ? 'border-red-500' : 'border-gray-300'
                 }`}
                 placeholder="Introdu prenumele"
+                disabled={isSubmitting}
               />
             </div>
             {errors.firstName && (
@@ -177,6 +230,7 @@ const DownloadModal = ({ isOpen, onClose }) => {
                   errors.lastName ? 'border-red-500' : 'border-gray-300'
                 }`}
                 placeholder="Introdu numele"
+                disabled={isSubmitting}
               />
             </div>
             {errors.lastName && (
@@ -200,6 +254,7 @@ const DownloadModal = ({ isOpen, onClose }) => {
                   errors.email ? 'border-red-500' : 'border-gray-300'
                 }`}
                 placeholder="exemplu@email.com"
+                disabled={isSubmitting}
               />
             </div>
             {errors.email && (
@@ -222,7 +277,8 @@ const DownloadModal = ({ isOpen, onClose }) => {
                 className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#FF6B00] focus:border-transparent transition-colors ${
                   errors.phone ? 'border-red-500' : 'border-gray-300'
                 }`}
-                placeholder="+40 123 456 789"
+                placeholder="07xx xxx xxx"
+                disabled={isSubmitting}
               />
             </div>
             {errors.phone && (
@@ -251,7 +307,7 @@ const DownloadModal = ({ isOpen, onClose }) => {
 
           {/* Privacy Note */}
           <p className="text-xs text-gray-500 text-center mt-4">
-            Datele tale sunt protejate și nu vor fi folosite în scopuri comerciale fără acordul tău.
+            Datele tale sunt protejate și vor fi folosite doar pentru a-ți trimite materialele educationale.
           </p>
         </form>
       </div>

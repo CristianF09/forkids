@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Zap, Smile, Check, Download, Star, BookOpen, HelpCircle } from 'lucide-react';
+import { Check, Star } from 'lucide-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
@@ -11,7 +11,6 @@ import PurchaseSteps from '../components/PurchaseSteps';
 
 const Home = () => {
   const [isDownloadModalOpen, setIsDownloadModalOpen] = useState(false);
-  const [expandedCard, setExpandedCard] = useState(null);
 
   const testimonials = [
     {
@@ -111,27 +110,26 @@ const Home = () => {
 
 
               <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight">
-                <span className="block">Învățarea este o</span>
+                <span className="block">Învățarea devine o</span>
                 <span className="block bg-gradient-to-r from-[#2C5F7A] to-[#0A4D68] bg-clip-text text-transparent">Aventură</span>
-                <span className="block">Cu Noi!</span>
+                <span className="block">alături de Corcodușa</span>
               </h1>
 
               <p className="text-xl sm:text-2xl md:text-3xl mb-8 max-w-2xl opacity-90 leading-relaxed">
-                Alătură-te miilor de copii care explorează matematica, cititul și științele prin jocuri interactive distractive și activități captivante.
+                Alătură-te miilor de copii care explorează matematica, cititul și științele prin jocuri interactive distractive și activități captivante
               </p>
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
                 <button
                   onClick={() => setIsDownloadModalOpen(true)}
-                  className="bg-gradient-to-r from-[#2C5F7A] to-[#0A4D68] text-white hover:from-[#1e3a5f] hover:to-[#083756] px-8 py-4 rounded-2xl text-xl font-bold transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 inline-flex items-center justify-center group"
+                  className="bg-gradient-to-r from-[#FF6B00] to-[#8B4513] text-white hover:from-[#E05C00] hover:to-[#6B3410] px-8 py-4 rounded-2xl text-xl font-bold transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 inline-flex items-center justify-center group border-4 border-white"
                 >
-                  Începe Învățarea
-                  <span className="ml-3 group-hover:translate-x-1 transition-transform">→</span>
+                  🎃 Descarcă GRATUIT E-book-ul Halloween! 🎃
                 </button>
                 <button
                   onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 px-8 py-4 rounded-2xl text-xl font-semibold transition-all duration-300 border-2 border-white/30 hover:border-white/50"
+                  className="bg-gradient-to-r from-[#0A4D68] to-[#2C5F7A] text-white hover:from-[#083756] hover:to-[#1e3a5f] px-8 py-4 rounded-2xl text-xl font-semibold transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 border-4 border-white"
                 >
                   Pentru Părinți
                 </button>
@@ -473,11 +471,11 @@ const Home = () => {
                     <div className="text-5xl lg:text-6xl font-black text-[#FF6B00] mb-2">
                       145 LEI
                     </div>
-                    <div className="text-2xl line-through text-gray-400">177 Lei</div>
+                    <div className="text-2xl line-through text-gray-400">226 Lei</div>
                   </div>
 
                   <button
-                    onClick={() => window.open('https://buy.stripe.com/28E3cwc3ceav0OD5hWeZ203', '_blank')}
+                    onClick={() => window.open('https://buy.stripe.com/bJe9AUc3c3vR2WLcKoeZ20c', '_blank')}
                     className="w-full bg-[#FF6B00] text-white py-4 px-8 rounded-2xl text-xl font-bold hover:bg-[#E05C00] transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 mb-6"
                   >
                     Cumpără pachetul

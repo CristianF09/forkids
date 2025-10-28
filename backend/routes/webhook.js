@@ -174,6 +174,8 @@ router.post('/', async (req, res) => {
         await sendOrderNotification({ customerEmail, customerName, productName: displayProductName, amount, currency, sessionId });
         if (isCompletePackage) {
           await sendCompletePackage(customerEmail, displayProductName, amount, currency);
+        } else if (productInfo && productInfo.type === 'promo') {
+          await sendPromoPackage(customerEmail, displayProductName, amount, currency, productInfo.files);
         } else {
           await sendPDFWithOptimization(customerEmail, pdfFileName, displayProductName, amount, currency);
         }
@@ -605,8 +607,199 @@ async function sendIndividualPDFs(toEmail, productName, amount, currency, pdfFil
   }
 }
 
+/**
+ * Send Promo Package with specific PDFs as ZIP
+ */
+async function sendPromoPackage(toEmail, productName, amount, currency, pdfFiles) {
+  console.log('📦 Starting Promo Package delivery to:', toEmail, 'Files:', pdfFiles);
+
+  // Check environment variables first
+  const isDryRun = process.env.DRY_RUN === 'true';
+  if (!isDryRun && (!process.env.ZMAIL_USER || !process.env.ZMAIL_PASS)) {
+    throw new Error('ZMAIL_USER and ZMAIL_PASS environment variables are required');
+  }
+
+  const nodemailer = require('nodemailer');
+  const path = require('path');
+  const fs = require('fs');
+  const archiver = require('archiver');
+
+  const transporter = !isDryRun ? nodemailer.createTransport({
+    host: 'smtp.zoho.eu',
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.ZMAIL_USER,
+      pass: process.env.ZMAIL_PASS,
+    },
+  }) : null;
+
+  // Create ZIP file
+  const zipFileName = `Pachetul_Promo_CorcoDusa_${Date.now()}.zip`;
+  const zipFilePath = path.join(__dirname, '..', 'temp', zipFileName);
+
+  // Ensure temp directory exists
+  const tempDir = path.dirname(zipFilePath);
+  if (!fs.existsSync(tempDir)) {
+    fs.mkdirSync(tempDir, { recursive: true });
+    console.log('📁 Created temp directory:', tempDir);
+  }
+
+  // Create ZIP archive
+  const output = fs.createWriteStream(zipFilePath);
+  const archive = archiver('zip', {
+    zlib: { level: 9 } // Maximum compression
+  });
+
+  return new Promise((resolve, reject) => {
+    output.on('close', async () => {
+      console.log(`📦 ZIP created: ${zipFileName} (${(archive.pointer() / 1024 / 1024).toFixed(2)} MB)`);
+
+      try {
+        // Check file size - if too large, send download link instead
+        const stats = fs.statSync(zipFilePath);
+        const fileSizeInMB = stats.size / (1024 * 1024);
+        const serverUrl = process.env.SERVER_URL || 'https://corcodusa.ro';
+        const displayProductName = productName;
+
+        if (fileSizeInMB > 25) { // Zoho limit is around 25MB
+          console.log('⚠️ ZIP file too large to attach. Providing secure download link for promo ZIP.');
+
+          // Move ZIP to public/pdfs so it can be downloaded via /api/download
+          const publicZipPath = path.join(__dirname, '..', 'public', 'pdfs', zipFileName);
+          try {
+            fs.renameSync(zipFilePath, publicZipPath);
+          } catch (moveErr) {
+            // fallback copy
+            fs.copyFileSync(zipFilePath, publicZipPath);
+            fs.unlinkSync(zipFilePath);
+          }
+
+          const downloadUrl = `${serverUrl}/api/download/${encodeURIComponent(zipFileName)}`;
+
+          if (isDryRun) {
+            console.log('🧪 DRY_RUN: would send ZIP download link', { toEmail, downloadUrl });
+          } else {
+            await transporter.sendMail({
+              from: `"CorcoDușa" <${process.env.ZMAIL_USER}>`,
+              to: toEmail,
+              subject: `Pachetul Promo - Descărcare ZIP - CorcoDușa`,
+              html: `
+                <h2>Pachetul Promo - Descărcare fișier</h2>
+                <p><strong>Produs:</strong> ${displayProductName}</p>
+                <p><strong>Preț:</strong> ${amount} ${currency}</p>
+                <p><strong>Data:</strong> ${new Date().toLocaleString('ro-RO')}</p>
+                <hr>
+                <p>Fișierul ZIP cu materialele din Pachetul Promo este disponibil pentru descărcare în siguranță:</p>
+                <p>
+                  <a href="${downloadUrl}" style="background:#20BF55;color:#fff;padding:10px 18px;text-decoration:none;border-radius:6px;display:inline-block;">
+                    📦 Descarcă Pachetul Promo (ZIP)
+                  </a>
+                </p>
+                <p>Conținut:</p>
+                <ul>
+                  <li>🧩 Labirinturi Magice.pdf</li>
+                  <li>🎓 Jocuri și Activități Educative.pdf</li>
+                </ul>
+                <p>Pentru întrebări: contact@corcodusa.ro</p>
+              `,
+            });
+          }
+
+        } else {
+          // File size is acceptable, send via email
+          console.log('✅ ZIP file size acceptable, sending via email');
+
+          if (isDryRun) {
+            console.log('🧪 DRY_RUN: would send Promo Package ZIP', { toEmail, zipFileName });
+          } else {
+            await transporter.sendMail({
+              from: `"CorcoDușa" <${process.env.ZMAIL_USER}>`,
+              to: toEmail,
+              subject: `Pachetul Promo - Materialele digitale - CorcoDușa`,
+              html: `
+                <h2>Pachetul Promo - Materialele digitale!</h2>
+                <p><strong>Produs:</strong> ${displayProductName}</p>
+                <p><strong>Preț:</strong> ${amount} ${currency}</p>
+                <p><strong>Data:</strong> ${new Date().toLocaleString('ro-RO')}</p>
+                <hr>
+                <p>Găsești atașat fișierul ZIP cu materialele digitale din Pachetul Promo:</p>
+                <ul>
+                  <li>🧩 Labirinturi Magice.pdf</li>
+                  <li>🎓 Jocuri și Activități Educative.pdf</li>
+                </ul>
+                <p><strong>Instrucțiuni:</strong></p>
+                <ol>
+                  <li>Descarcă fișierul ZIP atașat</li>
+                  <li>Dezarhivează fișierul pe calculatorul tău</li>
+                  <li>Găsești toate materialele digitale în folderul dezarhivat</li>
+                </ol>
+                <p>Pentru întrebări: contact@corcodusa.ro</p>
+              `,
+              attachments: [
+                {
+                  filename: zipFileName,
+                  path: zipFilePath,
+                }
+              ]
+            });
+          }
+
+          console.log(`✅ Promo Package ZIP sent to: ${toEmail}`);
+
+          // Clean up ZIP file after sending
+          fs.unlink(zipFilePath, (err) => {
+            if (err) {
+              console.log(`⚠️ Could not delete temporary ZIP file: ${err.message}`);
+            } else {
+              console.log(`🗑️ Temporary ZIP file deleted: ${zipFileName}`);
+            }
+          });
+        }
+
+        resolve();
+      } catch (error) {
+        console.error('❌ Error sending email:', error);
+        reject(error);
+      }
+    });
+
+    archive.on('error', (err) => {
+      console.error('❌ Archive error:', err);
+      reject(err);
+    });
+
+    archive.pipe(output);
+
+    // Add each PDF to the ZIP
+    let addedFiles = 0;
+    for (const pdfFile of pdfFiles) {
+      const filePath = path.join(__dirname, '..', 'public', 'pdfs', pdfFile);
+      if (fs.existsSync(filePath)) {
+        const stats = fs.statSync(filePath);
+        const fileSizeInMB = stats.size / (1024 * 1024);
+
+        archive.file(filePath, { name: pdfFile });
+        console.log(`📄 Added to ZIP: ${pdfFile} (${fileSizeInMB.toFixed(2)} MB)`);
+        addedFiles++;
+      } else {
+        console.log(`⚠️ PDF not found: ${pdfFile}`);
+      }
+    }
+
+    if (addedFiles === 0) {
+      reject(new Error('No PDF files found for Promo Package'));
+      return;
+    }
+
+    console.log(`📦 Creating ZIP with ${addedFiles} PDF files...`);
+    archive.finalize();
+  });
+}
+
 module.exports = router;
 
 // Expose internal helpers for local testing (non-production usage)
 module.exports.sendCompletePackage = sendCompletePackage;
+module.exports.sendPromoPackage = sendPromoPackage;
 module.exports.sendIndividualPDFs = sendIndividualPDFs;
