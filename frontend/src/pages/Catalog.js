@@ -1,25 +1,26 @@
 import React, { useState } from 'react';
 import { Search, ShoppingCart, CheckCircle2, ArrowRight, Gift } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 
 const products = [
   {
-    id: 'prod_Sg7FB1xJVJc2MV',
-    title: 'Pachet Standard',
-    ageRangeDisplay: '3-7 ani',
-    description: 'Obține toate cele 3 cărți la un preț special, cu peste 150 de pagini de activități educative și distractive.',
-    price: 145,
-    image: '/images/Pachet Standard.png',
-    category: 'all',
-    stripeLink: 'https://buy.stripe.com/bJe9AUc3c3vR2WLcKoeZ20c',
-    priceId: 'price_1SNBAgK6Qc2WK3kdgRGn5eW2',
-    imageBgColor: 'bg-gradient-to-r from-[#20BF55] to-[#01BAEF]'
+    id: 'prod_TJqMYITWTkXrqm',
+    title: 'Labirinturi Magice',
+    ageRangeDisplay: '3-8 ani',
+    description: 'Pornește alături de Corcodușa într-o lume plină de mister și distracție! 🌟 „Labirinturi Magice" este o carte de activități care provoacă imaginația și logica copiilor.',
+    price: 59,
+    image: '/images/Labirinturi Magice.png',
+    category: 'labirinturi',
+    stripeLink: 'https://buy.stripe.com/4gM4gA4AKd6rdBpeSweZ205',
+    priceId: 'price_1SNCfLK6Qc2WK3kdVbZ9T85H',
+    imageBgColor: 'bg-[#20BF55]'
   },
   {
     id: 'prod_Sg7FSlYGXYLqIx',
     title: 'Alfabetul',
-    ageRangeDisplay: '3-5 ani',
-    description: 'Învață literele și scrisul de mână prin activități captivante și jocuri interactive.',
+    ageRangeDisplay: '3-7 ani',
+    description: 'Descoperă literele alături de Corcodușa cea isteață! Această carte îi ajută pe cei mici să învețe alfabetul într-un mod distractiv și interactiv.',
     price: 59,
     image: '/images/Alfabetul .jpg',
     category: 'alfabet',
@@ -30,8 +31,8 @@ const products = [
   {
     id: 'prod_Sg7Fm0E2S5Hm1k',
     title: 'Numere',
-    ageRangeDisplay: '4-6 ani',
-    description: 'Descoperă cifrele, număratul și operații matematice simple prin jocuri și activități interactive.',
+    ageRangeDisplay: '3-7 ani',
+    description: 'Joacă-te cu cifrele și învață să numeri cu zâmbetul pe buze! Această carte transformă exercițiile de numărare într-o experiență colorată și veselă.',
     price: 59,
     image: '/images/Numere.jpg',
     category: 'numere',
@@ -43,7 +44,7 @@ const products = [
     id: 'prod_Sg7FLP5uIieb7r',
     title: 'Forme și Culori',
     ageRangeDisplay: '3-7 ani',
-    description: 'Planșe de colorat, activități de desen și jocuri care dezvoltă creativitatea și motricitatea fină.',
+    description: 'O lume plină de culori și forme te așteaptă! Alături de Corcodușa, copiii descoperă cercuri, pătrate, triunghiuri și culorile care dau viață imaginației lor.',
     price: 59,
     image: '/images/Forme si culori.jpg',
     category: 'culori',
@@ -55,7 +56,7 @@ const products = [
     id: 'prod_TJqEqowI96zqa3',
     title: 'Jocuri și Activități Educative',
     ageRangeDisplay: '3-7 ani',
-    description: 'Colecție variată de jocuri și activități interactive care acoperă multiple arii de dezvoltare.',
+    description: 'Bine ai venit în lumea Corcodușei, unde fiecare pagină aduce o nouă provocare! Această carte combină învățarea cu distracția.',
     price: 59,
     image: '/images/Jocuri si Activitati Distractive.png',
     category: 'jocuri',
@@ -67,7 +68,7 @@ const products = [
     id: 'prod_TJpts2v6oxXec2',
     title: 'Carte de Colorat',
     ageRangeDisplay: '3-7 ani',
-    description: 'Carte completă de colorat cu activități interactive pentru dezvoltarea creativității.',
+    description: 'Culorile prind viață alături de Corcodușa! Această carte de colorat este un spațiu magic în care copiii pot explora, imagina și se pot exprima liber prin culoare.',
     price: 49,
     image: '/images/Carte de Colorat.png',
     category: 'colorat',
@@ -79,7 +80,7 @@ const products = [
     id: 'prod_TJqMYITWTkXrqm',
     title: 'Labirinturi Magice',
     ageRangeDisplay: '4-7 ani',
-    description: 'Explorează labirinturi magice pentru dezvoltare cognitivă și gândire logică.',
+    description: 'Descoperă lumea labirinturilor magice alături de Corcodușa cea isteață! Această carte conține labirinturi creative și provocări distractive.',
     price: 59,
     image: '/images/Labirinturi Magice.png',
     category: 'labirinturi',
@@ -90,8 +91,8 @@ const products = [
   {
     id: 'prod_TJqdmBiCDbNA9I',
     title: 'Pachet Promo',
-    ageRangeDisplay: '3-7 ani',
-    description: 'Pachet esențial cu selecție atent aleasă de activități pentru dezvoltare completă.',
+    ageRangeDisplay: '3-8 ani',
+    description: 'Descoperă Pachetul Promo Corcodușa, o combinație unică de distracție și învățare! Acest pachet reunește cele mai iubite două cărți de activități pentru o experiență completă de explorare și descoperire.',
     price: 99,
     image: '/images/Pachet Promo.png',
     category: 'pachet-promo',
@@ -105,6 +106,7 @@ const promoPackageBannerImage = '/images/Pachet Promo.jpg'; // Updated to use co
 const promoPackagePdf = '/pdfs/pachet-complet.pdf'; // Path for the promo package PDF
 
 const Catalog = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
 
@@ -184,7 +186,10 @@ const Catalog = () => {
               key={product.id}
               className="bg-white rounded-2xl overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 flex flex-col h-full"
             >
-              <div className={`relative w-full h-40 xs:h-48 sm:h-56 flex items-center justify-center ${product.imageBgColor}`}> {/* Dynamic background color, responsive heights */}
+              <div
+                className={`relative w-full h-40 xs:h-48 sm:h-56 flex items-center justify-center ${product.imageBgColor} cursor-pointer`}
+                onClick={() => navigate(`/produs/${product.category}`)}
+              > {/* Dynamic background color, responsive heights */}
                 <img
                   src={product.image}
                   alt={product.title}

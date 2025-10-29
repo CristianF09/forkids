@@ -44,7 +44,7 @@ router.post('/download-halloween-ebook', async (req, res) => {
     }
 
     // ✅ CALE PDF
-    const ebookPath = path.join(__dirname, '..', 'public', 'Ebooks', 'Corcodusa Halloween.pdf');
+    const ebookPath = path.join(__dirname, '..', 'public', 'Ebooks', 'Corcodusa Halloween .pdf');
     console.log('🔍 Căutăm fișierul la:', ebookPath);
     
     // Verifică existența fișierului

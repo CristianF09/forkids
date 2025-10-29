@@ -11,60 +11,200 @@ const ProductDetail = () => {
       {
         id: 2,
         category: 'alfabet',
-        title: 'ALFABETUL',
-        pdfFile: 'Alfabetul .pdf',
-        price: 49,
+        title: 'Alfabetul',
+        pdfFile: 'Alfabetul.pdf',
+        price: 59,
         image: '/images/Alfabetul .jpg',
-        priceId: 'price_1RxRzjK6Qc2WK3kdz8eAiQjD',
+        priceId: 'price_1SNBBrK6Qc2WK3kdE86Rm9w4',
         productId: 'prod_Sg7FSlYGXYLqIx',
-        stripeLink: 'https://buy.stripe.com/14AaEY8R02rNfJxh0EeZ202',
+        stripeLink: 'https://buy.stripe.com/3cIfZiaZ8aYjgNB39OeZ209',
         age: '3-7 ani',
-        description: 'Această carte educativă îi ajută pe cei mici să descopere literele alfabetului printr-o serie de activități captivante și jocuri distractive. Peste 50 de pagini de activități.',
+        shortDescription: 'Învățarea literelor alfabetului prin activități captivante.',
+        description: 'Descoperă literele alături de Corcodușa cea isteață!\n\nAceastă carte îi ajută pe cei mici să învețe alfabetul într-un mod distractiv și interactiv. Fiecare pagină este gândită să transforme învățarea literelor într-o adevărată aventură educativă.',
         features: [
-          'Învățarea literelor mari și mici de tipar',
-          'Recunoașterea formelor și asocierea cu litere',
-          'Exerciții de scris pentru dezvoltarea abilităților motorii fine',
-          'Activități de colorat pentru fiecare literă',
-          'Peste 50 de pagini de activități'
+          'Litere mari și mici de trasat pentru exersarea scrisului',
+          'Cuvinte ilustrate pentru fiecare literă (A – Avion, B – Balon, etc.)',
+          'Activități de identificare a literelor și jocuri de recunoaștere vizuală',
+          'Spații pentru colorat, desen și completat',
+          'Propoziții scurte care îmbină litera învățată cu vocabularul zilnic',
+          'Dezvoltă coordonarea mână-ochi, recunoașterea literelor, motricitatea fină și interesul pentru citit',
+          'O carte ideală pentru preșcolari și clasa pregătitoare!'
         ]
       },
       {
         id: 3,
-        category: 'matematica',
-        title: 'NUMERE',
+        category: 'numere',
+        title: 'Numere',
         pdfFile: 'Numere.pdf',
-        price: 49,
+        price: 59,
         image: '/images/Numere.jpg',
-        priceId: 'price_1RxS3KK6Qc2WK3kd97xe4ihN',
+        priceId: 'price_1SNC1IK6Qc2WK3kdB3AIEUYP',
         productId: 'prod_Sg7Fm0E2S5Hm1k',
-        stripeLink: 'https://buy.stripe.com/fZu8wQ8R0c2n2WLh0EeZ201',
+        stripeLink: 'https://buy.stripe.com/fZu00k9V4eavapd8u8eZ20b',
         age: '3-7 ani',
-        description: 'Cărțile de numere sunt un instrument excelent pentru dezvoltarea abilităților matematice și logice a copiilor. Peste 50 de pagini de activități.',
+        shortDescription: 'Dezvoltă abilități matematice prin jocuri interactive.',
+        description: 'Joacă-te cu cifrele și învață să numeri cu zâmbetul pe buze!\n\nAceastă carte transformă exercițiile de numărare într-o experiență colorată și veselă.',
         features: [
-          'Exerciții de numărare și recunoaștere a numerelor',
-          'Activități de scriere a numerelor',
-          'Exerciții de logică și problem-solving',
-          'Peste 50 de pagini de activități'
+          'Cifrele de la 1 la 10 de trasat și colorat',
+          'Activități de recunoaștere a cantităților (numără obiectele și colorează-le)',
+          'Exerciții simple de adunare și scădere ilustrate cu imagini amuzante',
+          'Jocuri logice și puzzle-uri numerice pentru exersare',
+          'Activități „Unește punctele" pentru învățarea ordinii numerelor',
+          'Ajută copilul să înțeleagă conceptele de cantitate, numărare și ordine',
+          'Perfectă pentru copiii între 3 și 6 ani care învață prin joc!'
         ]
       },
       {
         id: 4,
         category: 'forme-si-culori',
-        title: 'FORME SI CULORI',
+        title: 'Forme și Culori',
         pdfFile: 'FormeSiCulori.pdf',
-        price: 49,
+        price: 59,
         image: '/images/Forme si culori.jpg',
-        priceId: 'price_1RxS42K6Qc2WK3kdWE7DjklP',
-        productId: 'prod_Sg7GhD6zkyA7lA',
-        stripeLink: 'https://buy.stripe.com/00geVa4AKayf2WL7swiN201',
+        priceId: 'price_1SNC2uK6Qc2WK3kdxNwaWzy9',
+        productId: 'prod_Sg7FLP5uIieb7r',
+        stripeLink: 'https://buy.stripe.com/6oU7sMaZ84zVeFt6m0eZ20a',
         age: '3-7 ani',
-        description: 'Cunoașterea formelor și a culorilor este esențială în dezvoltarea cognitivă timpurie a copiilor. Peste 50 de pagini de activități.',
+        shortDescription: 'Descoperă lumea formelor și culorilor în mod creativ.',
+        description: 'O lume plină de culori și forme te așteaptă!\n\nAlături de Corcodușa, copiii descoperă cercuri, pătrate, triunghiuri și culorile care dau viață imaginației lor.',
         features: [
-          'Învățarea formelor geometrice de bază',
-          'Recunoașterea și numirea culorilor',
-          'Activități de colorat și sortare',
-          'Exerciții de asociere și clasificare',
-          'Peste 50 de pagini de activități'
+          'Pagini dedicate formelor geometrice de bază (cerc, pătrat, triunghi, dreptunghi)',
+          'Activități de asociere formă–obiect („Ce formă are roata?", „Ce culoare are soarele?")',
+          'Exerciții de colorat și decupat pentru dezvoltarea motricității fine',
+          'Jocuri de potrivire și labirinturi simple cu forme și culori',
+          'Activități creative de desen și colorare liberă pentru exprimarea artistică',
+          'Îmbunătățește recunoașterea vizuală, atenția la detalii și coordonarea',
+          'Perfectă pentru grădiniță și primele clase, oferind un echilibru între distracție și învățare'
+        ]
+      },
+      {
+        id: 1,
+        category: 'pachet-standard',
+        title: 'Pachet Standard',
+        pdfFile: 'BonusCertificateDeAbsovire.pdf',
+        price: 145,
+        originalPrice: 226,
+        image: '/images/Pachet Standard.png',
+        priceId: 'price_1SNBAgK6Qc2WK3kdgRGn5eW2',
+        productId: 'prod_Sg7FB1xJVJc2MV',
+        stripeLink: 'https://buy.stripe.com/bJe9AUc3c3vR2WLcKoeZ20c',
+        age: '3-7 ani',
+        shortDescription: 'Pachetul complet cu toate resursele educaționale.',
+        description: 'Descoperă bucuria învățării prin joc cu Pachetul Standard Corcodușa, o colecție completă de materiale educative pentru copii între 3 și 7 ani!\n\nCreat cu grijă și pasiune, acest pachet conține activități ilustrate, exerciții interactive și jocuri care dezvoltă imaginația, logica și curiozitatea copiilor.',
+        features: [
+          '📖 Peste 150 de pagini de activități educative din cărțile:',
+          '🅰️ Corcodușa învață Alfabetul',
+          '🔢 Corcodușa învață Numerele',
+          '🔺 Corcodușa învață Formele și Culorile',
+          '✏️ Exerciții de trasare, recunoaștere, colorare și numărare',
+          '🎨 Jocuri logice, labirinturi și activități creative care transformă învățarea în joacă',
+          '🏅 Bonus exclusiv: Certificat de absolvire pentru fiecare carte completată',
+          '🎁 Extra cadou: Carte de colorat Corcodușa – peste 50 de pagini gratuite de desen și relaxare!',
+          'Stimulează imaginația, coordonarea și atenția copilului',
+          'Dezvoltă abilitățile de scriere, citire și gândire logică',
+          'Poate fi tipărit acasă sau folosit direct pe tabletă / laptop',
+          'Ideal pentru: părinți, educatori și copii curioși care învață prin joacă',
+          'Transformă timpul liber într-o aventură educativă plină de culoare, descoperiri și bucurie alături de Corcodușa!'
+        ]
+      },
+      {
+        id: 6,
+        category: 'labirinturi-magice',
+        title: 'Labirinturi Magice',
+        pdfFile: 'LabirinturiMagice.pdf',
+        price: 59,
+        image: '/images/Labirinturi Magice.png',
+        priceId: 'price_1SNCfLK6Qc2WK3kdVbZ9T85H',
+        productId: 'prod_TJqMYITWTkXrqm',
+        stripeLink: 'https://buy.stripe.com/4gM4gA4AKd6rdBpeSweZ205',
+        age: '3-8 ani',
+        shortDescription: 'Explorează labirinturi magice pentru dezvoltare cognitivă.',
+        description: 'Pornește alături de Corcodușa într-o lume plină de mister și distracție! 🌟\n\n„Labirinturi Magice" este o carte de activități care provoacă imaginația și logica copiilor, oferind ore întregi de joacă educativă.',
+        features: [
+          'Labirinturi simple pentru începători și unele mai complexe pentru micii exploratori curajoși',
+          'Activități cu cuburi, piramide și forme geometrice care stimulează gândirea spațială',
+          'Labirinturi matematice care transformă exercițiile de numărare într-o aventură distractivă',
+          'Spații de colorat și desenat, pentru a dezvolta creativitatea și coordonarea',
+          'Ilustrații prietenoase, clare și ușor de urmărit',
+          'Dezvoltă atenția, logica și răbdarea',
+          'Îmbunătățește gândirea strategică și orientarea în spațiu',
+          'Încurajează copilul să caute soluții și să gândească independent',
+          'Ideală pentru copiii cu vârste între 3 și 8 ani, care adoră provocările și descoperirile!'
+        ]
+      },
+      {
+        id: 7,
+        category: 'jocuri-si-activități-educative',
+        title: 'Jocuri și Activități Educative',
+        pdfFile: 'JocuriSiActivitatiEducative.pdf',
+        price: 59,
+        image: '/images/Jocuri si Activitati Distractive.png',
+        priceId: 'price_1SNCYSK6Qc2WK3kd1YKIoyo9',
+        productId: 'prod_TJqEqowI96zqa3',
+        stripeLink: 'https://buy.stripe.com/9B69AU0ku5DZ2WL4dSeZ206',
+        age: '3-7 ani',
+        shortDescription: 'Colecție variată de jocuri și activități interactive.',
+        description: 'Bine ai venit în lumea Corcodușei, unde fiecare pagină aduce o nouă provocare!\n\nAceastă carte combină învățarea cu distracția, transformând fiecare activitate într-o experiență veselă și plină de satisfacții.',
+        features: [
+          'Unește punctele și descoperă imagini-surpriză',
+          'Trasează liniile punctate pentru a-ți antrena coordonarea și scrisul de mână',
+          'Numără obiectele și învață cifrele într-un mod simplu și interactiv',
+          'Găsește diferențele, puzzle-uri vizuale și exerciții logice care stimulează atenția și gândirea critică',
+          'Activități de colorat și desenat, care eliberează creativitatea copilului',
+          'Dezvoltă atenția, memoria și spiritul de observație',
+          'Antrenează motricitatea fină și coordonarea mână-ochi',
+          'Încurajează învățarea prin joc și descoperire activă',
+          'Perfectă pentru copiii de 3–7 ani, această carte oferă o combinație echilibrată între distracție și educație!'
+        ]
+      },
+      {
+        id: 5,
+        category: 'carte-de-colorat',
+        title: 'Carte de Colorat',
+        pdfFile: 'CarteDeColorat.pdf',
+        price: 49,
+        image: '/images/Carte de Colorat.png',
+        priceId: 'price_1SNCDvK6Qc2WK3kdR7PskNbO',
+        productId: 'prod_TJpts2v6oxXec2',
+        stripeLink: 'https://buy.stripe.com/8x2cN6c3c8QbeFt9yceZ207',
+        age: '3-7 ani',
+        shortDescription: 'Carte completă de colorat cu activități interactive.',
+        description: 'Culorile prind viață alături de Corcodușa!\n\nAceastă carte de colorat este un spațiu magic în care copiii pot explora, imagina și se pot exprima liber prin culoare.',
+        features: [
+          'Peste 50 de pagini cu desene mari, clare și prietenoase',
+          'Tematici diverse: natură, animale, emoții, joacă și personaje simpatice',
+          'Ilustrații gândite special pentru copiii de 3–7 ani, cu linii simple și spații generoase pentru colorat',
+          'Pagini bonus cu activități creative (forme, trasează și colorează)',
+          'Stimulează creativitatea, concentrarea și răbdarea',
+          'Ajută la dezvoltarea motricității fine și a controlului creionului',
+          'Oferă momente de relaxare și exprimare artistică',
+          'Ideală pentru acasă, grădiniță sau activități în familie – un mod minunat de a petrece timp de calitate și de a cultiva dragostea pentru artă!'
+        ]
+      },
+      {
+        id: 8,
+        category: 'pachet-promo',
+        title: 'Pachet Promo',
+        pdfFile: 'PachetPromo.pdf',
+        price: 99,
+        originalPrice: 120,
+        image: '/images/Pachet Promo.png',
+        priceId: 'price_1SNCw4K6Qc2WK3kdOLmO6qpp',
+        productId: 'prod_TJqdmBiCDbNA9I',
+        stripeLink: 'https://buy.stripe.com/aFa9AU3wG4zVgNB6m0eZ204',
+        age: '3-7 ani',
+        shortDescription: 'Pachet esențial pentru dezvoltare completă.',
+        description: 'Descoperă Pachetul Promo Corcodușa, o combinație unică de distracție și învățare!\n\nAcest pachet reunește cele mai iubite două cărți de activități: Labirinturi Magice și Jocuri și Activități Educative, pentru o experiență completă de explorare și descoperire.',
+        features: [
+          'Două cărți pline de activități captivante pentru copii între 3–8 ani',
+          'Labirinturi, jocuri logice, exerciții de trasare și activități de colorat',
+          'Exerciții care dezvoltă atenția, creativitatea și gândirea logică',
+          'Ilustrații prietenoase și pagini ușor de tipărit, perfecte pentru acasă sau la grădiniță',
+          'Include certificat de absolvire pentru fiecare carte finalizată!',
+          'Copiii învață fără efort, prin joacă și curiozitate',
+          'Este un cadou educativ ideal pentru acasă, școală sau vacanță',
+          'Stimulează implicarea părintelui în procesul de învățare',
+          'Cu Pachetul Promo Corcodușa, fiecare pagină devine o nouă aventură! Învață, joacă-te și descoperă magia cunoașterii pas cu pas!'
         ]
       }
     ];
@@ -124,7 +264,16 @@ const ProductDetail = () => {
 
               <div className="mt-auto">
                 <div className="flex items-center justify-between mb-6">
-                  <span className="text-3xl font-bold text-[#20BF55]">{product.price} Lei</span>
+                  <div className="flex flex-col">
+                    {product.originalPrice ? (
+                      <>
+                        <span className="text-3xl font-bold text-[#20BF55]">{product.price} Lei</span>
+                        <span className="text-xl line-through text-gray-500">{product.originalPrice} Lei</span>
+                      </>
+                    ) : (
+                      <span className="text-3xl font-bold text-[#20BF55]">{product.price} Lei</span>
+                    )}
+                  </div>
                   <button
                     onClick={() => window.open(product.stripeLink, '_blank')}
                     className="inline-flex items-center bg-[#FF6B00] text-white px-8 py-3 rounded-md hover:bg-[#E05C00] transition-colors shadow-md text-lg font-semibold"
@@ -134,16 +283,9 @@ const ProductDetail = () => {
                 </div>
 
                 <p className="text-gray-600 text-sm text-center flex items-center justify-center">
-                  Plată securizată prin
-                  <span className="ml-2" style={{ display: 'inline-flex', alignItems: 'center', height: '24px' }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 90 90">
-                      <g>
-                        <circle cx="45" cy="45" r="45" fill="#635bff"/>
-                        <path d="M75 45.417c0-4.267-2.067-7.633-6.017-7.633-3.967 0-6.367 3.367-6.367 7.6 0 5.017 2.833 7.55 6.9 7.55 1.983 0 3.483-.45 4.617-1.083v-3.333C73 49.083 71.7 49.433 70.05 49.433c-1.617 0-3.05-.567-3.233-2.533h8.15c0-.217.033-1.083.033-1.483z" fill="#f9f9f9"/>
-                        <path d="M56.183 37.783c-1.633 0-2.683.767-3.267 1.3l-.217-1.033h-3.667v19.433l4.167-.833.017-4.717c.6.433 1.483 1.05 2.95 1.05 2.983 0 5.7-2.4 5.7-7.683 0-5.017-2.75-7.65-5.667-7.65zm-1 11.484c-.983 0-1.567-.35-1.967-.783l-.017-6.184c.433-.483 1.033-.817 1.983-.817 1.517 0 2.567 1.7 2.567 3.883 0 2.218-1.033 3.883-2.566 3.883z" fill="#f9f9f9"/>
-                      </g>
-                    </svg>
-                  </span>
+                  <span className="mr-2">🔒</span>
+                  Plata securizata prin
+                  <img src="/images/iconstripe.png" alt="Stripe" className="ml-2 h-4" />
                 </p>
               </div>
             </div>

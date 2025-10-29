@@ -54,9 +54,6 @@ const Contact = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Hero Section */}
         <div className="text-center mb-16">
-          <div className="inline-block p-4 bg-gray-200 rounded-full mb-6">
-            <MessageCircle className="w-12 h-12 text-[#20BF55]" />
-          </div>
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
             Contactează-ne
           </h1>
@@ -138,7 +135,6 @@ const Contact = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
           <div className="bg-white rounded-xl p-8 shadow-lg">
             <div className="flex items-center mb-6">
-              <MessageCircle className="w-8 h-8 text-[#20BF55] mr-3" />
               <h2 className="text-3xl font-bold text-gray-800">Ai întrebări? Contactează-ne!</h2>
             </div>
             <p className="text-lg text-gray-700 mb-8">
@@ -290,4 +286,4 @@ const Contact = () => {
   );
 };
 
-export default Contact; 
+export default Contact;

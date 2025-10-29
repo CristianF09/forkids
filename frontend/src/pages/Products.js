@@ -16,18 +16,20 @@ const productsData = [
     stripeLink: 'https://buy.stripe.com/3cIfZiaZ8aYjgNB39OeZ209',
     age: '3-7 ani',
     shortDescription: 'Învățarea literelor alfabetului prin activități captivante.',
-    description: 'Această carte educativă îi ajută pe cei mici să descopere literele alfabetului printr-o serie de activități captivante și jocuri distractive. Peste 50 de pagini de activități.',
+    description: 'Descoperă literele alături de Corcodușa cea isteață!\n\nAceastă carte îi ajută pe cei mici să învețe alfabetul într-un mod distractiv și interactiv. Fiecare pagină este gândită să transforme învățarea literelor într-o adevărată aventură educativă.',
     features: [
-      'Învățarea literelor mari și mici de tipar',
-      'Recunoașterea formelor și asocierea cu litere',
-      'Exerciții de scris pentru dezvoltarea abilităților motorii fine',
-      'Activități de colorat pentru fiecare literă',
-      'Peste 50 de pagini de activități'
+      'Litere mari și mici de trasat pentru exersarea scrisului',
+      'Cuvinte ilustrate pentru fiecare literă (A – Avion, B – Balon, etc.)',
+      'Activități de identificare a literelor și jocuri de recunoaștere vizuală',
+      'Spații pentru colorat, desen și completat',
+      'Propoziții scurte care îmbină litera învățată cu vocabularul zilnic',
+      'Dezvoltă coordonarea mână-ochi, recunoașterea literelor, motricitatea fină și interesul pentru citit',
+      'O carte ideală pentru preșcolari și clasa pregătitoare!'
     ]
   },
   {
     id: 3,
-    category: 'matematica',
+    category: 'numere',
     title: 'Numere',
     pdfFile: 'Numere.pdf',
     price: 59,
@@ -37,12 +39,15 @@ const productsData = [
     stripeLink: 'https://buy.stripe.com/fZu00k9V4eavapd8u8eZ20b',
     age: '3-7 ani',
     shortDescription: 'Dezvoltă abilități matematice prin jocuri interactive.',
-    description: 'Cărțile de numere sunt un instrument excelent pentru dezvoltarea abilităților matematice și logice a copiilor. Peste 50 de pagini de activități.',
+    description: 'Joacă-te cu cifrele și învață să numeri cu zâmbetul pe buze!\n\nAceastă carte transformă exercițiile de numărare într-o experiență colorată și veselă.',
     features: [
-      'Exerciții de numărare și recunoaștere a numerelor',
-      'Activități de scriere a numerelor',
-      'Exerciții de logică și problem-solving',
-      'Peste 50 de pagini de activități'
+      'Cifrele de la 1 la 10 de trasat și colorat',
+      'Activități de recunoaștere a cantităților (numără obiectele și colorează-le)',
+      'Exerciții simple de adunare și scădere ilustrate cu imagini amuzante',
+      'Jocuri logice și puzzle-uri numerice pentru exersare',
+      'Activități „Unește punctele" pentru învățarea ordinii numerelor',
+      'Ajută copilul să înțeleagă conceptele de cantitate, numărare și ordine',
+      'Perfectă pentru copiii între 3 și 6 ani care învață prin joc!'
     ]
   },
   {
@@ -57,18 +62,20 @@ const productsData = [
     stripeLink: 'https://buy.stripe.com/6oU7sMaZ84zVeFt6m0eZ20a',
     age: '3-7 ani',
     shortDescription: 'Descoperă lumea formelor și culorilor în mod creativ.',
-    description: 'Cunoașterea formelor și a culorilor este esențială în dezvoltarea cognitivă timpurie a copiilor. Peste 50 de pagini de activități.',
+    description: 'O lume plină de culori și forme te așteaptă!\n\nAlături de Corcodușa, copiii descoperă cercuri, pătrate, triunghiuri și culorile care dau viață imaginației lor.',
     features: [
-      'Învățarea formelor geometrice de bază',
-      'Recunoașterea și numirea culorilor',
-      'Activități de colorat și sortare',
-      'Exerciții de asociere și clasificare',
-      'Peste 50 de pagini de activități'
+      'Pagini dedicate formelor geometrice de bază (cerc, pătrat, triunghi, dreptunghi)',
+      'Activități de asociere formă–obiect („Ce formă are roata?", „Ce culoare are soarele?")',
+      'Exerciții de colorat și decupat pentru dezvoltarea motricității fine',
+      'Jocuri de potrivire și labirinturi simple cu forme și culori',
+      'Activități creative de desen și colorare liberă pentru exprimarea artistică',
+      'Îmbunătățește recunoașterea vizuală, atenția la detalii și coordonarea',
+      'Perfectă pentru grădiniță și primele clase, oferind un echilibru între distracție și învățare'
     ]
   },
   {
     id: 1,
-    category: 'pachet-complet',
+    category: 'pachet-standard',
     title: 'Pachet Standard',
     pdfFile: 'BonusCertificateDeAbsovire.pdf',
     price: 145,
@@ -79,18 +86,26 @@ const productsData = [
     stripeLink: 'https://buy.stripe.com/bJe9AUc3c3vR2WLcKoeZ20c',
     age: '3-7 ani',
     shortDescription: 'Pachetul complet cu toate resursele educaționale.',
-    description: 'Obține toate cele 3 cărți la un preț special, cu peste 150 de pagini de activități educative și distractive pentru copilul tău.',
+    description: 'Descoperă bucuria învățării prin joc cu Pachetul Standard Corcodușa, o colecție completă de materiale educative pentru copii între 3 și 7 ani!\n\nCreat cu grijă și pasiune, acest pachet conține activități ilustrate, exerciții interactive și jocuri care dezvoltă imaginația, logica și curiozitatea copiilor.',
     features: [
-      'Alfabetul - activități de alfabetizare',
-      'Numere - activități matematice',
-      'Forme și Culori - activități artistice',
-      'BONUS: 40 de pagini de colorat foarte interactive și distractive pentru copii',
-      'BONUS: Diplome personalizate pentru fiecare secțiune completată (3 diplome)'
+      '📖 Peste 150 de pagini de activități educative din cărțile:',
+      '🅰️ Corcodușa învață Alfabetul',
+      '🔢 Corcodușa învață Numerele',
+      '🔺 Corcodușa învață Formele și Culorile',
+      '✏️ Exerciții de trasare, recunoaștere, colorare și numărare',
+      '🎨 Jocuri logice, labirinturi și activități creative care transformă învățarea în joacă',
+      '🏅 Bonus exclusiv: Certificat de absolvire pentru fiecare carte completată',
+      '🎁 Extra cadou: Carte de colorat Corcodușa – peste 50 de pagini gratuite de desen și relaxare!',
+      'Stimulează imaginația, coordonarea și atenția copilului',
+      'Dezvoltă abilitățile de scriere, citire și gândire logică',
+      'Poate fi tipărit acasă sau folosit direct pe tabletă / laptop',
+      'Ideal pentru: părinți, educatori și copii curioși care învață prin joacă',
+      'Transformă timpul liber într-o aventură educativă plină de culoare, descoperiri și bucurie alături de Corcodușa!'
     ]
   },
   {
     id: 6,
-    category: 'labirinturi',
+    category: 'labirinturi-magice',
     title: 'Labirinturi Magice',
     pdfFile: 'Labirinturi Magice.pdf',
     price: 59,
@@ -100,18 +115,22 @@ const productsData = [
     stripeLink: 'https://buy.stripe.com/4gM4gA4AKd6rdBpeSweZ205',
     age: '4-7 ani',
     shortDescription: 'Explorează labirinturi magice pentru dezvoltare cognitivă.',
-    description: 'Jocuri creative cu labirinturi care dezvoltă gândirea logică, capacitatea de rezolvare a problemelor și coordonarea. Fiecare labirint oferă o nouă aventură de învățare.',
+    description: 'Pornește alături de Corcodușa într-o lume plină de mister și distracție! 🌟\n\n„Labirinturi Magice" este o carte de activități care provoacă imaginația și logica copiilor, oferind ore întregi de joacă educativă.',
     features: [
-      'Labirinturi cu dificultate progresivă',
-      'Dezvoltă gândirea logică',
-      'Îmbunătățește orientarea spațială',
-      'Include elemente interactive',
-      'Peste 30 de provocări diferite'
+      'Labirinturi simple pentru începători și unele mai complexe pentru micii exploratori curajoși',
+      'Activități cu cuburi, piramide și forme geometrice care stimulează gândirea spațială',
+      'Labirinturi matematice care transformă exercițiile de numărare într-o aventură distractivă',
+      'Spații de colorat și desenat, pentru a dezvolta creativitatea și coordonarea',
+      'Ilustrații prietenoase, clare și ușor de urmărit',
+      'Dezvoltă atenția, logica și răbdarea',
+      'Îmbunătățește gândirea strategică și orientarea în spațiu',
+      'Încurajează copilul să caute soluții și să gândească independent',
+      'Ideală pentru copiii cu vârste între 3 și 8 ani, care adoră provocările și descoperirile!'
     ]
   },
   {
     id: 7,
-    category: 'jocuri-educative',
+    category: 'jocuri-si-activități-educative',
     title: 'Jocuri și Activități Educative',
     pdfFile: 'JocuriSiActivitatiEducative.pdf',
     price: 59,
@@ -121,18 +140,22 @@ const productsData = [
     stripeLink: 'https://buy.stripe.com/9B69AU0ku5DZ2WL4dSeZ206',
     age: '3-7 ani',
     shortDescription: 'Colecție variată de jocuri și activități interactive.',
-    description: 'O colecție completă de jocuri și activități educative care acoperă multiple arii de dezvoltare. Include puzzle-uri, jocuri de memorie, activități de potrivire și multe altele.',
+    description: 'Bine ai venit în lumea Corcodușei, unde fiecare pagină aduce o nouă provocare!\n\nAceastă carte combină învățarea cu distracția, transformând fiecare activitate într-o experiență veselă și plină de satisfacții.',
     features: [
-      'Puzzle-uri educative',
-      'Jocuri de memorie',
-      'Activități de potrivire',
-      'Exerciții de concentrare',
-      'Peste 45 de activități diverse'
+      'Unește punctele și descoperă imagini-surpriză',
+      'Trasează liniile punctate pentru a-ți antrena coordonarea și scrisul de mână',
+      'Numără obiectele și învață cifrele într-un mod simplu și interactiv',
+      'Găsește diferențele, puzzle-uri vizuale și exerciții logice care stimulează atenția și gândirea critică',
+      'Activități de colorat și desenat, care eliberează creativitatea copilului',
+      'Dezvoltă atenția, memoria și spiritul de observație',
+      'Antrenează motricitatea fină și coordonarea mână-ochi',
+      'Încurajează învățarea prin joc și descoperire activă',
+      'Perfectă pentru copiii de 3–7 ani, această carte oferă o combinație echilibrată între distracție și educație!'
     ]
   },
   {
     id: 5,
-    category: 'colorat',
+    category: 'carte-de-colorat',
     title: 'Carte de Colorat',
     pdfFile: 'CarteDeColorat.pdf',
     price: 49,
@@ -142,18 +165,21 @@ const productsData = [
     stripeLink: 'https://buy.stripe.com/8x2cN6c3c8QbeFt9yceZ207',
     age: '3-7 ani',
     shortDescription: 'Carte completă de colorat cu activități interactive.',
-    description: 'Carte completă de colorat cu activități interactive special create pentru dezvoltarea creativității și îmbunătățirea coordonării mână-ochi. Include imagini variate și atractive pentru copii.',
+    description: 'Culorile prind viață alături de Corcodușa!\n\nAceastă carte de colorat este un spațiu magic în care copiii pot explora, imagina și se pot exprima liber prin culoare.',
     features: [
-      'Carte completă de colorat',
-      'Activități interactive',
-      'Dezvoltă coordonarea mână-ochi',
-      'Stimulează creativitatea',
-      'Activități relaxante și educative'
+      'Peste 50 de pagini cu desene mari, clare și prietenoase',
+      'Tematici diverse: natură, animale, emoții, joacă și personaje simpatice',
+      'Ilustrații gândite special pentru copiii de 3–7 ani, cu linii simple și spații generoase pentru colorat',
+      'Pagini bonus cu activități creative (forme, trasează și colorează)',
+      'Stimulează creativitatea, concentrarea și răbdarea',
+      'Ajută la dezvoltarea motricității fine și a controlului creionului',
+      'Oferă momente de relaxare și exprimare artistică',
+      'Ideală pentru acasă, grădiniță sau activități în familie – un mod minunat de a petrece timp de calitate și de a cultiva dragostea pentru artă!'
     ]
   },
   {
     id: 8,
-    category: 'pachet-standard',
+    category: 'pachet-promo',
     title: 'Pachet Promo',
     pdfFile: 'PachetPromo.pdf',
     price: 99,
@@ -164,13 +190,17 @@ const productsData = [
     stripeLink: 'https://buy.stripe.com/aFa9AU3wG4zVgNB6m0eZ204',
     age: '3-7 ani',
     shortDescription: 'Pachet esențial pentru dezvoltare completă.',
-    description: 'Pachetul Promo include o selecție atent aleasă de activități educative care acoperă principalele arii de dezvoltare ale copilului tău.',
+    description: 'Descoperă Pachetul Promo Corcodușa, o combinație unică de distracție și învățare!\n\nAcest pachet reunește cele mai iubite două cărți de activități: Labirinturi Magice și Jocuri și Activități Educative, pentru o experiență completă de explorare și descoperire.',
     features: [
-      'Pagini de colorat selectate',
-      'Labirinturi interactive',
-      'Jocuri educative esențiale',
-      'Activități de dezvoltare cognitivă',
-      'BONUS: Diplomă de participare personalizată'
+      'Două cărți pline de activități captivante pentru copii între 3–8 ani',
+      'Labirinturi, jocuri logice, exerciții de trasare și activități de colorat',
+      'Exerciții care dezvoltă atenția, creativitatea și gândirea logică',
+      'Ilustrații prietenoase și pagini ușor de tipărit, perfecte pentru acasă sau la grădiniță',
+      'Include certificat de absolvire pentru fiecare carte finalizată!',
+      'Copiii învață fără efort, prin joacă și curiozitate',
+      'Este un cadou educativ ideal pentru acasă, școală sau vacanță',
+      'Stimulează implicarea părintelui în procesul de învățare',
+      'Cu Pachetul Promo Corcodușa, fiecare pagină devine o nouă aventură! Învață, joacă-te și descoperă magia cunoașterii pas cu pas!'
     ]
   }
 ];
@@ -254,16 +284,16 @@ const Products = () => {
             <div className="flex flex-wrap gap-4 justify-center">
               {renderCategoryButton('Toate produsele', 'Toate Produsele')}
               {renderCategoryButton('alfabet', 'Alfabetul')}
-              {renderCategoryButton('matematica', 'Matematică')}
+              {renderCategoryButton('numere', 'Numere')}
               {renderCategoryButton('forme-si-culori', 'Forme și Culori')}
-              {renderCategoryButton('colorat', 'Pagini de Colorat')}
+              {renderCategoryButton('carte-de-colorat', 'Carte de Colorat')}
             </div>
             {/* Second row */}
             <div className="flex flex-wrap gap-4 justify-center">
-              {renderCategoryButton('labirinturi', 'Labirinturi Magice')}
-              {renderCategoryButton('jocuri-educative', 'Jocuri Educative')}
-              {renderCategoryButton('pachet-standard', 'Pachet Promo')}
-              {renderCategoryButton('pachet-complet', 'Pachet Standard')}
+              {renderCategoryButton('labirinturi-magice', 'Labirinturi Magice')}
+              {renderCategoryButton('jocuri-si-activități-educative', 'Jocuri și Activități Educative')}
+              {renderCategoryButton('pachet-standard', 'Pachet Standard')}
+              {renderCategoryButton('pachet-promo', 'Pachet Promo')}
             </div>
           </div>
         </div>
