@@ -151,6 +151,9 @@ app.get('/api/debug/ebook-leads', async (req, res) => {
 
 // === Servește frontendul ===
 const frontendBuildPath = path.join(__dirname, 'frontend');
+console.log('🔍 Frontend path:', frontendBuildPath);
+console.log('🔍 Files in frontend:', require('fs').readdirSync(frontendBuildPath));
+
 if (require('fs').existsSync(frontendBuildPath)) {
   app.use(express.static(frontendBuildPath, {
     setHeaders: (res) => {
