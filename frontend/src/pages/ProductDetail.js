@@ -210,10 +210,15 @@ const ProductDetail = () => {
     ];
 
     const foundProduct = productsData.find(p => p.category === productId);
+    console.log('ProductDetail - productId:', productId);
+    console.log('ProductDetail - foundProduct:', foundProduct);
+    console.log('ProductDetail - available categories:', productsData.map(p => p.category));
+
     if (foundProduct) {
       setProduct(foundProduct);
       window.scrollTo(0, 0);
     } else {
+      console.log('ProductDetail - Product not found, redirecting to /produse');
       navigate('/produse');
     }
   }, [productId, navigate]);
