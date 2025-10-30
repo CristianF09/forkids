@@ -372,28 +372,32 @@ async function sendCompletePackage(toEmail, productName, amount, currency) {
             await transporter.sendMail({
               from: `"CorcoDușa" <${process.env.ZMAIL_USER}>`,
               to: toEmail,
-              subject: `Pachetul Complet - Toate materialele digitale - CorcoDușa`,
+              subject: `Pachetul Complet - CorcoDușa`,
               html: `
-                <h2>Pachetul Complet - Toate materialele digitale!</h2>
-                <p><strong>Produs:</strong> ${displayProductName}</p>
-                <p><strong>Preț:</strong> ${amount} ${currency}</p>
-                <p><strong>Data:</strong> ${new Date().toLocaleString('ro-RO')}</p>
-                <hr>
-                <p>Găsești atașat fișierul ZIP cu toate materialele digitale din Pachetul Complet:</p>
-                <ul>
-                  <li>🔠 Alfabetul.pdf</li>
-                  <li>🔢 Numere.pdf</li>
-                  <li>🎨 Forme și Culori.pdf</li>
-                  <li>🎨 Bonus - Fișe de Colorat.pdf</li>
-                  <li>🏆 Bonus - Certificat de Absolvire - Pachet Standard.pdf</li>
-                </ul>
-                <p><strong>Instrucțiuni:</strong></p>
-                <ol>
-                  <li>Descarcă fișierul ZIP atașat</li>
-                  <li>Dezarhivează fișierul pe calculatorul tău</li>
-                  <li>Găsești toate materialele digitale în folderul dezarhivat</li>
-                </ol>
-                <p>Pentru întrebări: contact@corcodusa.ro</p>
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                  <h2 style="color: #20BF55;">🎉 Mulțumim pentru achiziție!</h2>
+
+                  <div style="background: #e8f5e8; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <h3 style="margin-top: 0; color: #20BF55;">📦 Pachetul Complet</h3>
+                    <p>Găsești atașat fișierul ZIP cu toate materialele digitale din Pachetul Complet.</p>
+                    <p><strong>Fișier atașat:</strong> ${zipFileName}</p>
+                    <p><strong>Conținut pachet:</strong></p>
+                    <ul>
+                      <li>🔠 Alfabetul.pdf</li>
+                      <li>🔢 Numere.pdf</li>
+                      <li>🎨 Forme și Culori.pdf</li>
+                      <li>🎨 Bonus - Fișe de Colorat.pdf</li>
+                      <li>🏆 Bonus - Certificat de Absolvire - Pachet Standard.pdf</li>
+                    </ul>
+                    <p><em>Chitanța de plată a fost trimisă automat de către Stripe.</em></p>
+                  </div>
+
+                  <hr style="border: none; border-top: 1px solid #ddd; margin: 30px 0;">
+                  <p style="color: #666; font-size: 14px;">
+                    Pentru întrebări sau suport: <a href="mailto:contact@corcodusa.ro">contact@corcodusa.ro</a><br>
+                    Mulțumim că ai ales CorcoDușa! 🎓
+                  </p>
+                </div>
               `,
               attachments: [
                 {
@@ -684,29 +688,38 @@ async function sendPromoPackage(toEmail, productName, amount, currency, pdfFiles
             await transporter.sendMail({
               from: `"CorcoDușa" <${process.env.ZMAIL_USER}>`,
               to: toEmail,
-              subject: `Pachetul Promo - Descărcare ZIP - CorcoDușa`,
+              subject: `Pachetul Promo - CorcoDușa`,
               html: `
-                <h2>Pachetul Promo - Descărcare fișier</h2>
-                <p><strong>Produs:</strong> ${displayProductName}</p>
-                <p><strong>Preț:</strong> ${amount} ${currency}</p>
-                <p><strong>Data:</strong> ${new Date().toLocaleString('ro-RO')}</p>
-                <hr>
-                <p>Fișierul ZIP cu materialele din Pachetul Promo este disponibil pentru descărcare în siguranță:</p>
-                <p>
-                  <a href="${downloadUrl}" style="background:#20BF55;color:#fff;padding:10px 18px;text-decoration:none;border-radius:6px;display:inline-block;">
-                    📦 Descarcă Pachetul Promo (ZIP)
-                  </a>
-                </p>
-                <p>Conținut:</p>
-                <ul>
-                  ${pdfFiles.map(file => {
-                    if (file === 'Labirinturi Magice.pdf') return '<li>🧩 Labirinturi Magice.pdf</li>';
-                    if (file === 'JocuriSiActivitatiEducative.pdf') return '<li>🎓 Jocuri și Activități Educative.pdf</li>';
-                    if (file === 'BonusCertificatDeAbsolvire.pdf') return '<li>🏆 Bonus - Certificat de Absolvire.pdf</li>';
-                    return `<li>${file}</li>`;
-                  }).join('')}
-                </ul>
-                <p>Pentru întrebări: contact@corcodusa.ro</p>
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                  <h2 style="color: #20BF55;">🎉 Mulțumim pentru achiziție!</h2>
+
+                  <div style="background: #e8f5e8; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <h3 style="margin-top: 0; color: #20BF55;">📦 Pachetul Promo</h3>
+                    <p>Fișierul ZIP cu materialele din Pachetul Promo este disponibil pentru descărcare în siguranță:</p>
+                    <p style="text-align: center; margin: 20px 0;">
+                      <a href="${downloadUrl}" style="background:#20BF55;color:#fff;padding:12px 24px;text-decoration:none;border-radius:6px;display:inline-block;font-weight:bold;">
+                        📦 Descarcă Pachetul Promo (ZIP)
+                      </a>
+                    </p>
+                    <p><strong>Conținut pachet:</strong></p>
+                    <ul>
+                      ${pdfFiles.map(file => {
+                        if (file === 'Labirinturi Magice.pdf') return '<li>🧩 Labirinturi Magice.pdf</li>';
+                        if (file === 'JocuriSiActivitatiEducative.pdf') return '<li>🎓 Jocuri și Activități Educative.pdf</li>';
+                        if (file === 'BonusCertificatDeAbsolvire.pdf') return '<li>🏆 Bonus - Certificat de Absolvire.pdf</li>';
+                        return `<li>${file}</li>`;
+                      }).join('')}
+                    </ul>
+                    <p><em>Link-ul de descărcare este valabil timp de 30 de zile.</em></p>
+                    <p><em>Chitanța de plată a fost trimisă automat de către Stripe.</em></p>
+                  </div>
+
+                  <hr style="border: none; border-top: 1px solid #ddd; margin: 30px 0;">
+                  <p style="color: #666; font-size: 14px;">
+                    Pentru întrebări sau suport: <a href="mailto:contact@corcodusa.ro">contact@corcodusa.ro</a><br>
+                    Mulțumim că ai ales CorcoDușa! 🎓
+                  </p>
+                </div>
               `,
             });
           }
@@ -721,29 +734,33 @@ async function sendPromoPackage(toEmail, productName, amount, currency, pdfFiles
             await transporter.sendMail({
               from: `"CorcoDușa" <${process.env.ZMAIL_USER}>`,
               to: toEmail,
-              subject: `Pachetul Promo - Materialele digitale - CorcoDușa`,
+              subject: `Pachetul Promo - CorcoDușa`,
               html: `
-                <h2>Pachetul Promo - Materialele digitale!</h2>
-                <p><strong>Produs:</strong> ${displayProductName}</p>
-                <p><strong>Preț:</strong> ${amount} ${currency}</p>
-                <p><strong>Data:</strong> ${new Date().toLocaleString('ro-RO')}</p>
-                <hr>
-                <p>Găsești atașat fișierul ZIP cu materialele digitale din Pachetul Promo:</p>
-                <ul>
-                  ${pdfFiles.map(file => {
-                    if (file === 'Labirinturi Magice.pdf') return '<li>🧩 Labirinturi Magice.pdf</li>';
-                    if (file === 'JocuriSiActivitatiEducative.pdf') return '<li>🎓 Jocuri și Activități Educative.pdf</li>';
-                    if (file === 'BonusCertificatDeAbsolvire.pdf') return '<li>🏆 Bonus - Certificat de Absolvire.pdf</li>';
-                    return `<li>${file}</li>`;
-                  }).join('')}
-                </ul>
-                <p><strong>Instrucțiuni:</strong></p>
-                <ol>
-                  <li>Descarcă fișierul ZIP atașat</li>
-                  <li>Dezarhivează fișierul pe calculatorul tău</li>
-                  <li>Găsești toate materialele digitale în folderul dezarhivat</li>
-                </ol>
-                <p>Pentru întrebări: contact@corcodusa.ro</p>
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                  <h2 style="color: #20BF55;">🎉 Mulțumim pentru achiziție!</h2>
+
+                  <div style="background: #e8f5e8; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <h3 style="margin-top: 0; color: #20BF55;">📦 Pachetul Promo</h3>
+                    <p>Găsești atașat fișierul ZIP cu materialele digitale din Pachetul Promo.</p>
+                    <p><strong>Fișier atașat:</strong> ${zipFileName}</p>
+                    <p><strong>Conținut pachet:</strong></p>
+                    <ul>
+                      ${pdfFiles.map(file => {
+                        if (file === 'Labirinturi Magice.pdf') return '<li>🧩 Labirinturi Magice.pdf</li>';
+                        if (file === 'JocuriSiActivitatiEducative.pdf') return '<li>🎓 Jocuri și Activități Educative.pdf</li>';
+                        if (file === 'BonusCertificatDeAbsolvire.pdf') return '<li>🏆 Bonus - Certificat de Absolvire.pdf</li>';
+                        return `<li>${file}</li>`;
+                      }).join('')}
+                    </ul>
+                    <p><em>Chitanța de plată a fost trimisă automat de către Stripe.</em></p>
+                  </div>
+
+                  <hr style="border: none; border-top: 1px solid #ddd; margin: 30px 0;">
+                  <p style="color: #666; font-size: 14px;">
+                    Pentru întrebări sau suport: <a href="mailto:contact@corcodusa.ro">contact@corcodusa.ro</a><br>
+                    Mulțumim că ai ales CorcoDușa! 🎓
+                  </p>
+                </div>
               `,
               attachments: [
                 {

@@ -79,20 +79,29 @@ async function sendPDFWithOptimization(toEmail, pdfFileName, productName, amount
             await transporter.sendMail({
               from: `"CorcoDușa" <${process.env.ZMAIL_USER}>`,
               to: toEmail,
-              subject: `Materialul digital ${productName} (ZIP) - Link de descărcare - CorcoDușa`,
+              subject: `Materialul digital ${productName} - CorcoDușa`,
               html: `
-                <h2>Materialul digital este gata!</h2>
-                <p><strong>Produs:</strong> ${productName}</p>
-                <p><strong>Preț:</strong> ${amount} ${currency}</p>
-                <p><strong>Data:</strong> ${new Date().toLocaleString('ro-RO')}</p>
-                <hr>
-                <p>Fișierul ZIP este disponibil pentru descărcare în siguranță:</p>
-                <p>
-                  <a href="${downloadUrl}" style="background:#20BF55;color:#fff;padding:8px 16px;text-decoration:none;border-radius:4px;display:inline-block;">
-                    📥 Descarcă ${productName} (ZIP)
-                  </a>
-                </p>
-                <p>Pentru întrebări: contact@corcodusa.ro</p>
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                  <h2 style="color: #20BF55;">🎉 Mulțumim pentru achiziție!</h2>
+
+                  <div style="background: #e8f5e8; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <h3 style="margin-top: 0; color: #20BF55;">📦 Materialul digital</h3>
+                    <p>Fișierul ZIP cu materialele tale digitale este disponibil pentru descărcare în siguranță:</p>
+                    <p style="text-align: center; margin: 20px 0;">
+                      <a href="${downloadUrl}" style="background:#20BF55;color:#fff;padding:12px 24px;text-decoration:none;border-radius:6px;display:inline-block;font-weight:bold;">
+                        📥 Descarcă ${productName} (ZIP)
+                      </a>
+                    </p>
+                    <p><em>Link-ul de descărcare este valabil timp de 30 de zile.</em></p>
+                    <p><em>Chitanța de plată a fost trimisă automat de către Stripe.</em></p>
+                  </div>
+
+                  <hr style="border: none; border-top: 1px solid #ddd; margin: 30px 0;">
+                  <p style="color: #666; font-size: 14px;">
+                    Pentru întrebări sau suport: <a href="mailto:contact@corcodusa.ro">contact@corcodusa.ro</a><br>
+                    Mulțumim că ai ales CorcoDușa! 🎓
+                  </p>
+                </div>
               `,
             });
             console.log('✅ Download link email sent to:', toEmail);
@@ -107,15 +116,24 @@ async function sendPDFWithOptimization(toEmail, pdfFileName, productName, amount
             await transporter.sendMail({
               from: `"CorcoDușa" <${process.env.ZMAIL_USER}>`,
               to: toEmail,
-              subject: `Materialul digital ${productName} (ZIP) - CorcoDușa`,
+              subject: `Materialul digital ${productName} - CorcoDușa`,
               html: `
-                <h2>Materialul digital este gata!</h2>
-                <p><strong>Produs:</strong> ${productName}</p>
-                <p><strong>Preț:</strong> ${amount} ${currency}</p>
-                <p><strong>Data:</strong> ${new Date().toLocaleString('ro-RO')}</p>
-                <hr>
-                <p>Găsești atașat fișierul ZIP care conține materialul tău digital.</p>
-                <p>Pentru întrebări: contact@corcodusa.ro</p>
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                  <h2 style="color: #20BF55;">🎉 Mulțumim pentru achiziție!</h2>
+
+                  <div style="background: #e8f5e8; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <h3 style="margin-top: 0; color: #20BF55;">📦 Materialul digital</h3>
+                    <p>Găsești atașat fișierul ZIP care conține materialele tale digitale.</p>
+                    <p><strong>Fișier atașat:</strong> ${zipFileName}</p>
+                    <p><em>Chitanța de plată a fost trimisă automat de către Stripe.</em></p>
+                  </div>
+
+                  <hr style="border: none; border-top: 1px solid #ddd; margin: 30px 0;">
+                  <p style="color: #666; font-size: 14px;">
+                    Pentru întrebări sau suport: <a href="mailto:contact@corcodusa.ro">contact@corcodusa.ro</a><br>
+                    Mulțumim că ai ales CorcoDușa! 🎓
+                  </p>
+                </div>
               `,
               attachments: [
                 { filename: zipFileName, path: zipFilePath },
@@ -144,4 +162,4 @@ async function sendPDFWithOptimization(toEmail, pdfFileName, productName, amount
   }
 }
 
-module.exports = { sendPDFWithOptimization }; 
+module.exports = { sendPDFWithOptimization };
