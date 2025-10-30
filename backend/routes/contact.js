@@ -11,68 +11,71 @@ router.post('/', async (req, res) => {
     return res.status(400).json({ error: 'Toate câmpurile sunt necesare.' });
   }
 
-  try {
-    // Check if email credentials are configured
-    if (!process.env.ZMAIL_USER || !process.env.ZMAIL_PASS) {
-      console.log('❌ Email credentials not configured');
-      console.log('📧 Development mode - Email would be sent to: contact@corcodusa.ro');
-      console.log('📧 Email content:', { name, email, message });
-      return res.status(200).json({ message: 'Mesajul a fost trimis cu succes (development mode).' });
-    }
+  // Respond immediately to avoid timeout
+  res.status(200).json({ message: 'Mulțumim pentru mesaj! Vă vom contacta în curând.' });
 
-    console.log('📧 Attempting to send email to contact@corcodusa.ro');
-    console.log('📧 From:', name, '<' + email + '>');
-    console.log('📧 Message:', message);
-    console.log('📧 Using Zoho credentials:', {
-      user: process.env.ZMAIL_USER,
-      pass: process.env.ZMAIL_PASS ? '***configured***' : '***missing***'
-    });
-
-    // Send the actual email directly without verification
-    await sendContactEmail({ name, email, message });
-    console.log('✅ Contact email sent successfully');
-    res.status(200).json({ message: 'Mulțumim pentru mesaj! Vă vom contacta în curând.' });
-
-  } catch (error) {
-    console.error('❌ Eroare la trimiterea emailului:', error.message);
-    console.error('❌ Full error:', error);
-
-    // Try to send a simple email as fallback
+  // Process email sending in background
+  setImmediate(async () => {
     try {
-      const nodemailer = require('nodemailer');
-      const transporter = nodemailer.createTransport({
-        host: 'smtp.zoho.eu',
-        port: 465,
-        secure: true,
-        auth: {
-          user: process.env.ZMAIL_USER,
-          pass: process.env.ZMAIL_PASS,
-        },
+      // Check if email credentials are configured
+      if (!process.env.ZMAIL_USER || !process.env.ZMAIL_PASS) {
+        console.log('❌ Email credentials not configured');
+        console.log('📧 Development mode - Email would be sent to: contact@corcodusa.ro');
+        console.log('📧 Email content:', { name, email, message });
+        return;
+      }
+
+      console.log('📧 Attempting to send email to contact@corcodusa.ro');
+      console.log('📧 From:', name, '<' + email + '>');
+      console.log('📧 Message:', message);
+      console.log('📧 Using Zoho credentials:', {
+        user: process.env.ZMAIL_USER,
+        pass: process.env.ZMAIL_PASS ? '***configured***' : '***missing***',
       });
 
-      await transporter.sendMail({
-        from: `"CorcoDușa Contact Form" <${process.env.ZMAIL_USER}>`,
-        to: 'contact@corcodusa.ro',
-        subject: 'Mesaj nou din formularul de contact',
-        html: `
-          <h3>Ai primit un mesaj nou de la ${name} (${email})</h3>
-          <p><strong>Mesaj:</strong></p>
-          <p>${message}</p>
-          <hr>
-          <p><small>Acest mesaj a fost trimis din formularul de contact de pe site-ul CorcoDușa.</small></p>
-        `,
-        replyTo: email,
-      });
+      // Send the actual email directly without verification
+      await sendContactEmail({ name, email, message });
+      console.log('✅ Contact email sent successfully');
 
-      console.log('✅ Fallback email sent successfully');
-      res.status(200).json({ message: 'Mulțumim pentru mesaj! Vă vom contacta în curând.' });
+    } catch (error) {
+      console.error('❌ Eroare la trimiterea emailului:', error.message);
+      console.error('❌ Full error:', error);
 
-    } catch (fallbackError) {
-      console.error('❌ Fallback email also failed:', fallbackError.message);
-      console.error('❌ Fallback error details:', fallbackError);
-      res.status(200).json({ message: 'Mesajul a fost trimis cu succes (development mode).' });
+      // Try to send a simple email as fallback
+      try {
+        const nodemailer = require('nodemailer');
+        const transporter = nodemailer.createTransport({
+          host: 'smtp.zoho.eu',
+          port: 465,
+          secure: true,
+          auth: {
+            user: process.env.ZMAIL_USER,
+            pass: process.env.ZMAIL_PASS,
+          },
+        });
+
+        await transporter.sendMail({
+          from: `"CorcoDușa Contact Form" <${process.env.ZMAIL_USER}>`,
+          to: 'contact@corcodusa.ro',
+          subject: 'Mesaj nou din formularul de contact',
+          html: `
+            <h3>Ai primit un mesaj nou de la ${name} (${email})</h3>
+            <p><strong>Mesaj:</strong></p>
+            <p>${message}</p>
+            <hr>
+            <p><small>Acest mesaj a fost trimis din formularul de contact de pe site-ul CorcoDușa.</small></p>
+          `,
+          replyTo: email,
+        });
+
+        console.log('✅ Fallback email sent successfully');
+
+      } catch (fallbackError) {
+        console.error('❌ Fallback email also failed:', fallbackError.message);
+        console.error('❌ Fallback error details:', fallbackError);
+      }
     }
-  }
+  });
 });
 
 // Test route for email functionality
@@ -86,7 +89,7 @@ router.get('/test-email', async (req, res) => {
         message: 'Email credentials not configured',
         configured: false,
         user: process.env.ZMAIL_USER ? 'set' : 'missing',
-        pass: process.env.ZMAIL_PASS ? 'set' : 'missing'
+        pass: process.env.ZMAIL_PASS ? 'set' : 'missing',
       });
     }
 
@@ -124,7 +127,7 @@ router.get('/test-email', async (req, res) => {
       success: true,
       message: 'Test email sent successfully',
       configured: true,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
 
   } catch (error) {
@@ -133,7 +136,7 @@ router.get('/test-email', async (req, res) => {
       success: false,
       message: 'Email test failed',
       error: error.message,
-      configured: !!(process.env.ZMAIL_USER && process.env.ZMAIL_PASS)
+      configured: !!(process.env.ZMAIL_USER && process.env.ZMAIL_PASS),
     });
   }
 });

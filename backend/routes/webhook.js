@@ -112,12 +112,13 @@ router.post('/', async (req, res) => {
         let amount = session.amount_total / 100;
         let currency = session.currency?.toUpperCase() || 'RON';
         let isCompletePackage = false;
+        let productInfo = null;
 
         const lineItems = expandedSession.line_items?.data || [];
         if (lineItems.length > 0) {
           const li = lineItems[0];
           const priceId = li.price?.id;
-          const productInfo = priceId ? products[priceId] : undefined;
+          productInfo = priceId ? products[priceId] : undefined;
           const liDescription = (li.description || '').toLowerCase();
           const liUnitAmount = ((li.amount_total ?? li.amount_subtotal ?? li.price?.unit_amount ?? 0) / 100);
 
@@ -280,10 +281,10 @@ async function sendCompletePackage(toEmail, productName, amount, currency) {
   // All PDFs for Complete Package
   const pdfFiles = [
     'Alfabetul.pdf',
-    'Numere.pdf', 
+    'Numere.pdf',
     'FormeSiCulori.pdf',
     'BonusFiseDeColorat.pdf',
-    'BonusCertificateDeAbsovire.pdf'
+    'BonusCertificatDeAbsolvire-PachetStandard.pdf'
   ];
 
   // Create ZIP file
@@ -354,7 +355,7 @@ async function sendCompletePackage(toEmail, productName, amount, currency) {
                   <li>🔢 Numere.pdf</li>
                   <li>🎨 Forme și Culori.pdf</li>
                   <li>🎨 Bonus - Fișe de Colorat.pdf</li>
-                  <li>🏆 Bonus - Certificat de Absolvire.pdf</li>
+                  <li>🏆 Bonus - Certificat de Absolvire - Pachet Standard.pdf</li>
                 </ul>
                 <p>Pentru întrebări: contact@corcodusa.ro</p>
               `,
@@ -384,7 +385,7 @@ async function sendCompletePackage(toEmail, productName, amount, currency) {
                   <li>🔢 Numere.pdf</li>
                   <li>🎨 Forme și Culori.pdf</li>
                   <li>🎨 Bonus - Fișe de Colorat.pdf</li>
-                  <li>🏆 Bonus - Certificat de Absolvire.pdf</li>
+                  <li>🏆 Bonus - Certificat de Absolvire - Pachet Standard.pdf</li>
                 </ul>
                 <p><strong>Instrucțiuni:</strong></p>
                 <ol>
@@ -497,7 +498,7 @@ async function sendIndividualPDFs(toEmail, productName, amount, currency, pdfFil
         else if (pdfFile === 'Numere.pdf') pdfProductName = 'Numere';
         else if (pdfFile === 'FormeSiCulori.pdf') pdfProductName = 'Forme și Culori';
         else if (pdfFile === 'BonusFiseDeColorat.pdf') pdfProductName = 'Bonus - Fișe de Colorat';
-        else if (pdfFile === 'BonusCertificateDeAbsovire.pdf') pdfProductName = 'Bonus - Certificat de Absolvire';
+        else if (pdfFile === 'BonusCertificatDeAbsolvire-PachetStandard.pdf') pdfProductName = 'Bonus - Certificat de Absolvire - Pachet Standard';
         
         if (fileSizeInMB < 10) { // Send if under 10MB
           await transporter.sendMail({
@@ -588,7 +589,7 @@ async function sendIndividualPDFs(toEmail, productName, amount, currency, pdfFil
           <li>🔢 Numere.pdf</li>
           <li>🎨 Forme și Culori.pdf</li>
           <li>🎨 Bonus - Fișe de Colorat.pdf</li>
-          <li>🏆 Bonus - Certificat de Absolvire.pdf</li>
+          <li>🏆 Bonus - Certificat de Absolvire - Pachet Standard.pdf</li>
         </ul>
         ${largeFilesHtml}
         <hr>
@@ -698,8 +699,12 @@ async function sendPromoPackage(toEmail, productName, amount, currency, pdfFiles
                 </p>
                 <p>Conținut:</p>
                 <ul>
-                  <li>🧩 Labirinturi Magice.pdf</li>
-                  <li>🎓 Jocuri și Activități Educative.pdf</li>
+                  ${pdfFiles.map(file => {
+                    if (file === 'Labirinturi Magice.pdf') return '<li>🧩 Labirinturi Magice.pdf</li>';
+                    if (file === 'JocuriSiActivitatiEducative.pdf') return '<li>🎓 Jocuri și Activități Educative.pdf</li>';
+                    if (file === 'BonusCertificatDeAbsolvire.pdf') return '<li>🏆 Bonus - Certificat de Absolvire.pdf</li>';
+                    return `<li>${file}</li>`;
+                  }).join('')}
                 </ul>
                 <p>Pentru întrebări: contact@corcodusa.ro</p>
               `,
@@ -725,8 +730,12 @@ async function sendPromoPackage(toEmail, productName, amount, currency, pdfFiles
                 <hr>
                 <p>Găsești atașat fișierul ZIP cu materialele digitale din Pachetul Promo:</p>
                 <ul>
-                  <li>🧩 Labirinturi Magice.pdf</li>
-                  <li>🎓 Jocuri și Activități Educative.pdf</li>
+                  ${pdfFiles.map(file => {
+                    if (file === 'Labirinturi Magice.pdf') return '<li>🧩 Labirinturi Magice.pdf</li>';
+                    if (file === 'JocuriSiActivitatiEducative.pdf') return '<li>🎓 Jocuri și Activități Educative.pdf</li>';
+                    if (file === 'BonusCertificatDeAbsolvire.pdf') return '<li>🏆 Bonus - Certificat de Absolvire.pdf</li>';
+                    return `<li>${file}</li>`;
+                  }).join('')}
                 </ul>
                 <p><strong>Instrucțiuni:</strong></p>
                 <ol>

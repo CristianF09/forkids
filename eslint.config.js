@@ -58,6 +58,8 @@ export default defineConfig([
         require: "readonly",
         module: "readonly",
         exports: "readonly",
+        setImmediate: "readonly",
+        setTimeout: "readonly",
       },
     },
   },
