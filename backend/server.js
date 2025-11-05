@@ -14,8 +14,8 @@ const webhookRoutes = require('./routes/webhook');
 const productsRoutes = require('./routes/products');
 const testRoutes = require('./routes/test');
 
-// ✅ Ruta pentru Ebook Leads
-const ebookLeadsRoutes = require('./routes/ebookLeads');
+// ✅ Ruta pentru Ebook Leads - COMENTATĂ (funcționalitate dezactivată)
+// const ebookLeadsRoutes = require('./routes/ebookLeads');
 
 const app = express();
 
@@ -111,8 +111,8 @@ app.use('/api', successRoutes);
 app.use('/api/products', productsRoutes);
 app.use('/api/test', testRoutes);
 
-// ✅ Ruta pentru Ebook Leads
-app.use('/api/ebook-leads', ebookLeadsRoutes);
+// ✅ Ruta pentru Ebook Leads - COMENTATĂ (funcționalitate dezactivată)
+// app.use('/api/ebook-leads', ebookLeadsRoutes);
 
 // === ✅ Health check cu status MongoDB ===
 app.get('/api/health', (req, res) => {
@@ -126,28 +126,28 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// === ✅ Test route pentru ebook leads ===
-app.get('/api/debug/ebook-leads', async (req, res) => {
-  try {
-    const EbookLead = require('./models/EbookLead');
-    const leadCount = await EbookLead.countDocuments();
-    
-    res.json({
-      success: true,
-      collection: 'ebookleads',
-      totalLeads: leadCount,
-      database: 'ebookhalloween',
-      mongoStatus: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
-    });
-  } catch (error) {
-    res.json({
-      success: false,
-      error: error.message,
-      database: 'ebookhalloween',
-      mongoStatus: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
-    });
-  }
-});
+// === ✅ Test route pentru ebook leads - COMENTATĂ (funcționalitate dezactivată) ===
+// app.get('/api/debug/ebook-leads', async (req, res) => {
+//   try {
+//     const EbookLead = require('./models/EbookLead');
+//     const leadCount = await EbookLead.countDocuments();
+//
+//     res.json({
+//       success: true,
+//       collection: 'ebookleads',
+//       totalLeads: leadCount,
+//       database: 'ebookhalloween',
+//       mongoStatus: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
+//     });
+//   } catch (error) {
+//     res.json({
+//       success: false,
+//       error: error.message,
+//       database: 'ebookhalloween',
+//       mongoStatus: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
+//     });
+//   }
+// });
 
 // === Servește frontendul ===
 const frontendBuildPath = path.join(__dirname, 'frontend');

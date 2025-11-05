@@ -18,9 +18,10 @@ async function sendPDF(toEmail, productId) {
   }
 
   const transporter = nodemailer.createTransport({
-    host: 'smtp.zoho.eu',
-    port: 465,
-    secure: true,
+    host: process.env.ZMAIL_HOST,
+    port: parseInt(process.env.ZMAIL_PORT),
+    secure: process.env.ZMAIL_SECURE === 'true',
+    requireTLS: true, // obligatoriu pentru port 587
     auth: {
       user: process.env.ZMAIL_USER,
       pass: process.env.ZMAIL_PASS,
@@ -55,9 +56,10 @@ async function sendPDF(toEmail, productId) {
  */
 async function sendContactEmail({ name, email, message }) {
   const transporter = nodemailer.createTransport({
-    host: 'smtp.zoho.eu',
-    port: 465,
-    secure: true,
+    host: process.env.ZMAIL_HOST,
+    port: parseInt(process.env.ZMAIL_PORT),
+    secure: process.env.ZMAIL_SECURE === 'true',
+    requireTLS: true, // obligatoriu pentru port 587
     auth: {
       user: process.env.ZMAIL_USER,
       pass: process.env.ZMAIL_PASS,
@@ -86,9 +88,10 @@ async function sendContactEmail({ name, email, message }) {
  */
 async function sendOrderNotification(orderDetails) {
   const transporter = nodemailer.createTransport({
-    host: 'smtp.zoho.eu',
-    port: 465,
-    secure: true,
+    host: process.env.ZMAIL_HOST,
+    port: parseInt(process.env.ZMAIL_PORT),
+    secure: process.env.ZMAIL_SECURE === 'true',
+    requireTLS: true, // obligatoriu pentru port 587
     auth: {
       user: process.env.ZMAIL_USER,
       pass: process.env.ZMAIL_PASS,
@@ -125,9 +128,10 @@ async function sendEmailWithAttachment(to, productName) {
   }
 
   const transporter = nodemailer.createTransport({
-    host: 'smtp.zoho.eu',
-    port: 465,
-    secure: true,
+    host: process.env.ZMAIL_HOST,
+    port: parseInt(process.env.ZMAIL_PORT),
+    secure: process.env.ZMAIL_SECURE === 'true',
+    requireTLS: true, // obligatoriu pentru port 587
     auth: {
       user: process.env.ZMAIL_USER,
       pass: process.env.ZMAIL_PASS,

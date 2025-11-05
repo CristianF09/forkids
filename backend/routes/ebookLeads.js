@@ -1,3 +1,5 @@
+// FUNCȚIONALITATE EBOOK DEZACTIVATĂ - TOATE RUTELE SUNT COMENTATE
+/*
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose'); // ✅ IMPORTANT - ADAUGĂ
@@ -8,7 +10,7 @@ const fs = require('fs');
 // ✅ RUTA SIMPLIFICATĂ - FĂRĂ MONGODB PENTRU TESTARE
 router.post('/download-halloween-ebook', async (req, res) => {
   console.log('🔍 START - Processing Halloween ebook download');
-  
+
   try {
     const { firstName, lastName, email, phone } = req.body;
     console.log('📥 Date primite:', { firstName, lastName, email, phone });
@@ -16,9 +18,9 @@ router.post('/download-halloween-ebook', async (req, res) => {
     // Validare câmpuri obligatorii
     if (!firstName || !lastName || !email || !phone) {
       console.log('❌ Validare eșuată - câmpuri lipsă');
-      return res.status(400).json({ 
+      return res.status(400).json({
         success: false,
-        message: 'Toate câmpurile sunt obligatorii' 
+        message: 'Toate câmpurile sunt obligatorii'
       });
     }
 
@@ -26,11 +28,11 @@ router.post('/download-halloween-ebook', async (req, res) => {
     if (mongoose.connection.readyState === 1) {
       try {
         console.log('💾 Încercăm să salvăm în MongoDB...');
-        const lead = new EbookLead({ 
-          firstName, 
-          lastName, 
-          email, 
-          phone 
+        const lead = new EbookLead({
+          firstName,
+          lastName,
+          email,
+          phone
         });
         await lead.save();
         console.log(`✅ Lead salvat în MongoDB: ${email}`);
@@ -46,7 +48,7 @@ router.post('/download-halloween-ebook', async (req, res) => {
     // ✅ CALE PDF
     const ebookPath = path.join(__dirname, '..', 'public', 'Ebooks', 'Corcodusa Halloween .pdf');
     console.log('🔍 Căutăm fișierul la:', ebookPath);
-    
+
     // Verifică existența fișierului
     if (!fs.existsSync(ebookPath)) {
       console.error('❌ Fișierul PDF nu există:', ebookPath);
@@ -66,7 +68,7 @@ router.post('/download-halloween-ebook', async (req, res) => {
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', 'attachment; filename="Corcodusa-Halloween-Ebook-Gratuit.pdf"');
     res.setHeader('Content-Length', stats.size);
-    
+
     const fileStream = fs.createReadStream(ebookPath);
     fileStream.pipe(res);
 
@@ -77,29 +79,30 @@ router.post('/download-halloween-ebook', async (req, res) => {
     fileStream.on('error', (error) => {
       console.error('❌ Eroare la trimiterea fișierului:', error);
       if (!res.headersSent) {
-        res.status(500).json({ 
+        res.status(500).json({
           success: false,
-          message: 'Eroare la descărcarea fișierului' 
+          message: 'Eroare la descărcarea fișierului'
         });
       }
     });
 
   } catch (error) {
     console.error('❌ Eroare generală:', error);
-    res.status(500).json({ 
+    res.status(500).json({
       success: false,
-      message: 'Eroare server: ' + error.message 
+      message: 'Eroare server: ' + error.message
     });
   }
 });
 
 // ✅ Ruta de test
 router.get('/test', (req, res) => {
-  res.json({ 
-    success: true, 
+  res.json({
+    success: true,
     message: 'Ruta ebook-leads funcționează!',
     mongoStatus: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
   });
 });
 
 module.exports = router;
+*/
