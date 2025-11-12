@@ -233,12 +233,12 @@ const Home = () => {
 
           {/* Secondary CTA - Products */}
           <div className="text-center">
-            <Link
+            {/* <Link
               to="/produse"
               className="inline-block bg-white text-[#FF6B00] hover:bg-gray-50 px-10 py-5 rounded-2xl text-xl font-bold transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 border-4 border-[#FF6B00]"
             >
               VEZI TOATE PRODUSELE
-            </Link>
+            </Link> */}
           </div>
         </div>
       </section>
@@ -401,12 +401,12 @@ const Home = () => {
                     <div className="text-5xl lg:text-6xl font-black text-[#25B838] mb-2">59 LEI</div>
                   </div>
 
-                  <Link
+                  {/* <Link
                     to="/produse"
                     className="w-full bg-[#25B838] text-white py-4 px-8 rounded-2xl text-xl font-bold hover:bg-[#1e6b2e] transition-all duration-300 shadow-xl hover:shadow-2xl inline-block text-center transform hover:scale-105 mb-6"
                   >
                     Alege cartea
-                  </Link>
+                  </Link> */}
 
                   <div className="text-center">
                     <p className="text-gray-600 text-sm flex items-center justify-center">

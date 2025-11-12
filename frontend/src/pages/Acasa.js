@@ -31,9 +31,9 @@ function Acasa() {
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
-                <button className="bg-gradient-to-r from-[#FF6B00] to-[#8B4513] text-white hover:from-[#E05C00] hover:to-[#6B3410] px-8 py-4 rounded-2xl text-xl font-bold transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 inline-flex items-center justify-center group border-4 border-white">
+                {/* <button className="bg-gradient-to-r from-[#FF6B00] to-[#8B4513] text-white hover:from-[#E05C00] hover:to-[#6B3410] px-8 py-4 rounded-2xl text-xl font-bold transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 inline-flex items-center justify-center group border-4 border-white">
                   🎃 Descarcă GRATUIT E-book-ul Halloween! 🎃
-                </button>
+                </button> */}
                 <button className="bg-gradient-to-r from-[#0A4D68] to-[#2C5F7A] text-white hover:from-[#083756] hover:to-[#1e3a5f] px-8 py-4 rounded-2xl text-xl font-semibold transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 border-4 border-white">
                   Pentru Părinți
                 </button>

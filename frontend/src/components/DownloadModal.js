@@ -1,3 +1,6 @@
+// FUNCȚIONALITATE EBOOK DEZACTIVATĂ - COMPONENTA DOWNLOADMODAL ESTE COMENTATĂ
+
+/*
 import React, { useState } from 'react';
 import { X, Download, Mail, Phone, User } from 'lucide-react';
 
@@ -170,6 +173,7 @@ const DownloadModal = ({ isOpen, onClose }) => {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto relative">
         {/* Halloween-themed header */}
+        /*
         <div className="bg-gradient-to-r from-[#FF6B00] to-[#8B4513] text-white p-6 rounded-t-2xl relative overflow-hidden">
           <div className="absolute inset-0 opacity-10">
             <div className="absolute top-2 left-4 text-4xl">🎃</div>
@@ -189,8 +193,9 @@ const DownloadModal = ({ isOpen, onClose }) => {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        //<form onSubmit={handleSubmit} className="p-6 space-y-4">
           {/* First Name */}
+          /*
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Prenume *
@@ -213,8 +218,10 @@ const DownloadModal = ({ isOpen, onClose }) => {
               <p className="text-red-500 text-sm mt-1">{errors.firstName}</p>
             )}
           </div>
+          */
 
           {/* Last Name */}
+          /*
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Nume *
@@ -237,8 +244,10 @@ const DownloadModal = ({ isOpen, onClose }) => {
               <p className="text-red-500 text-sm mt-1">{errors.lastName}</p>
             )}
           </div>
+          */
 
           {/* Email */}
+          /*
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Email *
@@ -261,8 +270,10 @@ const DownloadModal = ({ isOpen, onClose }) => {
               <p className="text-red-500 text-sm mt-1">{errors.email}</p>
             )}
           </div>
+          */
 
           {/* Phone */}
+          /*
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Număr de telefon *
@@ -285,8 +296,10 @@ const DownloadModal = ({ isOpen, onClose }) => {
               <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
             )}
           </div>
+          */
 
           {/* Submit Button */}
+          /*
           <button
             type="submit"
             disabled={isSubmitting}
@@ -304,8 +317,10 @@ const DownloadModal = ({ isOpen, onClose }) => {
               </>
             )}
           </button>
+          */
 
           {/* Privacy Note */}
+          /*
           <p className="text-xs text-gray-500 text-center mt-4">
             Datele tale sunt protejate și vor fi folosite doar pentru a-ți trimite materialele educationale.
           </p>
@@ -316,3 +331,4 @@ const DownloadModal = ({ isOpen, onClose }) => {
 };
 
 export default DownloadModal;
+*/

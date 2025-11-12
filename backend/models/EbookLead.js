@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+/*const mongoose = require('mongoose');
 
 const ebookLeadSchema = new mongoose.Schema({
   firstName: { 
@@ -33,3 +33,4 @@ const ebookLeadSchema = new mongoose.Schema({
 ebookLeadSchema.index({ email: 1 }, { unique: true });
 
 module.exports = mongoose.model('EbookLead', ebookLeadSchema);
+*/
