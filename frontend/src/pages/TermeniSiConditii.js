@@ -1,11 +1,21 @@
-import React from 'react';
+ 
 
 const TermeniSiConditii = () => {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-8">Termeni și Condiții</h1>
-      
-      <div className="space-y-6 text-lg">
+    <div className="min-h-screen bg-gray-100 py-12 md:py-16 lg:py-20">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Hero Section */}
+        <div className="text-center mb-16">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+            Termeni și Condiții
+          </h1>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Regulile și condițiile de utilizare a site-ului și produselor Corcodușa.ro
+          </p>
+        </div>
+
+        <div className="bg-white rounded-2xl p-8 md:p-12 shadow-lg">
+          <div className="space-y-6 text-lg">
         <p className="text-gray-700">
           Prin accesarea și utilizarea site-ului <span className="font-semibold">www.corcodusa.ro</span>, precum și prin achiziționarea produselor digitale disponibile, confirmați că ați citit, înțeles și sunteți de acord cu termenii și condițiile prezentate în acest document.
         </p>
@@ -56,6 +66,8 @@ const TermeniSiConditii = () => {
         <h2 className="text-2xl font-semibold mt-8 mb-2">8. Contact</h2>
         <p className="text-gray-700">Pentru întrebări legate de termeni și condiții sau de utilizarea materialelor, ne puteți contacta la:</p>
         <p className="text-gray-800 font-semibold">📩 <a href="mailto:contact@corcodusa.ro" className="underline">contact@corcodusa.ro</a></p>
+          </div>
+        </div>
       </div>
     </div>
   );

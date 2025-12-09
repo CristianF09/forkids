@@ -31,7 +31,15 @@ function App() {
       }, 1500); // Increased to 1.5s to ensure smooth animation
 
       try {
-        const apiBase = process.env.REACT_APP_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:10000' : 'https://api.corcodusa.ro');
+        const isLocalDev = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+        const apiBase = process.env.REACT_APP_API_URL || (isLocalDev ? 'http://localhost:10000' : 'https://api.corcodusa.ro');
+        if (isLocalDev && !process.env.REACT_APP_API_URL) {
+          clearTimeout(fallbackTimer);
+          if (!cancelled) {
+            setIsLoading(false);
+          }
+          return;
+        }
         const deadline = Date.now() + 5000; // reduced to 5s for better UX
 
         while (!cancelled && Date.now() < deadline) {

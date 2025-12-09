@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { Check } from 'lucide-react';
 import PurchaseSteps from '../components/PurchaseSteps';
@@ -24,7 +24,7 @@ const productsData = [
       'Spații pentru colorat, desen și completat',
       'Propoziții scurte care îmbină litera învățată cu vocabularul zilnic',
       'Dezvoltă coordonarea mână-ochi, recunoașterea literelor, motricitatea fină și interesul pentru citit',
-      'O carte ideală pentru preșcolari și clasa pregătitoare!'
+      'O carte ideală pentru preșcolari și clasa pregătitoare!',
     ]
   },
   {
@@ -47,7 +47,7 @@ const productsData = [
       'Jocuri logice și puzzle-uri numerice pentru exersare',
       'Activități „Unește punctele" pentru învățarea ordinii numerelor',
       'Ajută copilul să înțeleagă conceptele de cantitate, numărare și ordine',
-      'Perfectă pentru copiii între 3 și 6 ani care învață prin joc!'
+      'Perfectă pentru copiii între 3 și 6 ani care învață prin joc!',
     ]
   },
   {
@@ -70,7 +70,7 @@ const productsData = [
       'Jocuri de potrivire și labirinturi simple cu forme și culori',
       'Activități creative de desen și colorare liberă pentru exprimarea artistică',
       'Îmbunătățește recunoașterea vizuală, atenția la detalii și coordonarea',
-      'Perfectă pentru grădiniță și primele clase, oferind un echilibru între distracție și învățare'
+      'Perfectă pentru grădiniță și primele clase, oferind un echilibru între distracție și învățare',
     ]
   },
   {
@@ -100,7 +100,7 @@ const productsData = [
       'Dezvoltă abilitățile de scriere, citire și gândire logică',
       'Poate fi tipărit acasă sau folosit direct pe tabletă / laptop',
       'Ideal pentru: părinți, educatori și copii curioși care învață prin joacă',
-      'Transformă timpul liber într-o aventură educativă plină de culoare, descoperiri și bucurie alături de Corcodușa!'
+      'Transformă timpul liber într-o aventură educativă plină de culoare, descoperiri și bucurie alături de Corcodușa!',
     ]
   },
   {
@@ -125,7 +125,7 @@ const productsData = [
       'Dezvoltă atenția, logica și răbdarea',
       'Îmbunătățește gândirea strategică și orientarea în spațiu',
       'Încurajează copilul să caute soluții și să gândească independent',
-      'Ideală pentru copiii cu vârste între 3 și 8 ani, care adoră provocările și descoperirile!'
+      'Ideală pentru copiii cu vârste între 3 și 8 ani, care adoră provocările și descoperirile!',
     ]
   },
   {
@@ -150,7 +150,7 @@ const productsData = [
       'Dezvoltă atenția, memoria și spiritul de observație',
       'Antrenează motricitatea fină și coordonarea mână-ochi',
       'Încurajează învățarea prin joc și descoperire activă',
-      'Perfectă pentru copiii de 3–7 ani, această carte oferă o combinație echilibrată între distracție și educație!'
+      'Perfectă pentru copiii de 3–7 ani, această carte oferă o combinație echilibrată între distracție și educație!',
     ]
   },
   {
@@ -174,7 +174,7 @@ const productsData = [
       'Stimulează creativitatea, concentrarea și răbdarea',
       'Ajută la dezvoltarea motricității fine și a controlului creionului',
       'Oferă momente de relaxare și exprimare artistică',
-      'Ideală pentru acasă, grădiniță sau activități în familie – un mod minunat de a petrece timp de calitate și de a cultiva dragostea pentru artă!'
+      'Ideală pentru acasă, grădiniță sau activități în familie – un mod minunat de a petrece timp de calitate și de a cultiva dragostea pentru artă!',
     ]
   },
   {
@@ -200,16 +200,16 @@ const productsData = [
       'Copiii învață fără efort, prin joacă și curiozitate',
       'Este un cadou educativ ideal pentru acasă, școală sau vacanță',
       'Stimulează implicarea părintelui în procesul de învățare',
-      'Cu Pachetul Promo Corcodușa, fiecare pagină devine o nouă aventură! Învață, joacă-te și descoperă magia cunoașterii pas cu pas!'
-    ]
-  }
+      'Cu Pachetul Promo Corcodușa, fiecare pagină devine o nouă aventură! Învață, joacă-te și descoperă magia cunoașterii pas cu pas!',
+    ],
+  },
 ];
 
 const Products = () => {
   const { category } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   const [selectedCategory, setSelectedCategory] = useState(category || 'Toate produsele');
   const [filteredProducts, setFilteredProducts] = useState(productsData);
 
@@ -217,7 +217,7 @@ const Products = () => {
     if (category) {
       const filtered = productsData.filter(product => product.category === category);
       setFilteredProducts(filtered);
-      
+
       if (filtered.length === 0) {
         navigate('/produse');
       }
@@ -227,15 +227,23 @@ const Products = () => {
   }, [category, navigate]);
 
   useEffect(() => {
-    if (location.hash === '#pachet-complet') {
-      setTimeout(() => {
-        const section = document.querySelector('section');
-        if (section) {
-          section.scrollIntoView({ behavior: 'smooth' });
+    const OFFSET = 80;
+    if (location.hash === '#pachet-complet' || location.hash === '#pachete-educative') {
+      window.setTimeout(() => {
+        const special = document.getElementById('pachete-educative');
+        if (special) {
+          const top = special.getBoundingClientRect().top + window.pageYOffset - OFFSET;
+          window.scrollTo({ top, behavior: 'smooth' });
         }
       }, 100);
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (location.hash === '#products') {
+      window.setTimeout(() => {
+        const productsEl = document.getElementById('products');
+        if (productsEl) {
+          const top = productsEl.getBoundingClientRect().top + window.pageYOffset - OFFSET;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      }, 100);
     }
   }, [location]);
 
@@ -243,26 +251,28 @@ const Products = () => {
     setSelectedCategory(newCategory);
     if (newCategory === 'Toate produsele') {
       setFilteredProducts(productsData);
-      navigate('/produse');
+      navigate('/produse#products');
     } else {
       const filtered = productsData.filter(product => product.category === newCategory);
       setFilteredProducts(filtered);
-      navigate(`/produse/${newCategory}`);
+      navigate(`/produse/${newCategory}#products`);
     }
   };
 
-  const renderCategoryButton = (categoryId, text) => (
-    <button
-      onClick={() => handleCategoryClick(categoryId)}
-      className={`px-6 py-2 rounded-full font-semibold transition-colors text-sm md:text-base ${
-        selectedCategory === categoryId 
-        ? 'bg-[#FF6B00] text-white' 
-        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-      }`}
-    >
-      {text}
-    </button>
-  );
+  const renderCategoryButton = (categoryId, text) => {
+    return (
+      <button
+        onClick={() => handleCategoryClick(categoryId)}
+        className={`px-6 py-2 rounded-full font-semibold transition-colors text-sm md:text-base ${
+            selectedCategory === categoryId
+          ? 'bg-[#FF6B00] text-white'
+          : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+        }`}
+      >
+        {text}
+      </button>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 py-12 md:py-16 lg:py-20">
@@ -286,7 +296,10 @@ const Products = () => {
               {renderCategoryButton('alfabet', 'Alfabetul')}
               {renderCategoryButton('numere', 'Numere')}
               {renderCategoryButton('forme-si-culori', 'Forme și Culori')}
-              {renderCategoryButton('carte-de-colorat', 'Carte de Colorat')}
+              {renderCategoryButton('labirinturi-magice', 'Labirinturi Magice')}
+              {renderCategoryButton('jocuri-si-activități-educative', 'Jocuri și Activități Educative')}
+              {renderCategoryButton('pachet-standard', 'Pachet Standard')}
+              {renderCategoryButton('pachet-promo', 'Pachet Promo')}
             </div>
             {/* Second row */}
             <div className="flex flex-wrap gap-4 justify-center">
@@ -299,7 +312,7 @@ const Products = () => {
         </div>
 
         {/* Products Grid */}
-        <div className="mb-20">
+        <div className="mb-20" id="products">
           {selectedCategory === 'Toate produsele' ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               {filteredProducts.map((product) => (
@@ -335,22 +348,22 @@ const Products = () => {
                       </li>
                     ))}
                   </ul>
-                  <div className="mt-auto w-full flex flex-col sm:flex-row justify-between items-center gap-4">
-                    {product.originalPrice ? (
-                      <div className="flex flex-col text-center sm:text-left">
+                  <div className="mt-auto w-full">
+                    <div className="flex justify-center mb-3">
+                      <div className="flex flex-col text-center">
                         <span className="text-xl sm:text-2xl font-bold text-[#20BF55]">{product.price} Lei</span>
-                        <span className="text-base sm:text-lg line-through text-gray-500">{product.originalPrice} Lei</span>
+                        <span className="text-base sm:text-lg line-through text-gray-500">{product.originalPrice ? product.originalPrice + ' Lei' : ''}</span>
                       </div>
-                    ) : (
-                      <span className="text-xl sm:text-2xl font-bold text-[#20BF55]">{product.price} Lei</span>
-                    )}
-                    <button
-                      onClick={() => window.open(product.stripeLink, '_blank')}
-                      className="w-full sm:w-auto inline-flex items-center justify-center bg-[#FF6B00] text-white px-6 py-2 rounded-md hover:bg-[#E05C00] transition-colors shadow"
-                      aria-label={`Cumpără ${product.title}`}
-                    >
-                      Cumpără
-                    </button>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <button
+                        onClick={() => window.open(product.stripeLink, '_blank')}
+                        className="w-full inline-flex items-center justify-center bg-[#FF6B00] text-white px-6 py-2 rounded-md hover:bg-[#E05C00] transition-colors shadow"
+                        aria-label={`Cumpără ${product.title}`}
+                      >
+                        {product.originalPrice ? 'Cumpără pachetul' : 'Cumpără acum'}
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -395,16 +408,12 @@ const Products = () => {
                         </div>
                       </div>
 
-                      <div className="mt-6 flex flex-col sm:flex-row justify-between sm:justify-end items-center gap-4">
-                        <div className="flex items-center gap-4">
-                          {product.originalPrice ? (
-                            <div className="flex flex-col sm:flex-row items-center gap-2">
-                              <span className="text-xl sm:text-2xl font-bold text-[#20BF55]">{product.price} Lei</span>
-                              <span className="text-base sm:text-lg line-through text-gray-500">{product.originalPrice} Lei</span>
-                            </div>
-                          ) : (
+                      <div className="mt-6 flex justify-center">
+                        <div className="flex flex-col items-center gap-4">
+                          <div className="flex flex-col items-center gap-2">
                             <span className="text-xl sm:text-2xl font-bold text-[#20BF55]">{product.price} Lei</span>
-                          )}
+                            <span className="text-base sm:text-lg line-through text-gray-500">{product.originalPrice ? product.originalPrice + ' Lei' : ''}</span>
+                          </div>
                           <button
                             onClick={() => window.open(product.stripeLink, '_blank')}
                             className="w-full sm:w-auto inline-flex items-center justify-center bg-[#FF6B00] text-white px-6 sm:px-8 py-2 sm:py-3 rounded-md hover:bg-[#E05C00] transition-colors shadow text-base sm:text-lg font-semibold"
@@ -414,16 +423,17 @@ const Products = () => {
                           </button>
                         </div>
                       </div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                
               ))}
-            </div>
+              </div>
           )}
         </div>
 
         {/* Special Offer Section */}
-        <section className="bg-gradient-to-r from-[#20BF55] to-[#FF6B00] text-white py-16 rounded-xl shadow-lg">
+        <section id="pachete-educative" className="bg-gradient-to-r from-[#20BF55] to-[#FF6B00] text-white py-16 rounded-xl shadow-lg">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-8">
               Oferte Speciale: Pachete Educative

@@ -1,19 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {
-  BookOpenCheck,
-  Heart,
-  Star,
-  ArrowRight,
-  Target,
-  Users,
-  Award,
-  Lightbulb,
-  Shield,
-  MessageCircle,
-  Sparkles,
-  CheckCircle
-} from 'lucide-react';
+import { ArrowRight, CheckCircle } from 'lucide-react';
 
 const DespreNoi = () => {
   return (
@@ -207,7 +194,7 @@ const DespreNoi = () => {
                 <ArrowRight className="ml-3 w-6 h-6" />
               </Link>
               <Link
-                to="/contact"
+                to="/contact#form"
                 className="inline-flex items-center px-8 py-4 bg-white/20 backdrop-blur-sm text-white font-bold rounded-2xl text-xl hover:bg-white/30 transition-all duration-300"
               >
                 Contactează-ne

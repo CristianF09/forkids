@@ -401,12 +401,12 @@ const Home = () => {
                     <div className="text-5xl lg:text-6xl font-black text-[#25B838] mb-2">59 LEI</div>
                   </div>
 
-                  {/* <Link
+                  <Link
                     to="/produse"
                     className="w-full bg-[#25B838] text-white py-4 px-8 rounded-2xl text-xl font-bold hover:bg-[#1e6b2e] transition-all duration-300 shadow-xl hover:shadow-2xl inline-block text-center transform hover:scale-105 mb-6"
                   >
                     Alege cartea
-                  </Link> */}
+                  </Link>
 
                   <div className="text-center">
                     <p className="text-gray-600 text-sm flex items-center justify-center">

@@ -216,7 +216,12 @@ const ProductDetail = () => {
 
     if (foundProduct) {
       setProduct(foundProduct);
-      window.scrollTo(0, 0);
+      const OFFSET = 80;
+      window.setTimeout(() => {
+        const container = document.getElementById('product-detail');
+        const top = container ? (container.getBoundingClientRect().top + window.pageYOffset - OFFSET) : 20;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }, 100);
     } else {
       console.log('ProductDetail - Product not found, redirecting to /produse');
       navigate('/produse');
@@ -226,7 +231,7 @@ const ProductDetail = () => {
   if (!product) return null;
 
   return (
-    <div className="min-h-screen bg-gray-100 py-12 md:py-16 lg:py-20">
+    <div id="product-detail" className="min-h-screen bg-gray-100 py-12 md:py-16 lg:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white rounded-xl shadow-lg overflow-hidden">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-8">

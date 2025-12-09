@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ChevronUp } from 'lucide-react';
 
@@ -25,13 +25,18 @@ const Footer = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const scrollToTopWithOffset = () => {
+    // Scroll to top with a small offset to ensure page title is visible below fixed header
+    window.scrollTo({ top: 20, behavior: 'smooth' });
+  };
+
   return (
     <footer className="bg-[#20232A] text-white py-12 md:py-16 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
           {/* Company Info */}
           <div className="space-y-4">
-            <Link to="/" className="flex items-center space-x-2" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            <Link to="/" className="flex items-center space-x-2" onClick={scrollToTopWithOffset}>
               <img src="/images/Icon.png" alt="Corcodușa Logo" className="h-8 w-auto" />
               <span className="text-2xl font-bold">
                 <span className="text-[#20BF55]">Corcodusa</span>
@@ -76,11 +81,11 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Produse</h3>
             <ul className="space-y-2">
-              <li><Link to="/produse" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Toate produsele</Link></li>
-              <li><Link to="/produse?category=alfabet" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Alfabetul în Joacă</Link></li>
-              <li><Link to="/produse?category=matematica" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Matematică Distractivă</Link></li>
-              <li><Link to="/produse?category=formesiculori" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Aventuri în Culori</Link></li>
-              <li><Link to="/produse#pachet-complet" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Pachet Complet</Link></li>
+              <li><Link to="/produse#products" className="text-gray-400 hover:text-white transition-colors">Toate produsele</Link></li>
+              <li><Link to="/produse/alfabet#products" className="text-gray-400 hover:text-white transition-colors">Alfabetul în Joacă</Link></li>
+              <li><Link to="/produse/numere#products" className="text-gray-400 hover:text-white transition-colors">Matematică Distractivă</Link></li>
+              <li><Link to="/produse/forme-si-culori#products" className="text-gray-400 hover:text-white transition-colors">Aventuri în Culori</Link></li>
+              <li><Link to="/produse#pachete-educative" className="text-gray-400 hover:text-white transition-colors">Pachete Educative</Link></li>
             </ul>
           </div>
 
@@ -88,7 +93,7 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Informații</h3>
             <ul className="space-y-2">
-              <li><Link to="/despre-noi" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Despre Noi</Link></li>
+              <li><Link to="/despre-noi" className="text-gray-400 hover:text-white transition-colors" onClick={scrollToTopWithOffset}>Despre Noi</Link></li>
               <li>
                 {location.pathname === '/' ? (
                   <button
@@ -98,12 +103,12 @@ const Footer = () => {
                     Întrebări Frecvente
                   </button>
                 ) : (
-                  <Link to="/intrebari-frecvente" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                  <Link to="/intrebari-frecvente" className="text-gray-400 hover:text-white transition-colors" onClick={scrollToTopWithOffset}>
                     Întrebări Frecvente
                   </Link>
                 )}
               </li>
-              <li><Link to="/contact" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Contact</Link></li>
+              <li><Link to="/contact" className="text-gray-400 hover:text-white transition-colors" onClick={scrollToTopWithOffset}>Contact</Link></li>
             </ul>
           </div>
 
@@ -111,10 +116,10 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Legal</h3>
             <ul className="space-y-2">
-              <li><Link to="/termeni-si-conditii" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Termeni și Condiții</Link></li>
-              <li><Link to="/politica-de-confidentialitate" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Politica de Confidențialitate</Link></li>
-              <li><Link to="/metode-de-plata" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Metode de Plată</Link></li>
-              <li><Link to="/politica-de-retur" className="text-gray-400 hover:text-white transition-colors" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Politica de Retur</Link></li>
+              <li><Link to="/termeni-si-conditii" className="text-gray-400 hover:text-white transition-colors" onClick={scrollToTopWithOffset}>Termeni și Condiții</Link></li>
+              <li><Link to="/politica-de-confidentialitate" className="text-gray-400 hover:text-white transition-colors" onClick={scrollToTopWithOffset}>Politica de Confidențialitate</Link></li>
+              <li><Link to="/metode-de-plata" className="text-gray-400 hover:text-white transition-colors" onClick={scrollToTopWithOffset}>Metode de Plată</Link></li>
+              <li><Link to="/politica-de-retur" className="text-gray-400 hover:text-white transition-colors" onClick={scrollToTopWithOffset}>Politica de Retur</Link></li>
               <li className="pt-2">
                 <div>
                   <a href="https://anpc.ro/ce-este-sal/" target="_blank" rel="noopener noreferrer nofollow" className="inline-block">

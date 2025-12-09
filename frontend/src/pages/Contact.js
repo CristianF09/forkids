@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Mail, Phone, Clock, MapPin, ShoppingCart, CreditCard, MailCheck, BookOpenCheck, MessageCircle, Star, Heart } from 'lucide-react';
 import { API_ENDPOINTS } from '../config/api';
 
@@ -8,6 +9,21 @@ const Contact = () => {
     email: '',
     message: ''
   });
+
+  const location = useLocation();
+
+  useEffect(() => {
+    const OFFSET = 80;
+    if (location.hash === '#form') {
+      window.setTimeout(() => {
+        const formEl = document.getElementById('contact-form');
+        if (formEl) {
+          const top = formEl.getBoundingClientRect().top + window.pageYOffset - OFFSET;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  }, [location]);
 
   const handleChange = (e) => {
     setFormData({
@@ -133,7 +149,7 @@ const Contact = () => {
 
         {/* Contact Form Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-          <div className="bg-white rounded-xl p-8 shadow-lg">
+          <div id="contact-form" className="bg-white rounded-xl p-8 shadow-lg">
             <div className="flex items-center mb-6">
               <h2 className="text-3xl font-bold text-gray-800">Ai întrebări? Contactează-ne!</h2>
             </div>

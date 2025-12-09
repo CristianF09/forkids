@@ -2,10 +2,20 @@ import React from 'react';
 
 const PoliticaDeConfidentialitate = () => {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-8">Politica de Confidențialitate</h1>
-      
-      <div className="space-y-6 text-lg">
+    <div className="min-h-screen bg-gray-100 py-12 md:py-16 lg:py-20">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Hero Section */}
+        <div className="text-center mb-16">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+            Politica de Confidențialitate
+          </h1>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Cum protejăm și gestionăm datele dumneavoastră personale
+          </p>
+        </div>
+
+        <div className="bg-white rounded-2xl p-8 md:p-12 shadow-lg">
+          <div className="space-y-6 text-lg">
         <p className="text-gray-700">
           La Corcodusa.ro respectăm confidențialitatea vizitatorilor și clienților noștri. Prezenta politică explică ce date colectăm, cum le folosim și ce drepturi aveți conform legislației în vigoare (Regulamentul (UE) 2016/679 – GDPR).
         </p>
@@ -71,6 +81,8 @@ const PoliticaDeConfidentialitate = () => {
         <h2 className="text-2xl font-semibold mt-8 mb-2">Contact</h2>
         <p className="text-gray-700">Pentru orice întrebare legată de datele dvs. personale, ne puteți contacta la:</p>
         <p className="text-gray-800 font-semibold">📧 contact@corcodusa.ro</p>
+          </div>
+        </div>
       </div>
     </div>
   );

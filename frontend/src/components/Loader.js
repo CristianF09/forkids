@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Loader.css';
+import { API_ENDPOINTS } from '../config/api';
 
 const Loader = ({ title = 'corcodusa.ro', subtitle = 'se încarcă...' }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -8,47 +9,37 @@ const Loader = ({ title = 'corcodusa.ro', subtitle = 'se încarcă...' }) => {
     if ('connection' in navigator) {
       const effectiveType = navigator.connection.effectiveType;
       if (effectiveType === 'slow-2g' || effectiveType === '2g') {
-        console.log("Rețea lentă detectată. Poți arăta loader-ul mai devreme.");
-        setIsLoading(true); // activate visual loader immediately
+        setIsLoading(true);
       }
     }
 
-    const LOADING_THRESHOLD = 100; // 0.1 seconds
-    let loaderTimeout;
-
-    // 1. Show loader if it exceeds 0.1 seconds
-    loaderTimeout = setTimeout(() => {
-      setIsLoading(true); // activate visual loader
+    const LOADING_THRESHOLD = 100;
+    const loaderTimeout = window.setTimeout(() => {
+      setIsLoading(true);
     }, LOADING_THRESHOLD);
 
     // 2. Function for initial API calls
     const fetchInitialData = async () => {
       try {
-        // Example: critical API calls
-        const [userRes, configRes] = await Promise.all([
-          fetch('/api/health'),         // health check
-          fetch('/api/config')        // app configurations
-        ]);
-
-        if (!userRes.ok || !configRes.ok) throw new Error("API error");
+        const isLocalDev = ['localhost', '127.0.0.1'].includes(window.location.hostname);
+        if (isLocalDev) {
+          return;
+        }
+        const healthRes = await window.fetch(API_ENDPOINTS.HEALTH, { cache: 'no-store' });
+        if (!healthRes.ok) throw new Error('API error');
 
         // Save data (e.g., in context or state)
         // ...
 
       } catch (error) {
-        console.error("Initial load failed:", error);
       } finally {
-        // 3. Clear timeout and hide loader
-        clearTimeout(loaderTimeout);
+        window.clearTimeout(loaderTimeout);
         setIsLoading(false);
       }
     };
 
-    // Start loading
     fetchInitialData();
-
-    // Cleanup on unmount
-    return () => clearTimeout(loaderTimeout);
+    return () => window.clearTimeout(loaderTimeout);
   }, []);
 
   return (
