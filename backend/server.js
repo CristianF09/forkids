@@ -57,7 +57,7 @@ const mongoUri = process.env.MONGODB_URI;
 
 // Debug MongoDB connection
 console.log('🔍 MongoDB Configuration:');
-console.log('📦 Database:', mongoUri ? mongoUri.split('/').pop().split('?')[0] : 'Not set');
+console.log('📦 Database from URI:', mongoUri ? mongoUri.split('/').pop().split('?')[0] : 'Not set');
 console.log('👤 User:', mongoUri ? mongoUri.split('//')[1].split(':')[0] : 'Not set');
 
 if (mongoUri) {
@@ -68,8 +68,8 @@ if (mongoUri) {
     socketTimeoutMS: 45000,
   })
     .then(() => {
-      console.log('✅ Conectat la MongoDB - ebookhalloween database');
-      
+      console.log('✅ Conectat la MongoDB');
+
       // Listează toate colecțiile pentru debug
       mongoose.connection.db.listCollections().toArray((err, collections) => {
         if (err) {
@@ -119,10 +119,10 @@ app.get('/api/health', (req, res) => {
   const mongoStatus = mongoose.connection.readyState === 1 ? 'connected' : 'disconnected';
   
   res.json({ 
-    status: 'ok', 
-    mongodb: mongoStatus,
-    database: 'ebookhalloween',
-    timestamp: new Date().toISOString()
+  status: 'ok', 
+  mongodb: mongoStatus,
+  database: mongoose.connection.name || 'not_connected',
+  timestamp: new Date().toISOString()
   });
 });
 

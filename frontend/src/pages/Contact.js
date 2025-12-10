@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Mail, Phone, Clock, MapPin, ShoppingCart, CreditCard, MailCheck, BookOpenCheck, MessageCircle, Star, Heart } from 'lucide-react';
+import { Mail, Phone, Clock, MapPin, ShoppingCart, CreditCard, MailCheck, BookOpenCheck, Star, Heart } from 'lucide-react';
 import { API_ENDPOINTS } from '../config/api';
 
 const Contact = () => {
