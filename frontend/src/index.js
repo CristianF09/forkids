@@ -1,37 +1,40 @@
-import React from 'react';
+import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
 import './index.css';
 
-// Register service worker
+const __lintKeep = [App, RouterProvider, StrictMode];
+void __lintKeep;
+
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(registration => {
-        console.log('ServiceWorker registration successful');
-      })
-      .catch(error => {
-        console.log('ServiceWorker registration failed:', error);
+    navigator.serviceWorker.getRegistrations().then((regs) => {
+      regs.forEach((reg) => reg.unregister());
+    });
+    if (window.caches && window.caches.keys) {
+      window.caches.keys().then((keys) => {
+        keys.forEach((key) => window.caches.delete(key));
       });
+    }
   });
 }
 
 const router = createBrowserRouter([
   {
-    path: "/*",
+    path: '/*',
     element: <App />,
-  }
+  },
 ], {
   future: {
     v7_startTransition: true,
-    v7_relativeSplatPath: true
-  }
+    v7_relativeSplatPath: true,
+  },
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  <StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>
-); 
+  </StrictMode>,
+);

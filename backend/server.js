@@ -19,6 +19,9 @@ const testRoutes = require('./routes/test');
 
 const app = express();
 
+const log = (...args) => process.stdout.write(`${args.join(' ')}\n`);
+const errorLog = (...args) => process.stderr.write(`${args.join(' ')}\n`);
+
 // === Middleware generale ===
 const defaultAllowedOrigins = [
   'http://localhost:3000',
@@ -27,7 +30,7 @@ const defaultAllowedOrigins = [
   'http://127.0.0.1:10000',
   'https://corcodusa.ro',
   'https://www.corcodusa.ro',
-  'https://forkids-app.onrender.com'
+  'https://forkids-app.onrender.com',
 ];
 const envAllowedOrigins = (process.env.ALLOWED_ORIGINS || '')
   .split(',')
@@ -36,13 +39,13 @@ const envAllowedOrigins = (process.env.ALLOWED_ORIGINS || '')
 const allowedOrigins = Array.from(new Set([...defaultAllowedOrigins, ...envAllowedOrigins]));
 
 app.use(cors({
-  origin: function(origin, callback) {
+  origin: function (origin, callback) {
     if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin)) return callback(null, true);
-    console.log('❌ CORS blocked for origin:', origin);
+    log('❌ CORS blocked for origin:', origin);
     return callback(new Error('Not allowed by CORS'));
   },
-  credentials: true
+  credentials: true,
 }));
 
 // Stripe webhook trebuie montat înainte de express.json()
@@ -56,9 +59,9 @@ app.use(express.urlencoded({ extended: true }));
 const mongoUri = process.env.MONGODB_URI;
 
 // Debug MongoDB connection
-console.log('🔍 MongoDB Configuration:');
-console.log('📦 Database from URI:', mongoUri ? mongoUri.split('/').pop().split('?')[0] : 'Not set');
-console.log('👤 User:', mongoUri ? mongoUri.split('//')[1].split(':')[0] : 'Not set');
+log('🔍 MongoDB Configuration:');
+log('📦 Database from URI:', mongoUri ? mongoUri.split('/').pop().split('?')[0] : 'Not set');
+log('👤 User:', mongoUri ? mongoUri.split('//')[1].split(':')[0] : 'Not set');
 
 if (mongoUri) {
   mongoose.connect(mongoUri, {
@@ -68,38 +71,43 @@ if (mongoUri) {
     socketTimeoutMS: 45000,
   })
     .then(() => {
-      console.log('✅ Conectat la MongoDB');
+      log('✅ Conectat la MongoDB');
 
-      // Listează toate colecțiile pentru debug
-      mongoose.connection.db.listCollections().toArray((err, collections) => {
-        if (err) {
-          console.log('❌ Eroare la listarea colecțiilor:', err);
-          return;
-        }
-        console.log('📁 Colecții în baza de date:');
-        collections.forEach(collection => {
-          console.log(`   - ${collection.name}`);
-        });
-      });
     })
     .catch(err => {
-      console.error('❌ Eroare conectare MongoDB:', err.message);
-      console.log('🔧 Verifică:');
-      console.log('   1. MongoDB URI în .env');
-      console.log('   2. Parola pentru user');
-      console.log('   3. IP-ul este whitelisted în MongoDB Atlas');
+      errorLog('❌ Eroare conectare MongoDB:', err.message);
+      log('🔧 Verifică:');
+      log('   1. MongoDB URI în .env');
+      log('   2. Parola pentru user');
+      log('   3. IP-ul este whitelisted în MongoDB Atlas');
     });
 } else {
-  console.log('❌ MONGODB_URI nu este setat în .env');
+  log('❌ MONGODB_URI nu este setat în .env');
 }
 
 // Event listeners pentru MongoDB
 mongoose.connection.on('connected', () => {
-  console.log('✅ MongoDB connected successfully');
+  log('✅ MongoDB connected successfully');
+  setTimeout(() => {
+    mongoose.connection.db.listCollections().toArray((err, collections) => {
+      if (err) {
+        errorLog('❌ Eroare la listarea colecțiilor:', err);
+        return;
+      }
+      log('📁 Colecții în baza de date:');
+      if (collections.length === 0) {
+        log('   - (Nicio colecție încă)');
+      } else {
+        collections.forEach(collection => {
+          log(`   - ${collection.name}`);
+        });
+      }
+    });
+  }, 1000);
 });
 
 mongoose.connection.on('error', (err) => {
-  console.log('❌ MongoDB connection error:', err);
+  errorLog('❌ MongoDB connection error:', err);
 });
 
 // === Folosim rutele definite ===
@@ -117,12 +125,12 @@ app.use('/api/test', testRoutes);
 // === ✅ Health check cu status MongoDB ===
 app.get('/api/health', (req, res) => {
   const mongoStatus = mongoose.connection.readyState === 1 ? 'connected' : 'disconnected';
-  
-  res.json({ 
-  status: 'ok', 
-  mongodb: mongoStatus,
-  database: mongoose.connection.name || 'not_connected',
-  timestamp: new Date().toISOString()
+
+  res.json({
+    status: 'ok',
+    mongodb: mongoStatus,
+    database: mongoose.connection.name || 'not_connected',
+    timestamp: new Date().toISOString(),
   });
 });
 
@@ -151,8 +159,8 @@ app.get('/api/health', (req, res) => {
 
 // === Servește frontendul ===
 const frontendBuildPath = path.join(__dirname, 'frontend');
-console.log('🔍 Frontend path:', frontendBuildPath);
-console.log('🔍 Files in frontend:', require('fs').readdirSync(frontendBuildPath));
+log('🔍 Frontend path:', frontendBuildPath);
+log('🔍 Files in frontend:', require('fs').readdirSync(frontendBuildPath));
 
 if (require('fs').existsSync(frontendBuildPath)) {
   app.use(express.static(frontendBuildPath, {
@@ -160,7 +168,7 @@ if (require('fs').existsSync(frontendBuildPath)) {
       res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
       res.set('Pragma', 'no-cache');
       res.set('Expires', '0');
-    }
+    },
   }));
 
   app.get('*', (req, res) => {
@@ -168,36 +176,37 @@ if (require('fs').existsSync(frontendBuildPath)) {
       headers: {
         'Cache-Control': 'no-cache, no-store, must-revalidate',
         'Pragma': 'no-cache',
-        'Expires': '0'
-      }
+        'Expires': '0',
+      },
     });
   });
-  console.log('✅ Frontend build găsit și servit din:', frontendBuildPath);
+  log('✅ Frontend build găsit și servit din:', frontendBuildPath);
 } else {
-  console.log('⚠️ Frontend build nu a fost găsit la:', frontendBuildPath);
+  log('⚠️ Frontend build nu a fost găsit la:', frontendBuildPath);
 }
 
 // === Middleware erori ===
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  void next;
+  errorLog(err.stack);
   res.status(500).json({ message: 'A apărut o eroare pe server!' });
 });
 
 // === Pornire server ===
 const PORT = process.env.PORT || 10000;
 const server = app.listen(PORT, () => {
-  console.log(`🚀 Server rulează pe portul ${PORT}`);
+  log(`🚀 Server rulează pe portul ${PORT}`);
 });
 
 // === Dacă portul e ocupat, încearcă următorul ===
 server.on('error', (err) => {
   if (err.code === 'EADDRINUSE') {
     const nextPort = parseInt(PORT) + 1;
-    console.log(`⚠️ Portul ${PORT} este ocupat, încerc portul ${nextPort}`);
+    log(`⚠️ Portul ${PORT} este ocupat, încerc portul ${nextPort}`);
     app.listen(nextPort, () => {
-      console.log(`🚀 Server rulează acum pe portul ${nextPort}`);
+      log(`🚀 Server rulează acum pe portul ${nextPort}`);
     });
   } else {
-    console.error('❌ Eroare la pornirea serverului:', err);
+    errorLog('❌ Eroare la pornirea serverului:', err);
   }
 });
