@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+
+const __lintKeepNavbar = [Link, Menu, X];
+void __lintKeepNavbar;
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,21 +27,21 @@ const Navbar = () => {
 
           {/* Desktop menu */}
           <div className="hidden md:flex items-center space-x-1">
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               className="relative text-gray-700 hover:text-[#ff5c18] px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 hover:bg-orange-50 group"
             >
               <span>Acasă</span>
               <span className="absolute inset-x-0 bottom-0 h-0.5 bg-[#ff5c18] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
             </Link>
-            <Link 
-              to="/produse" 
+            <Link
+              to="/produse"
               className="relative text-gray-700 hover:text-[#ff5c18] px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 hover:bg-orange-50 group"
             >
               <span>Produse</span>
               <span className="absolute inset-x-0 bottom-0 h-0.5 bg-[#ff5c18] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
             </Link>
-            <Link to="/despre" className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium">
+            <Link to="/despre-noi" className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium">
               Despre Noi
             </Link>
             <Link to="/contact" className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium">
@@ -61,34 +64,33 @@ const Navbar = () => {
       </div>
 
       {/* Mobile menu */}
-      <div className={`
-        md:hidden fixed inset-x-0 top-20 bg-white/90 backdrop-blur-md transform transition-all duration-300 ease-in-out
-        ${isOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}
-      `}>
+      <div className={`${
+        ''
+      } md:hidden fixed inset-x-0 top-20 bg-white/90 backdrop-blur-md transform transition-all duration-300 ease-in-out ${isOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}>
         <div className="px-4 pt-2 pb-3 space-y-1">
-          <Link 
-            to="/" 
+          <Link
+            to="/"
             className="text-gray-700 hover:text-[#ff5c18] hover:bg-orange-50 block px-4 py-3 rounded-lg text-base font-medium transition-all duration-300"
             onClick={() => setIsOpen(false)}
           >
             Acasă
           </Link>
-          <Link 
-            to="/produse" 
+          <Link
+            to="/produse"
             className="text-gray-700 hover:text-[#ff5c18] hover:bg-orange-50 block px-4 py-3 rounded-lg text-base font-medium transition-all duration-300"
             onClick={() => setIsOpen(false)}
           >
             Produse
           </Link>
-          <Link 
-            to="/despre" 
+          <Link
+            to="/despre-noi"
             className="text-gray-700 hover:text-[#ff5c18] hover:bg-orange-50 block px-4 py-3 rounded-lg text-base font-medium transition-all duration-300"
             onClick={() => setIsOpen(false)}
           >
             Despre Noi
           </Link>
-          <Link 
-            to="/contact" 
+          <Link
+            to="/contact"
             className="text-gray-700 hover:text-[#ff5c18] hover:bg-orange-50 block px-4 py-3 rounded-lg text-base font-medium transition-all duration-300"
             onClick={() => setIsOpen(false)}
           >
@@ -100,4 +102,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar; 
+export default Navbar;

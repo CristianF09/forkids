@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Loader from './components/Loader';
@@ -19,6 +19,7 @@ import Cancel from './pages/Cancel';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
+  const location = useLocation();
 
   useEffect(() => {
     let cancelled = false;
@@ -73,6 +74,14 @@ function App() {
     waitForBackend();
     return () => { cancelled = true; };
   }, []);
+
+  useEffect(() => {
+    const path = location.pathname || '';
+    const isProductDetail = path.startsWith('/produs/');
+    if (!isProductDetail) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [location.pathname]);
 
 if (isLoading) return <Loader title="Corcodusa.ro" subtitle="Se încarcă..." />;
 

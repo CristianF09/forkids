@@ -17,15 +17,16 @@ async function sendPDF(toEmail, productId) {
     throw new Error(`Fișierul PDF nu a fost găsit: ${pdfPath}`);
   }
 
-  const transporter = nodemailer.createTransport({
-    host: process.env.ZMAIL_HOST,
-    port: parseInt(process.env.ZMAIL_PORT),
+  const primaryTransporter = nodemailer.createTransport({
+    host: process.env.ZMAIL_HOST || 'smtp.zoho.eu',
+    port: parseInt(process.env.ZMAIL_PORT || '465'),
     secure: process.env.ZMAIL_SECURE === 'true',
-    requireTLS: true, // obligatoriu pentru port 587
     auth: {
       user: process.env.ZMAIL_USER,
       pass: process.env.ZMAIL_PASS,
     },
+    logger: true,
+    debug: true
   });
 
   const mailOptions = {
@@ -43,8 +44,44 @@ async function sendPDF(toEmail, productId) {
     ],
   };
 
-  await transporter.sendMail(mailOptions);
-  console.log(`PDF trimis către: ${toEmail}`);
+  try {
+    console.log('Încerc să trimit PDF cu config:', {
+      host: process.env.ZMAIL_HOST,
+      port: process.env.ZMAIL_PORT,
+      user: process.env.ZMAIL_USER,
+      secure: process.env.ZMAIL_SECURE
+    });
+    
+    const info = await primaryTransporter.sendMail(mailOptions);
+    console.log('PDF trimis cu succes:', info.messageId);
+    return info;
+    
+  } catch (err) {
+    console.error('Eroare la trimiterea PDF-ului:', err);
+    
+    const fallbackTransporter = nodemailer.createTransport({
+      host: 'smtp.zoho.eu',
+      port: 587,
+      secure: false,
+      requireTLS: true,
+      auth: {
+        user: process.env.ZMAIL_USER,
+        pass: process.env.ZMAIL_PASS,
+      },
+      logger: true,
+      debug: true
+    });
+    
+    try {
+      console.log('Încerc fallback pe portul 587 pentru PDF...');
+      const fallbackInfo = await fallbackTransporter.sendMail(mailOptions);
+      console.log('PDF trimis cu fallback:', fallbackInfo.messageId);
+      return fallbackInfo;
+    } catch (fallbackErr) {
+      console.error('Eroare și la fallback pentru PDF:', fallbackErr);
+      throw new Error(`Nu s-a putut trimite PDF-ul: ${fallbackErr.message}`);
+    }
+  }
 }
 
 /**
@@ -55,31 +92,72 @@ async function sendPDF(toEmail, productId) {
  * @param {string} param0.message - Mesajul expeditorului
  */
 async function sendContactEmail({ name, email, message }) {
-  const transporter = nodemailer.createTransport({
-    host: process.env.ZMAIL_HOST,
-    port: parseInt(process.env.ZMAIL_PORT),
+  const primaryTransporter = nodemailer.createTransport({
+    host: process.env.ZMAIL_HOST || 'smtp.zoho.eu',
+    port: parseInt(process.env.ZMAIL_PORT || '465'),
     secure: process.env.ZMAIL_SECURE === 'true',
-    requireTLS: true, // obligatoriu pentru port 587
     auth: {
       user: process.env.ZMAIL_USER,
       pass: process.env.ZMAIL_PASS,
     },
+    logger: true,
+    debug: true
   });
 
-  await transporter.sendMail({
+  const mail = {
     from: `"CorcoDușa Contact Form" <${process.env.ZMAIL_USER}>`,
     to: 'contact@corcodusa.ro',
     subject: 'Mesaj nou din formularul de contact',
+    text: `Mesaj de la: ${name} (${email})\n\n${message}`,
     html: `
       <h3>Ai primit un mesaj nou de la ${name} (${email})</h3>
       <p><strong>Mesaj:</strong></p>
-      <p>${message}</p>
+      <p>${message.replace(/\n/g, '<br>')}</p>
       <hr>
       <p><small>Acest mesaj a fost trimis din formularul de contact de pe site-ul CorcoDușa.</small></p>
     `,
     replyTo: email,
-  });
-  console.log(`Email de contact trimis către contact@corcodusa.ro de la: ${name} <${email}>`);
+  };
+
+  try {
+    console.log('Încerc să trimit email de contact cu config:', {
+      host: process.env.ZMAIL_HOST,
+      port: process.env.ZMAIL_PORT,
+      user: process.env.ZMAIL_USER,
+      secure: process.env.ZMAIL_SECURE
+    });
+    
+    const info = await primaryTransporter.sendMail(mail);
+    console.log('Email de contact trimis cu succes:', info.messageId);
+    return info;
+    
+  } catch (err) {
+    console.error('Eroare la trimiterea email-ului de contact:', err);
+    
+    try {
+      console.log('Încerc fallback pe portul 587 pentru contact...');
+      const fallbackTransporter = nodemailer.createTransport({
+        host: 'smtp.zoho.eu',
+        port: 587,
+        secure: false,
+        requireTLS: true,
+        auth: {
+          user: process.env.ZMAIL_USER,
+          pass: process.env.ZMAIL_PASS,
+        },
+        logger: true,
+        debug: true
+      });
+      
+      const fallbackInfo = await fallbackTransporter.sendMail(mail);
+      console.log('Email de contact trimis cu fallback:', fallbackInfo.messageId);
+      return fallbackInfo;
+      
+    } catch (fallbackErr) {
+      console.error('Eroare și la fallback pentru contact:', fallbackErr);
+      throw new Error(`Nu s-a putut trimite email-ul de contact: ${fallbackErr.message}`);
+    }
+  }
 }
 
 /**
@@ -91,29 +169,83 @@ async function sendOrderNotification(orderDetails) {
     host: process.env.ZMAIL_HOST,
     port: parseInt(process.env.ZMAIL_PORT),
     secure: process.env.ZMAIL_SECURE === 'true',
-    requireTLS: true, // obligatoriu pentru port 587
     auth: {
       user: process.env.ZMAIL_USER,
       pass: process.env.ZMAIL_PASS,
     },
+    logger: true,
+    debug: true
   });
 
-  await transporter.sendMail({
-    from: `"CorcoDușa Orders" <${process.env.ZMAIL_USER}>`,
-    to: 'contact@corcodusa.ro',
-    subject: 'Comandă nouă - CorcoDușa',
-    html: `
-      <h3>Comandă nouă primită!</h3>
-      <p><strong>Client:</strong> ${orderDetails.customerEmail}</p>
-      <p><strong>Produs:</strong> ${orderDetails.productName}</p>
-      <p><strong>Preț:</strong> ${orderDetails.amount} ${orderDetails.currency}</p>
-      <p><strong>Data:</strong> ${new Date().toLocaleString('ro-RO')}</p>
-      <p><strong>Session ID:</strong> ${orderDetails.sessionId}</p>
-      <hr>
-      <p><small>Notificare automată de la sistemul CorcoDușa.</small></p>
-    `,
-  });
-  console.log(`Notificare comandă trimisă către contact@corcodusa.ro pentru: ${orderDetails.customerEmail}`);
+  try {
+    console.log('Încerc să trimit notificare comandă cu config:', {
+      host: process.env.ZMAIL_HOST,
+      port: process.env.ZMAIL_PORT,
+      user: process.env.ZMAIL_USER,
+      secure: process.env.ZMAIL_SECURE
+    });
+    
+    const info = await transporter.sendMail({
+      from: `"CorcoDușa Orders" <${process.env.ZMAIL_USER}>`,
+      to: 'contact@corcodusa.ro',
+      subject: 'Comandă nouă - CorcoDușa',
+      html: `
+        <h3>Comandă nouă primită!</h3>
+        <p><strong>Client:</strong> ${orderDetails.customerEmail}</p>
+        <p><strong>Produs:</strong> ${orderDetails.productName}</p>
+        <p><strong>Preț:</strong> ${orderDetails.amount} ${orderDetails.currency}</p>
+        <p><strong>Data:</strong> ${new Date().toLocaleString('ro-RO')}</p>
+        <p><strong>Session ID:</strong> ${orderDetails.sessionId}</p>
+        <hr>
+        <p><small>Notificare automată de la sistemul CorcoDușa.</small></p>
+      `,
+    });
+    
+    console.log('Notificare comandă trimisă cu succes:', info.messageId);
+    return info;
+    
+  } catch (err) {
+    console.error('Eroare la trimiterea notificării comenzii:', err);
+    
+    const fallbackTransporter = nodemailer.createTransport({
+      host: 'smtp.zoho.eu',
+      port: 587,
+      secure: false,
+      requireTLS: true,
+      auth: {
+        user: process.env.ZMAIL_USER,
+        pass: process.env.ZMAIL_PASS,
+      },
+      logger: true,
+      debug: true
+    });
+    
+    try {
+      console.log('Încerc fallback pe portul 587 pentru notificare comandă...');
+      const fallbackInfo = await fallbackTransporter.sendMail({
+        from: `"CorcoDușa Orders" <${process.env.ZMAIL_USER}>`,
+        to: 'contact@corcodusa.ro',
+        subject: 'Comandă nouă - CorcoDușa',
+        html: `
+          <h3>Comandă nouă primită!</h3>
+          <p><strong>Client:</strong> ${orderDetails.customerEmail}</p>
+          <p><strong>Produs:</strong> ${orderDetails.productName}</p>
+          <p><strong>Preț:</strong> ${orderDetails.amount} ${orderDetails.currency}</p>
+          <p><strong>Data:</strong> ${new Date().toLocaleString('ro-RO')}</p>
+          <p><strong>Session ID:</strong> ${orderDetails.sessionId}</p>
+          <hr>
+          <p><small>Notificare automată de la sistemul CorcoDușa.</small></p>
+        `,
+      });
+      
+      console.log('Notificare comandă trimisă cu fallback:', fallbackInfo.messageId);
+      return fallbackInfo;
+      
+    } catch (fallbackErr) {
+      console.error('Eroare și la fallback pentru notificare comandă:', fallbackErr);
+      throw new Error(`Nu s-a putut trimite notificarea comenzii: ${fallbackErr.message}`);
+    }
+  }
 }
 
 /**
@@ -131,25 +263,79 @@ async function sendEmailWithAttachment(to, productName) {
     host: process.env.ZMAIL_HOST,
     port: parseInt(process.env.ZMAIL_PORT),
     secure: process.env.ZMAIL_SECURE === 'true',
-    requireTLS: true, // obligatoriu pentru port 587
     auth: {
       user: process.env.ZMAIL_USER,
       pass: process.env.ZMAIL_PASS,
     },
+    logger: true,
+    debug: true
   });
 
-  await transporter.sendMail({
-    from: `"Corcodușa" <${process.env.ZMAIL_USER}>`,
-    to,
-    subject: `Mulțumim pentru achiziția ${productName}`,
-    text: 'Găsești atașat materialul digital cumpărat. Îți mulțumim!',
-    attachments: [
-      {
-        filename: productName,
-        path: filePath,
+  try {
+    console.log('Încerc să trimit email cu atașament:', {
+      host: process.env.ZMAIL_HOST,
+      port: process.env.ZMAIL_PORT,
+      user: process.env.ZMAIL_USER,
+      secure: process.env.ZMAIL_SECURE,
+      to: to,
+      productName: productName
+    });
+    
+    const info = await transporter.sendMail({
+      from: `"Corcodușa" <${process.env.ZMAIL_USER}>`,
+      to,
+      subject: `Mulțumim pentru achiziția ${productName}`,
+      text: 'Găsești atașat materialul digital cumpărat. Îți mulțumim!',
+      attachments: [
+        {
+          filename: productName,
+          path: filePath,
+        },
+      ],
+    });
+    
+    console.log('Email cu atașament trimis cu succes:', info.messageId);
+    return info;
+    
+  } catch (err) {
+    console.error('Eroare la trimiterea email-ului cu atașament:', err);
+    
+    const fallbackTransporter = nodemailer.createTransport({
+      host: 'smtp.zoho.eu',
+      port: 587,
+      secure: false,
+      requireTLS: true,
+      auth: {
+        user: process.env.ZMAIL_USER,
+        pass: process.env.ZMAIL_PASS,
       },
-    ],
-  });
+      logger: true,
+      debug: true
+    });
+    
+    try {
+      console.log('Încerc fallback pe portul 587 pentru email cu atașament...');
+      const fallbackInfo = await fallbackTransporter.sendMail({
+        from: `"Corcodușa" <${process.env.ZMAIL_USER}>`,
+        to,
+        subject: `Mulțumim pentru achiziția ${productName}`,
+        text: 'Găsești atașat materialul digital cumpărat. Îți mulțumim!',
+        attachments: [
+          {
+            filename: productName,
+            path: filePath,
+          },
+        ],
+      });
+      
+      console.log('Email cu atașament trimis cu fallback:', fallbackInfo.messageId);
+      return fallbackInfo;
+      
+    } catch (fallbackErr) {
+      console.error('Eroare și la fallback pentru email cu atașament:', fallbackErr);
+      throw new Error(`Nu s-a putut trimite email-ul cu atașament: ${fallbackErr.message}`);
+    }
+  }
 }
 
 module.exports = { sendPDF, sendContactEmail, sendOrderNotification, sendEmailWithAttachment };

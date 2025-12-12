@@ -30,3 +30,13 @@ services:
         sync: false 
       - key: ALLOWED_ORIGINS
         sync: false
+      - key: ZMAIL_HOST
+        sync: false
+      - key: ZMAIL_PORT
+        sync: false
+      - key: ZMAIL_SECURE
+        sync: false
+      - key: ZMAIL_USER
+        sync: false
+      - key: ZMAIL_PASS
+        sync: false

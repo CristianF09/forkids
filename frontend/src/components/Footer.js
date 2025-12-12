@@ -30,6 +30,13 @@ const Footer = () => {
     window.scrollTo({ top: 20, behavior: 'smooth' });
   };
 
+  const scrollFaqWithOffset = () => {
+    const el = document.getElementById('faq-section');
+    const OFFSET = 80;
+    const top = el ? (el.getBoundingClientRect().top + window.pageYOffset - OFFSET) : 0;
+    window.scrollTo({ top, behavior: 'smooth' });
+  };
+
   return (
     <footer className="bg-[#20232A] text-white py-12 md:py-16 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -97,7 +104,7 @@ const Footer = () => {
               <li>
                 {location.pathname === '/' ? (
                   <button
-                    onClick={() => document.getElementById('faq-section')?.scrollIntoView({ behavior: 'smooth' })}
+                    onClick={scrollFaqWithOffset}
                     className="text-gray-400 hover:text-white transition-colors text-left"
                   >
                     Întrebări Frecvente
@@ -123,17 +130,17 @@ const Footer = () => {
               <li className="pt-2">
                 <div>
                   <a href="https://anpc.ro/ce-este-sal/" target="_blank" rel="noopener noreferrer nofollow" className="inline-block">
-                    <img 
+                    <img
                       className="w-[250px] m-[5px]"
-                      src="https://wpfitness.eu/wp-content/uploads/2022/10/anpc-sal.png" 
+                      src="https://wpfitness.eu/wp-content/uploads/2022/10/anpc-sal.png"
                       alt="Solutionarea Alternativa a Litigiilor"
                     />
                   </a>
                   <br/>
                   <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener noreferrer nofollow" className="inline-block">
-                    <img 
+                    <img
                       className="w-[250px] m-[5px]"
-                      src="https://wpfitness.eu/wp-content/uploads/2022/10/anpc-sol.png" 
+                      src="https://wpfitness.eu/wp-content/uploads/2022/10/anpc-sol.png"
                       alt="Solutionarea Online a Litigiilor"
                     />
                   </a>
