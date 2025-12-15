@@ -16,6 +16,7 @@ import MetodeDePlata from './pages/MetodeDePlata';
 import FAQ from './components/FAQ';
 import Success from './pages/Success';
 import Cancel from './pages/Cancel';
+import { API_ENDPOINTS } from './config/api';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -33,7 +34,6 @@ function App() {
 
       try {
         const isLocalDev = ['localhost', '127.0.0.1'].includes(window.location.hostname);
-        const apiBase = process.env.REACT_APP_API_URL || (isLocalDev ? 'http://localhost:10000' : 'https://api.corcodusa.ro');
         if (isLocalDev && !process.env.REACT_APP_API_URL) {
           clearTimeout(fallbackTimer);
           if (!cancelled) {
@@ -45,7 +45,7 @@ function App() {
 
         while (!cancelled && Date.now() < deadline) {
           try {
-            const res = await fetch(`${apiBase}/api/health`, { 
+            const res = await fetch(API_ENDPOINTS.HEALTH, { 
               cache: 'no-store',
               headers: {
                 'Cache-Control': 'no-cache',
