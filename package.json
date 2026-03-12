@@ -29,7 +29,7 @@
     "nodemailer": "^7.0.5",
     "path-to-regexp": "^8.2.0",
     "serve": "^14.2.5",
-    "swiper": "^11.2.10"
+    "swiper": "^12.1.2"
   },
   "status": "ok",
   "mongodb": "connected",

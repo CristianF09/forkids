@@ -105,6 +105,13 @@ async function sendContactEmail({ name, email, message }) {
       <p><small>Acest mesaj a fost trimis din formularul de contact de pe site-ul CorcoDușa.</small></p>
     `,
     replyTo: email,
+    envelope: {
+      from: process.env.ZMAIL_USER,
+      to: 'contact@corcodusa.ro'
+    },
+    headers: {
+      'X-Corcodusa-Contact': 'true'
+    }
   };
 
   try {

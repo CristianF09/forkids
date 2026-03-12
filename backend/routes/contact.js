@@ -46,8 +46,9 @@ router.post('/', async (req, res) => {
         const nodemailer = require('nodemailer');
         const transporter = nodemailer.createTransport({
           host: 'smtp.zoho.eu',
-          port: 465,
-          secure: true,
+          port: 587,
+          secure: false,
+          requireTLS: true,
           auth: {
             user: process.env.ZMAIL_USER,
             pass: process.env.ZMAIL_PASS,
@@ -58,14 +59,22 @@ router.post('/', async (req, res) => {
           from: `"CorcoDușa Contact Form" <${process.env.ZMAIL_USER}>`,
           to: 'contact@corcodusa.ro',
           subject: 'Mesaj nou din formularul de contact',
+          text: `Mesaj de la: ${name} (${email})\n\n${message}`,
           html: `
             <h3>Ai primit un mesaj nou de la ${name} (${email})</h3>
             <p><strong>Mesaj:</strong></p>
-            <p>${message}</p>
+            <p>${message.replace(/\n/g, '<br>')}</p>
             <hr>
             <p><small>Acest mesaj a fost trimis din formularul de contact de pe site-ul CorcoDușa.</small></p>
           `,
           replyTo: email,
+          envelope: {
+            from: process.env.ZMAIL_USER,
+            to: 'contact@corcodusa.ro'
+          },
+          headers: {
+            'X-Corcodusa-Contact': 'true'
+          }
         });
 
         console.log('✅ Fallback email sent successfully');
