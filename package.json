@@ -13,26 +13,42 @@
   },
   "devDependencies": {
     "@babel/core": "^7.28.5",
-    "@babel/eslint-parser": "^7.28.5",
+    "@babel/eslint-parser": "^7.15.8",
     "@babel/preset-react": "^7.28.5",
     "@eslint/js": "^9.38.0",
     "@typescript-eslint/parser": "^8.46.2",
     "concurrently": "^8.2.2",
-    "eslint": "^9.38.0",
-    "eslint-plugin-react": "^7.37.5",
+    "eslint": "^8.57.1",
+    "eslint-plugin-react": "^7.22.0",
     "nodemon": "^3.1.10",
-    "rimraf": "^5.0.5",
+    "rimraf": "^6.1.3",
     "sharp": "^0.34.3"
   },
   "dependencies": {
-    "dotenv": "^17.2.0",
-    "nodemailer": "^7.0.5",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongodb": "^7.1.1",
+    "mongoose": "^9.4.1",
+    "nodemailer": "^8.0.4",
     "path-to-regexp": "^8.2.0",
-    "serve": "^14.2.5",
+    "serve": "^14.2.6",
     "swiper": "^12.1.2"
   },
   "status": "ok",
   "mongodb": "connected",
   "database": "corcodusa_products",
-  "timestamp": "..."
+  "timestamp": "...",
+  "description": "A modern web application for selling educational PDFs for children.",
+  "main": "eslint.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CristianF09/forkids.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CristianF09/forkids/issues"
+  },
+  "homepage": "https://github.com/CristianF09/forkids#readme"
 }
