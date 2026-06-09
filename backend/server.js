@@ -64,12 +64,10 @@ log('📦 Database from URI:', mongoUri ? mongoUri.split('/').pop().split('?')[0
 log('👤 User:', mongoUri ? mongoUri.split('//')[1].split(':')[0] : 'Not set');
 
 if (mongoUri) {
-  mongoose.connect(mongoUri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    serverSelectionTimeoutMS: 5000,
-    socketTimeoutMS: 45000,
-  })
+   mongoose.connect(mongoUri, {
+     serverSelectionTimeoutMS: 5000,
+     socketTimeoutMS: 45000,
+   })
     .then(() => {
       log('✅ Conectat la MongoDB');
 

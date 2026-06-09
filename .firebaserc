@@ -1,0 +1,18 @@
+{
+  "projects": {
+    "default": "forkids-4f02d"
+  },
+  "targets": {
+    "forkids-4f02d": {
+      "hosting": {
+        "forkids-4f02d": [
+          "forkids-4f02d"
+        ],
+        "corcodusa-ro": [
+          "corcodusa.ro"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

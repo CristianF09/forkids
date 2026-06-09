@@ -1,70 +1,38 @@
 import js from "@eslint/js";
-import { defineConfig } from "eslint/config";
+import pluginReact from "eslint-plugin-react";
 
-export default defineConfig([
+/** @type {import('eslint').Linter.FlatConfig[]} */
+export default [
+  // Configurație pentru Backend
   {
     files: ["backend/**/*.js"],
-    plugins: {
-      js,
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: "module",
+      globals: {
+        process: "readonly",
+        __dirname: "readonly",
+      },
     },
-    extends: ["js/recommended"],
     rules: {
+      ...js.configs.recommended.rules,
       "no-unused-vars": "warn",
       "no-console": "warn",
-      "no-undef": "error",
-      "no-unreachable": "error",
-      "no-duplicate-imports": "error",
-      "no-const-assign": "error",
-      "no-var": "error",
       "prefer-const": "warn",
       "eqeqeq": "warn",
-      "no-multiple-empty-lines": ["warn", { "max": 1 }],
-      "no-trailing-spaces": "warn",
       "semi": ["error", "always"],
       "quotes": ["warn", "single"],
       "indent": ["warn", 2],
       "comma-dangle": ["warn", "always-multiline"],
       "object-curly-spacing": ["warn", "always"],
-      "array-bracket-spacing": ["warn", "never"],
-      "arrow-spacing": ["warn", { "before": true, "after": true }],
-      "no-multi-spaces": "warn",
-      "no-whitespace-before-property": "warn",
-      "space-before-blocks": ["warn", "always"],
-      "space-before-function-paren": ["warn", {
-        "anonymous": "always",
-        "named": "never",
-        "asyncArrow": "always"
-      }],
-      "space-in-parens": ["warn", "never"],
-      "space-infix-ops": "warn",
-      "space-unary-ops": ["warn", {
-        "words": true,
-        "nonwords": false
-      }],
-      "spaced-comment": ["warn", "always"],
-      "template-curly-spacing": ["warn", "never"],
-      "yoda": ["warn", "never"],
-    },
-    languageOptions: {
-      ecmaVersion: 2022,
-      sourceType: "module",
-      globals: {
-        console: "readonly",
-        process: "readonly",
-        Buffer: "readonly",
-        __dirname: "readonly",
-        __filename: "readonly",
-        global: "readonly",
-        require: "readonly",
-        module: "readonly",
-        exports: "readonly",
-        setImmediate: "readonly",
-        setTimeout: "readonly",
-      },
     },
   },
+  // Configurație pentru Frontend (React)
   {
-    files: ["frontend/**/*.js", "frontend/**/*.jsx"],
+    files: ["frontend/src/**/*.{js,jsx}"],
+    plugins: {
+      react: pluginReact,
+    },
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: "module",
@@ -74,50 +42,28 @@ export default defineConfig([
         },
       },
       globals: {
-        console: "readonly",
         window: "readonly",
         document: "readonly",
         navigator: "readonly",
-        React: "readonly",
-        JSX: "readonly",
       },
     },
     rules: {
+      ...js.configs.recommended.rules,
+      ...pluginReact.configs.recommended.rules,
+      "react/prop-types": "off", // O poți activa dacă folosești PropTypes
+      "react/react-in-jsx-scope": "off", // Nu mai este necesar cu React 17+
       "no-unused-vars": "warn",
       "no-console": "warn",
-      "no-undef": "error",
-      "no-unreachable": "error",
-      "no-duplicate-imports": "error",
-      "no-const-assign": "error",
-      "no-var": "error",
-      "prefer-const": "warn",
-      "eqeqeq": "warn",
-      "no-multiple-empty-lines": ["warn", { "max": 1 }],
-      "no-trailing-spaces": "warn",
       "semi": ["error", "always"],
       "quotes": ["warn", "single"],
       "indent": ["warn", 2],
       "comma-dangle": ["warn", "always-multiline"],
       "object-curly-spacing": ["warn", "always"],
-      "array-bracket-spacing": ["warn", "never"],
-      "arrow-spacing": ["warn", { "before": true, "after": true }],
-      "no-multi-spaces": "warn",
-      "no-whitespace-before-property": "warn",
-      "space-before-blocks": ["warn", "always"],
-      "space-before-function-paren": ["warn", {
-        "anonymous": "always",
-        "named": "never",
-        "asyncArrow": "always"
-      }],
-      "space-in-parens": ["warn", "never"],
-      "space-infix-ops": "warn",
-      "space-unary-ops": ["warn", {
-        "words": true,
-        "nonwords": false
-      }],
-      "spaced-comment": ["warn", "always"],
-      "template-curly-spacing": ["warn", "never"],
-      "yoda": ["warn", "never"],
+    },
+    settings: {
+      react: {
+        version: "detect", // Detectează automat versiunea de React
+      },
     },
   },
-]);
+];
