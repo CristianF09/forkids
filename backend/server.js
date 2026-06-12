@@ -31,6 +31,7 @@ const defaultAllowedOrigins = [
   'https://corcodusa.ro',
   'https://www.corcodusa.ro',
   'https://forkids-app.onrender.com',
+  'https://forkids-4f02d.web.app',
 ];
 const envAllowedOrigins = (process.env.ALLOWED_ORIGINS || '')
   .split(',')
