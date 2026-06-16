@@ -306,7 +306,19 @@ const Catalog = () => {
               <ul className="space-y-3 mb-6 text-left">
                 <li className="flex items-center">
                   <CheckCircle2 className="w-5 h-5 text-[#20BF55] mr-2" />
-                  <span className="text-gray-600">Toate cele 3 cărți principale</span>
+                  <span className="text-gray-600">Alfabetul</span>
+                </li>
+                <li className="flex items-center">
+                  <CheckCircle2 className="w-5 h-5 text-[#20BF55] mr-2" />
+                  <span className="text-gray-600">Numere</span>
+                </li>
+                <li className="flex items-center">
+                  <CheckCircle2 className="w-5 h-5 text-[#20BF55] mr-2" />
+                  <span className="text-gray-600">Forme și Culori</span>
+                </li>
+                <li className="flex items-center">
+                  <CheckCircle2 className="w-5 h-5 text-[#20BF55] mr-2" />
+                  <span className="text-gray-600">Carte de Colorat</span>
                 </li>
                 <li className="flex items-center">
                   <CheckCircle2 className="w-5 h-5 text-[#20BF55] mr-2" />
@@ -315,10 +327,6 @@ const Catalog = () => {
                 <li className="flex items-center">
                   <CheckCircle2 className="w-5 h-5 text-[#20BF55] mr-2" />
                   <span className="text-gray-600">Acces permanent la descărcări</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle2 className="w-5 h-5 text-[#FF6B00] mr-2" />
-                  <span className="text-gray-600 font-semibold">BONUS: Carte de colorat completă</span>
                 </li>
                 <li className="flex items-center">
                   <CheckCircle2 className="w-5 h-5 text-[#FF6B00] mr-2" />

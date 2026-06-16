@@ -92,10 +92,10 @@ const productsData = [
       '🅰️ Corcodușa învață Alfabetul',
       '🔢 Corcodușa învață Numerele',
       '🔺 Corcodușa învață Formele și Culorile',
+      '🎨 Carte de Colorat Corcodușa',
       '✏️ Exerciții de trasare, recunoaștere, colorare și numărare',
       '🎨 Jocuri logice, labirinturi și activități creative care transformă învățarea în joacă',
       '🏅 Bonus exclusiv: Certificat de absolvire pentru fiecare carte completată',
-      '🎁 Extra cadou: Carte de colorat Corcodușa – peste 50 de pagini gratuite de desen și relaxare!',
       'Stimulează imaginația, coordonarea și atenția copilului',
       'Dezvoltă abilitățile de scriere, citire și gândire logică',
       'Poate fi tipărit acasă sau folosit direct pe tabletă / laptop',
@@ -477,7 +477,7 @@ const Products = () => {
                         <div className="bg-[#FF6B00] rounded-full p-1 mr-3 mt-0.5">
                           <Check className="w-3 h-3 text-white" />
                         </div>
-                        <span className="text-sm font-medium">🎨 BONUS: Carte de Colorat completă</span>
+                        <span className="text-sm font-medium">Carte de Colorat - activități de colorat</span>
                       </li>
                       <li className="flex items-start text-gray-700">
                         <div className="bg-[#FF6B00] rounded-full p-1 mr-3 mt-0.5">
