@@ -53,42 +53,42 @@ const Footer = () => {
             <p className="text-gray-400 text-sm mb-4">
               Materiale educative interactive pentru copii între 3 și 7 ani care transformă învățarea în joacă.
             </p>
-            <div className="flex space-x-8">
+            <div className="flex items-center space-x-8">
               <a
                 href="https://www.facebook.com/corcodusa.ro"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-[#FF6B00] transition-colors"
+                className="text-gray-400 hover:text-[#FF6B00] transition-colors flex items-center justify-center"
                 aria-label="Urmărește-ne pe Facebook"
               >
-                <img src="/images/iconfacebook.svg" alt="Facebook" className="w-14 h-14" />
+                <img src="/images/iconfacebook.svg" alt="Facebook" className="w-14 h-14 object-contain" />
               </a>
               <a
                 href="https://www.instagram.com/corcodusa.ro/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-[#FF6B00] transition-colors"
+                className="text-gray-400 hover:text-[#FF6B00] transition-colors flex items-center justify-center"
                 aria-label="Urmărește-ne pe Instagram"
               >
-                <img src="/images/iconinstagram.svg" alt="Instagram" className="w-14 h-14" />
+                <img src="/images/iconinstagram.svg" alt="Instagram" className="w-14 h-14 object-contain" />
               </a>
               <a
                 href="https://www.tiktok.com/@corcodusa.ro1"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-[#FF6B00] transition-colors"
+                className="text-gray-400 hover:text-[#FF6B00] transition-colors flex items-center justify-center"
                 aria-label="Urmărește-ne pe TikTok"
               >
-                <img src="/images/icontiktok.svg" alt="TikTok" className="w-14 h-14" />
+                <img src="/images/icontiktok.svg" alt="TikTok" className="w-14 h-14 object-contain" />
               </a>
               <a
                 href="https://www.youtube.com/@corcodusa.ro"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-[#FF6B00] transition-colors"
+                className="text-gray-400 hover:text-[#FF6B00] transition-colors flex items-center justify-center"
                 aria-label="Urmărește-ne pe Youtube"
               >
-                <img src="/images/iconyoutube.svg" alt="Youtube" className="w-14 h-14" />
+                <img src="/images/iconyoutube.svg" alt="Youtube" className="w-14 h-14 object-contain" />
               </a>
             </div>
           </div>
