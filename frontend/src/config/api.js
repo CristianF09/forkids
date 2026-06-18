@@ -1,5 +1,5 @@
 // API Configuration
-const API_BASE_URL = process.env.REACT_APP_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:10000' : window.location.origin);
+const API_BASE_URL = '';
 
 export const API_ENDPOINTS = {
   CONTACT: `${API_BASE_URL}/api/contact`,
@@ -14,4 +14,4 @@ export const STRIPE_CONFIG = {
   PUBLISHABLE_KEY: process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY,
 };
 
-export default API_BASE_URL; 
+export default API_BASE_URL;

@@ -51,7 +51,7 @@ app.use(cors({
 
 // Allow preflight requests from any origin as a temporary quick fix
 // This adds the required CORS headers for OPTIONS requests
-app.options('*', cors());
+
 
 // Stripe webhook trebuie montat înainte de express.json()
 app.use('/api/webhook', express.raw({ type: 'application/json' }), webhookRoutes);

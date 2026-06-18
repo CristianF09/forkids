@@ -88,7 +88,7 @@ const Footer = () => {
                 className="text-gray-400 hover:text-[#FF6B00] transition-colors"
                 aria-label="Urmărește-ne pe Youtube"
               >
-                <img src="/images/iconyoutube.svg" alt="Youtube" className="w-18 h-18" />
+                <img src="/images/iconyoutube.svg" alt="Youtube" className="w-14 h-14" />
               </a>
             </div>
           </div>
@@ -161,9 +161,9 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center text-sm">
-          <p className="text-gray-500 text-center md:text-left mb-4 md:mb-0">
-            © {new Date().getFullYear()} Corcodușa.ro. Toate drepturile rezervate.
-          </p>
+                      <p className="text-gray-500 text-center md:text-left mb-4 md:mb-0">
+              © 2025 Corcodușa.ro. Toate drepturile rezervate.
+            </p>
           <div className="flex items-center space-x-2">
             <p className="text-gray-500">Plată securizată prin</p>
             <img src="/images/iconstripe.png" alt="Stripe" />
