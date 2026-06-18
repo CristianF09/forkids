@@ -3,7 +3,6 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Loader from './components/Loader';
-import QRCodeComponent from './components/QRCode';
 import Home from './pages/Home';
 import DespreNoi from './pages/DespreNoi';
 import Products from './pages/Products';
@@ -103,7 +102,6 @@ if (isLoading) return <Loader title="Corcodusa.ro" subtitle="Se încarcă..." />
           <Route path="/intrebari-frecvente" element={<FAQ />} />
           <Route path="/success" element={<Success />} />
           <Route path="/cancel" element={<Cancel />} />
-          <Route path="/qr-code" element={<QRCodeComponent />} />
         </Routes>
       </main>
       <Footer />

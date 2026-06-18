@@ -1,6 +1,7 @@
 .loader-container {
   display: flex;
-  align-items: center;
+  align-items: flex-start; /* Changed from 'center' to 'flex-start' */
+  padding-top: 15vh; /* Added padding to push content down a bit */
   justify-content: center;
   height: 100vh;
   background: linear-gradient(135deg, #fff2f9 0%, #e6f3ff 100%);
@@ -21,8 +22,8 @@
 }
 
 .loader-logo {
-  width: 120px;
-  height: 120px;
+  width: 200px;
+  height: 200px;
   margin-bottom: 20px;
   animation: logoFloat 2s ease-in-out infinite;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));

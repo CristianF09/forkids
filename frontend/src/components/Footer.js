@@ -81,6 +81,15 @@ const Footer = () => {
               >
                 <img src="/images/icontiktok.svg" alt="TikTok" className="w-14 h-14" />
               </a>
+              <a
+                href="https://www.youtube.com/@corcodusa.ro"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-[#FF6B00] transition-colors"
+                aria-label="Urmărește-ne pe Youtube"
+              >
+                <img src="/images/iconyoutube.svg" alt="Youtube" className="w-18 h-18" />
+              </a>
             </div>
           </div>
 

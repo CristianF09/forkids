@@ -6,7 +6,7 @@ const Loader = ({ title = 'corcodusa.ro', subtitle = 'se încarcă...' }) => {
       <div className="loader-container">
         <div className="loader-content">
           <img
-            src="/images/Logo -Corcodusa.ro.png"
+            src="/images/Logo.corocodusa.png"
             alt="Corcodușa Logo"
             className="loader-logo"
           />
