@@ -138,9 +138,9 @@ app.get('/api/health', (req, res) => {
 // === Servește frontendul ===
 const frontendBuildPath = path.join(__dirname, 'frontend');
 log('🔍 Frontend path:', frontendBuildPath);
-log('🔍 Files in frontend:', require('fs').readdirSync(frontendBuildPath));
 
 if (require('fs').existsSync(frontendBuildPath)) {
+  log('🔍 Files in frontend:', require('fs').readdirSync(frontendBuildPath));
   app.use(express.static(frontendBuildPath, {
     setHeaders: (res) => {
       res.set('Cache-Control', 'no-cache, no-store, must-revalidate');

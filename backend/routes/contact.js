@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 const { sendContactEmail } = require('../services/emailService');
 
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, (s) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[s]);
+}
+
 router.post('/', async (req, res) => {
   console.log('📧 Contact form submission received:', req.body);
   const { name, email, message } = req.body;
@@ -61,9 +65,9 @@ router.post('/', async (req, res) => {
           subject: 'Mesaj nou din formularul de contact',
           text: `Mesaj de la: ${name} (${email})\n\n${message}`,
           html: `
-            <h3>Ai primit un mesaj nou de la ${name} (${email})</h3>
+            <h3>Ai primit un mesaj nou de la ${escapeHtml(name)} (${escapeHtml(email)})</h3>
             <p><strong>Mesaj:</strong></p>
-            <p>${message.replace(/\n/g, '<br>')}</p>
+            <p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>
             <hr>
             <p><small>Acest mesaj a fost trimis din formularul de contact de pe site-ul CorcoDușa.</small></p>
           `,

@@ -488,12 +488,13 @@ async function sendCompletePackage(toEmail, productName, amount, currency) {
  */
 async function sendIndividualPDFs(toEmail, productName, amount, currency, pdfFiles) {
   console.log('📧 Sending individual PDFs to:', toEmail);
-  
+
+  const isDryRun = process.env.DRY_RUN === 'true';
   const nodemailer = require('nodemailer');
   const path = require('path');
   const fs = require('fs');
 
-  const transporter = nodemailer.createTransport({
+  const transporter = !isDryRun ? nodemailer.createTransport({
     host: 'smtp.zoho.eu',
     port: 465,
     secure: true,
@@ -501,7 +502,7 @@ async function sendIndividualPDFs(toEmail, productName, amount, currency, pdfFil
       user: process.env.ZMAIL_USER,
       pass: process.env.ZMAIL_PASS,
     },
-  });
+  }) : null;
 
   // Get your server URL from environment or use a default
   const serverUrl = process.env.SERVER_URL || 'https://corcodusa.ro';
@@ -528,6 +529,11 @@ async function sendIndividualPDFs(toEmail, productName, amount, currency, pdfFil
         else if (pdfFile === 'BonusCertificatDeAbsolvire-PachetStandard.pdf') pdfProductName = 'Bonus - Certificat de Absolvire - Pachet Standard';
         
         if (fileSizeInMB < 10) { // Send if under 10MB
+          if (isDryRun) {
+            console.log('🧪 DRY_RUN: would send individual PDF', { toEmail, pdfFile });
+            sentCount++;
+            continue;
+          }
           await transporter.sendMail({
             from: `"CorcoDușa" <${process.env.ZMAIL_USER}>`,
             to: toEmail,
@@ -600,6 +606,10 @@ async function sendIndividualPDFs(toEmail, productName, amount, currency, pdfFil
       `;
     }
     
+    if (isDryRun) {
+      console.log('🧪 DRY_RUN: would send individual PDFs summary email', { toEmail });
+      return;
+    }
     await transporter.sendMail({
       from: `"CorcoDușa" <${process.env.ZMAIL_USER}>`,
       to: toEmail,

@@ -1,7 +1,7 @@
 const CACHE_NAME = 'corcodusa-cache-v1';
 const STATIC_ASSETS = [
   '/',
-  '/images/Logo -Corcodusa.ro.png',
+  '/images/Logo-Corcodusa.ro.png',
   '/static/css/main.css',
   '/static/js/main.js',
   '/manifest.webmanifest'

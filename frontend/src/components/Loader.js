@@ -17,7 +17,6 @@ const Loader = ({ title = 'corcodusa.ro', subtitle = 'se încarcă...' }) => {
           <div className="loader-orbit"></div>
         </div>
       </div>
-      <p>Se încarcă aplicația...</p>
     </div>
   );
 };

@@ -14,7 +14,7 @@ const ProductDetail = () => {
         title: 'Alfabetul',
         pdfFile: 'Alfabetul.pdf',
         price: 59,
-        image: '/images/Alfabetul .jpg',
+        image: '/images/Alfabetul.png',
         priceId: 'price_1SNBBrK6Qc2WK3kdE86Rm9w4',
         productId: 'prod_Sg7FSlYGXYLqIx',
         stripeLink: 'https://buy.stripe.com/3cIfZiaZ8aYjgNB39OeZ209',
@@ -37,7 +37,7 @@ const ProductDetail = () => {
         title: 'Numere',
         pdfFile: 'Numere.pdf',
         price: 59,
-        image: '/images/Numere.jpg',
+        image: '/images/Numere.png',
         priceId: 'price_1SNC1IK6Qc2WK3kdB3AIEUYP',
         productId: 'prod_Sg7Fm0E2S5Hm1k',
         stripeLink: 'https://buy.stripe.com/fZu00k9V4eavapd8u8eZ20b',
@@ -60,7 +60,7 @@ const ProductDetail = () => {
         title: 'Forme și Culori',
         pdfFile: 'FormeSiCulori.pdf',
         price: 59,
-        image: '/images/Forme si culori.jpg',
+        image: '/images/Forme si culori.png',
         priceId: 'price_1SNC2uK6Qc2WK3kdxNwaWzy9',
         productId: 'prod_Sg7FLP5uIieb7r',
         stripeLink: 'https://buy.stripe.com/6oU7sMaZ84zVeFt6m0eZ20a',
@@ -81,7 +81,7 @@ const ProductDetail = () => {
         id: 1,
         category: 'pachet-standard',
         title: 'Pachet Standard',
-        pdfFile: 'BonusCertificateDeAbsovire.pdf',
+        pdfFile: 'BonusCertificatDeAbsolvire-PachetStandard.pdf',
         price: 145,
         originalPrice: 226,
         image: '/images/Pachet Standard.png',
@@ -210,9 +210,6 @@ const ProductDetail = () => {
     ];
 
     const foundProduct = productsData.find(p => p.category === productId);
-    console.log('ProductDetail - productId:', productId);
-    console.log('ProductDetail - foundProduct:', foundProduct);
-    console.log('ProductDetail - available categories:', productsData.map(p => p.category));
 
     if (foundProduct) {
       setProduct(foundProduct);
@@ -223,7 +220,6 @@ const ProductDetail = () => {
         window.scrollTo({ top, behavior: 'smooth' });
       }, 100);
     } else {
-      console.log('ProductDetail - Product not found, redirecting to /produse');
       navigate('/produse');
     }
   }, [productId, navigate]);

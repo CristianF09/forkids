@@ -19,10 +19,11 @@ function escapeHtml(str) {
  * Creează un transporter SMTP bazat pe setările din .env
  */
 function createTransporter(useFallback = false) {
-  const host = useFallback ? 'smtp.zoho.eu' : (process.env.ZMAIL_HOST || 'smtp.zoho.eu');
-  const port = useFallback ? 587 : parseInt(process.env.ZMAIL_PORT || '587');
-  const secure = useFallback ? false : (process.env.ZMAIL_SECURE === 'true');
-  
+  // Primary: use env config (default 587 STARTTLS). Fallback: try 465 SSL.
+  const host = process.env.ZMAIL_HOST || 'smtp.zoho.eu';
+  const port = useFallback ? 465 : parseInt(process.env.ZMAIL_PORT || '587');
+  const secure = useFallback ? true : (process.env.ZMAIL_SECURE === 'true');
+
   log(`Creating transporter: ${host}:${port}, secure:${secure}, fallback:${useFallback}`);
   
   // SECURITY: nodemailer's debug/logger options print the raw SMTP conversation,
@@ -33,7 +34,7 @@ function createTransporter(useFallback = false) {
     host: host,
     port: port,
     secure: secure,
-    requireTLS: !secure, // Pentru portul 587 (TLS), nu pentru 465 (SSL)
+    requireTLS: !secure, // true for port 587 (STARTTLS), false for port 465 (SSL)
     auth: {
       user: process.env.ZMAIL_USER,
       pass: process.env.ZMAIL_PASS,

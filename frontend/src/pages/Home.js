@@ -543,7 +543,7 @@ const Home = () => {
 
                   <button
                     onClick={() => window.open('https://buy.stripe.com/aFa9AU3wG4zVgNB6m0eZ204', '_blank')}
-                    className="w-full bg-[#FFD700] text-gray-800 py-4 px-8 rounded-2xl text-xl font-bold hover:bg-[#E6C300] transition-all durata-300 shadow-xl hover:shadow-2xl transform hover:scale-105 mb-6"
+                    className="w-full bg-[#FFD700] text-gray-800 py-4 px-8 rounded-2xl text-xl font-bold hover:bg-[#E6C300] transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 mb-6"
                   >
                     Cumpără pachetul
                   </button>

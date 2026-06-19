@@ -141,16 +141,18 @@ const Footer = () => {
                   <a href="https://anpc.ro/ce-este-sal/" target="_blank" rel="noopener noreferrer nofollow" className="inline-block">
                     <img
                       className="w-[250px] m-[5px]"
-                      src="https://wpfitness.eu/wp-content/uploads/2022/10/anpc-sal.png"
+                      src="/images/anpc-sal.png"
                       alt="Solutionarea Alternativa a Litigiilor"
+                      onError={(e) => { e.target.style.display = 'none'; }}
                     />
                   </a>
-                  <br/>
+                  <br />
                   <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener noreferrer nofollow" className="inline-block">
                     <img
                       className="w-[250px] m-[5px]"
-                      src="https://wpfitness.eu/wp-content/uploads/2022/10/anpc-sol.png"
+                      src="/images/anpc-sol.png"
                       alt="Solutionarea Online a Litigiilor"
+                      onError={(e) => { e.target.style.display = 'none'; }}
                     />
                   </a>
                 </div>

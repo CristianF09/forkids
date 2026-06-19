@@ -10,7 +10,7 @@ const productsData = [
     title: 'Alfabetul',
     pdfFile: 'Alfabetul.pdf',
     price: 59,
-    image: '/images/Alfabetul .jpg',
+    image: '/images/Alfabetul.png',
     priceId: 'price_1SNBBrK6Qc2WK3kdE86Rm9w4',
     productId: 'prod_Sg7FSlYGXYLqIx',
     stripeLink: 'https://buy.stripe.com/3cIfZiaZ8aYjgNB39OeZ209',
@@ -33,7 +33,7 @@ const productsData = [
     title: 'Numere',
     pdfFile: 'Numere.pdf',
     price: 59,
-    image: '/images/Numere.jpg',
+    image: '/images/Numere.png',
     priceId: 'price_1SNC1IK6Qc2WK3kdB3AIEUYP',
     productId: 'prod_Sg7Fm0E2S5Hm1k',
     stripeLink: 'https://buy.stripe.com/fZu00k9V4eavapd8u8eZ20b',
@@ -56,7 +56,7 @@ const productsData = [
     title: 'Forme și Culori',
     pdfFile: 'FormeSiCulori.pdf',
     price: 59,
-    image: '/images/Forme si culori.jpg',
+    image: '/images/Forme si culori.png',
     priceId: 'price_1SNC2uK6Qc2WK3kdxNwaWzy9',
     productId: 'prod_Sg7FLP5uIieb7r',
     stripeLink: 'https://buy.stripe.com/6oU7sMaZ84zVeFt6m0eZ20a',
@@ -77,10 +77,10 @@ const productsData = [
     id: 1,
     category: 'pachet-standard',
     title: 'Pachet Standard',
-    pdfFile: 'BonusCertificateDeAbsovire.pdf',
+    pdfFile: 'BonusCertificatDeAbsolvire-PachetStandard.pdf',
     price: 145,
     originalPrice: 226,
-    image: '/images/Pachet Standard.png',
+    image: '/images/Pachet Standart.png',
     priceId: 'price_1SNBAgK6Qc2WK3kdgRGn5eW2',
     productId: 'prod_Sg7FB1xJVJc2MV',
     stripeLink: 'https://buy.stripe.com/bJe9AUc3c3vR2WLcKoeZ20c',
@@ -289,25 +289,15 @@ const Products = () => {
         <PurchaseSteps />
 
         <div className="mt-10 mb-12">
-          <div className="flex flex-col gap-4">
-            {/* First row */}
-            <div className="flex flex-wrap gap-4 justify-center">
-              {renderCategoryButton('Toate produsele', 'Toate Produsele')}
-              {renderCategoryButton('alfabet', 'Alfabetul')}
-              {renderCategoryButton('numere', 'Numere')}
-              {renderCategoryButton('forme-si-culori', 'Forme și Culori')}
-              {renderCategoryButton('labirinturi-magice', 'Labirinturi Magice')}
-              {renderCategoryButton('jocuri-si-activități-educative', 'Jocuri și Activități Educative')}
-              {renderCategoryButton('pachet-standard', 'Pachet Standard')}
-              {renderCategoryButton('pachet-promo', 'Pachet Promo')}
-            </div>
-            {/* Second row */}
-            <div className="flex flex-wrap gap-4 justify-center">
-              {renderCategoryButton('labirinturi-magice', 'Labirinturi Magice')}
-              {renderCategoryButton('jocuri-si-activități-educative', 'Jocuri și Activități Educative')}
-              {renderCategoryButton('pachet-standard', 'Pachet Standard')}
-              {renderCategoryButton('pachet-promo', 'Pachet Promo')}
-            </div>
+          <div className="flex flex-wrap gap-4 justify-center">
+            {renderCategoryButton('Toate produsele', 'Toate Produsele')}
+            {renderCategoryButton('alfabet', 'Alfabetul')}
+            {renderCategoryButton('numere', 'Numere')}
+            {renderCategoryButton('forme-si-culori', 'Forme și Culori')}
+            {renderCategoryButton('labirinturi-magice', 'Labirinturi Magice')}
+            {renderCategoryButton('jocuri-si-activități-educative', 'Jocuri și Activități Educative')}
+            {renderCategoryButton('pachet-standard', 'Pachet Standard')}
+            {renderCategoryButton('pachet-promo', 'Pachet Promo')}
           </div>
         </div>
 
