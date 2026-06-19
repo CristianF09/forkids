@@ -299,12 +299,14 @@ async function sendCompletePackage(toEmail, productName, amount, currency) {
     },
   }) : null;
 
-  // All PDFs for Complete Package
+  // All PDFs for Complete Package (Pachet Standard): the 3 activities,
+  // the Coloring Book, and the certificate PDF (contains 3 diplomas, one
+  // per activity — Alfabetul, Numere, Forme și Culori).
   const pdfFiles = [
     'Alfabetul.pdf',
     'Numere.pdf',
     'FormeSiCulori.pdf',
-    'BonusFiseDeColorat.pdf',
+    'CarteDeColorat.pdf',
     'BonusCertificatDeAbsolvire-PachetStandard.pdf'
   ];
 
@@ -375,7 +377,7 @@ async function sendCompletePackage(toEmail, productName, amount, currency) {
                   <li>🔠 Alfabetul.pdf</li>
                   <li>🔢 Numere.pdf</li>
                   <li>🎨 Forme și Culori.pdf</li>
-                  <li>🎨 Bonus - Fișe de Colorat.pdf</li>
+                  <li>📖 Carte de Colorat.pdf</li>
                   <li>🏆 Bonus - Certificat de Absolvire - Pachet Standard.pdf</li>
                 </ul>
                 <p>Pentru întrebări: contact@corcodusa.ro</p>
@@ -407,7 +409,7 @@ async function sendCompletePackage(toEmail, productName, amount, currency) {
                       <li>🔠 Alfabetul.pdf</li>
                       <li>🔢 Numere.pdf</li>
                       <li>🎨 Forme și Culori.pdf</li>
-                      <li>🎨 Bonus - Fișe de Colorat.pdf</li>
+                      <li>📖 Carte de Colorat.pdf</li>
                       <li>🏆 Bonus - Certificat de Absolvire - Pachet Standard.pdf</li>
                     </ul>
                     <p><em>Chitanța de plată a fost trimisă automat de către Stripe.</em></p>
@@ -522,7 +524,7 @@ async function sendIndividualPDFs(toEmail, productName, amount, currency, pdfFil
         if (pdfFile === 'Alfabetul.pdf') pdfProductName = 'Alfabetul';
         else if (pdfFile === 'Numere.pdf') pdfProductName = 'Numere';
         else if (pdfFile === 'FormeSiCulori.pdf') pdfProductName = 'Forme și Culori';
-        else if (pdfFile === 'BonusFiseDeColorat.pdf') pdfProductName = 'Bonus - Fișe de Colorat';
+        else if (pdfFile === 'CarteDeColorat.pdf') pdfProductName = 'Carte de Colorat';
         else if (pdfFile === 'BonusCertificatDeAbsolvire-PachetStandard.pdf') pdfProductName = 'Bonus - Certificat de Absolvire - Pachet Standard';
         
         if (fileSizeInMB < 10) { // Send if under 10MB
@@ -613,7 +615,7 @@ async function sendIndividualPDFs(toEmail, productName, amount, currency, pdfFil
           <li>📚 Alfabetul.pdf</li>
           <li>🔢 Numere.pdf</li>
           <li>🎨 Forme și Culori.pdf</li>
-          <li>🎨 Bonus - Fișe de Colorat.pdf</li>
+          <li>📖 Carte de Colorat.pdf</li>
           <li>🏆 Bonus - Certificat de Absolvire - Pachet Standard.pdf</li>
         </ul>
         ${largeFilesHtml}
