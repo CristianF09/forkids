@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Stripe = require('stripe');
 const nodemailer = require('nodemailer');
+const mongoose = require('mongoose');
+const ProcessedWebhookEvent = require('../models/ProcessedWebhookEvent');
 
 // Initialize Stripe lazily (only when webhook is called)
 let stripe = null;
@@ -40,6 +42,25 @@ router.post('/', async (req, res) => {
   } catch (err) {
     console.log(`⚠️  Eroare webhook: ${err.message}`);
     return res.status(400).send(`Webhook error: ${err.message}`);
+  }
+
+  // Idempotency: Stripe retries webhooks on timeouts/transient errors, and a
+  // retried event must NOT trigger a second round of emails/ZIPs to the same
+  // customer. Record the event ID first; a duplicate-key error means we've
+  // already handled this exact event, so we stop here.
+  if (mongoose.connection.readyState === 1) {
+    try {
+      await ProcessedWebhookEvent.create({ eventId: event.id });
+    } catch (dupErr) {
+      if (dupErr.code === 11000) {
+        console.log('🔁 Duplicate Stripe event ignored:', event.id);
+        return res.status(200).json({ received: true, duplicate: true });
+      }
+      console.error('⚠️ Could not record webhook event for idempotency check:', dupErr.message);
+      // Fail open: an unrelated DB error here shouldn't block fulfillment.
+    }
+  } else {
+    console.log('⚠️ MongoDB not connected — skipping webhook idempotency check');
   }
 
   // Acknowledge to Stripe immediately to avoid timeouts, then process in background
@@ -107,7 +128,7 @@ router.post('/', async (req, res) => {
         }
 
         // Determine product
-        let pdfFileName = 'BonusCertificateDeAbsovire.pdf';
+        let pdfFileName = 'BonusCertificatDeAbsolvire.pdf';
         let productName = 'Pachet Complet';
         let amount = session.amount_total / 100;
         let currency = session.currency?.toUpperCase() || 'RON';
@@ -150,7 +171,7 @@ router.post('/', async (req, res) => {
           }
         } else {
           if (amount === 110 || amount === 89) {
-            pdfFileName = 'BonusCertificateDeAbsovire.pdf';
+            pdfFileName = 'BonusCertificatDeAbsolvire.pdf';
             productName = 'Pachet Complet';
             isCompletePackage = true;
           } else if (amount === 49) {
@@ -204,7 +225,7 @@ router.post('/', async (req, res) => {
         }
 
         let productName = 'Pachet Complet';
-        let pdfFileName = 'BonusCertificateDeAbsovire.pdf';
+        let pdfFileName = 'BonusCertificatDeAbsolvire.pdf';
         let isCompletePackage = false;
         if (invoice.lines && invoice.lines.data.length > 0) {
           const line = invoice.lines.data[0];
@@ -704,7 +725,7 @@ async function sendPromoPackage(toEmail, productName, amount, currency, pdfFiles
                     <p><strong>Conținut pachet:</strong></p>
                     <ul>
                       ${pdfFiles.map(file => {
-                        if (file === 'Labirinturi Magice.pdf') return '<li>🧩 Labirinturi Magice.pdf</li>';
+                        if (file === 'LabirinturiMagice.pdf') return '<li>🧩 Labirinturi Magice.pdf</li>';
                         if (file === 'JocuriSiActivitatiEducative.pdf') return '<li>🎓 Jocuri și Activități Educative.pdf</li>';
                         if (file === 'BonusCertificatDeAbsolvire.pdf') return '<li>🏆 Bonus - Certificat de Absolvire.pdf</li>';
                         return `<li>${file}</li>`;
@@ -746,7 +767,7 @@ async function sendPromoPackage(toEmail, productName, amount, currency, pdfFiles
                     <p><strong>Conținut pachet:</strong></p>
                     <ul>
                       ${pdfFiles.map(file => {
-                        if (file === 'Labirinturi Magice.pdf') return '<li>🧩 Labirinturi Magice.pdf</li>';
+                        if (file === 'LabirinturiMagice.pdf') return '<li>🧩 Labirinturi Magice.pdf</li>';
                         if (file === 'JocuriSiActivitatiEducative.pdf') return '<li>🎓 Jocuri și Activități Educative.pdf</li>';
                         if (file === 'BonusCertificatDeAbsolvire.pdf') return '<li>🏆 Bonus - Certificat de Absolvire.pdf</li>';
                         return `<li>${file}</li>`;

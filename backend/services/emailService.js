@@ -25,6 +25,10 @@ function createTransporter(useFallback = false) {
   
   log(`Creating transporter: ${host}:${port}, secure:${secure}, fallback:${useFallback}`);
   
+  // SECURITY: nodemailer's debug/logger options print the raw SMTP conversation,
+  // which includes base64-encoded AUTH credentials. Never enable in production.
+  const smtpDebug = process.env.SMTP_DEBUG === 'true' && process.env.NODE_ENV !== 'production';
+
   return nodemailer.createTransport({
     host: host,
     port: port,
@@ -34,8 +38,8 @@ function createTransporter(useFallback = false) {
       user: process.env.ZMAIL_USER,
       pass: process.env.ZMAIL_PASS,
     },
-    logger: true,
-    debug: true,
+    logger: smtpDebug,
+    debug: smtpDebug,
   });
 }
 

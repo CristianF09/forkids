@@ -11,27 +11,13 @@ if (!stripeSecretKey) {
 
 const stripe = Stripe(stripeSecretKey);
 
-// Creează Payment Intent pentru plăți directe
-router.post('/create-payment-intent', async (req, res) => {
-  const { amount, currency = 'ron' } = req.body;
-
-  try {
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: amount * 100, // Stripe folosește cenți
-      currency: currency,
-      automatic_payment_methods: {
-        enabled: true,
-      },
-    });
-
-    res.json({
-      clientSecret: paymentIntent.client_secret,
-    });
-  } catch (error) {
-    console.error('Eroare la crearea Payment Intent:', error);
-    res.status(500).json({ error: 'Eroare la procesarea plății.' });
-  }
-});
+// NOTE: a '/create-payment-intent' endpoint used to live here. It accepted
+// a client-supplied `amount` with no server-side price validation (and no
+// product attached to the resulting PaymentIntent), let anyone mint live
+// PaymentIntents on this Stripe account for any amount, and was never
+// called by the frontend (checkout only uses /api/checkout/create-checkout-session,
+// which validates the priceId against Stripe). Removed as dead, exploitable
+// surface area — see code-cleanup audit.
 
 // Returnează configurația Stripe pentru frontend
 router.get('/config', (req, res) => {

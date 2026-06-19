@@ -9,10 +9,10 @@ const pdfRoutes = require('./routes/pdfs');
 const paymentRoutes = require('./routes/payments');
 const contactRoutes = require('./routes/contact');
 const checkoutRoutes = require('./routes/checkout');
-const successRoutes = require('./routes/success');
 const webhookRoutes = require('./routes/webhook');
 const productsRoutes = require('./routes/products');
 const testRoutes = require('./routes/test');
+const downloadRoutes = require('./routes/download');
 
 // ✅ Ruta pentru Ebook Leads - COMENTATĂ (funcționalitate dezactivată)
 // const ebookLeadsRoutes = require('./routes/ebookLeads');
@@ -60,13 +60,11 @@ app.use('/api/webhook', express.raw({ type: 'application/json' }), webhookRoutes
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// === ✅ CONECTARE MONGODB CU DEBUG ===
+// === ✅ CONECTARE MONGODB ===
 const mongoUri = process.env.MONGODB_URI;
 
-// Debug MongoDB connection
-log('🔍 MongoDB Configuration:');
-log('📦 Database from URI:', mongoUri ? mongoUri.split('/').pop().split('?')[0] : 'Not set');
-log('👤 User:', mongoUri ? mongoUri.split('//')[1].split(':')[0] : 'Not set');
+// Debug MongoDB connection (non-sensitive only — never log credentials/usernames)
+log('🔍 MongoDB Configuration:', mongoUri ? 'URI set' : 'URI NOT set');
 
 if (mongoUri) {
    mongoose.connect(mongoUri, {
@@ -118,9 +116,9 @@ app.use('/api/pdfs', pdfRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/checkout', checkoutRoutes);
-app.use('/api', successRoutes);
 app.use('/api/products', productsRoutes);
 app.use('/api/test', testRoutes);
+app.use('/api/download', downloadRoutes);
 
 // ✅ Ruta pentru Ebook Leads - COMENTATĂ (funcționalitate dezactivată)
 // app.use('/api/ebook-leads', ebookLeadsRoutes);
@@ -136,29 +134,6 @@ app.get('/api/health', (req, res) => {
     timestamp: new Date().toISOString(),
   });
 });
-
-// === ✅ Test route pentru ebook leads - COMENTATĂ (funcționalitate dezactivată) ===
-// app.get('/api/debug/ebook-leads', async (req, res) => {
-//   try {
-//     const EbookLead = require('./models/EbookLead');
-//     const leadCount = await EbookLead.countDocuments();
-//
-//     res.json({
-//       success: true,
-//       collection: 'ebookleads',
-//       totalLeads: leadCount,
-//       database: 'ebookhalloween',
-//       mongoStatus: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
-//     });
-//   } catch (error) {
-//     res.json({
-//       success: false,
-//       error: error.message,
-//       database: 'ebookhalloween',
-//       mongoStatus: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
-//     });
-//   }
-// });
 
 // === Servește frontendul ===
 const frontendBuildPath = path.join(__dirname, 'frontend');
