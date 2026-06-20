@@ -3,11 +3,12 @@ const router = express.Router();
 
 const { sendPDFWithOptimization } = require('../services/pdfDeliveryService');
 
-// Reuse internal helpers from webhook route for complete package
-let sendCompletePackage;
+// Reuse internal helpers from webhook route
+let sendCompletePackage, sendPromoPackage;
 try {
   const webhookModule = require('./webhook');
   sendCompletePackage = webhookModule.sendCompletePackage;
+  sendPromoPackage = webhookModule.sendPromoPackage;
 } catch (err) {
   // Fallback: not available
 }
@@ -19,7 +20,7 @@ function ensureEnabled(req, res, next) {
 }
 
 // POST /api/test/send
-// Body: { email: string, product: 'Alfabetul'|'Numere'|'Forme si culori'|'Pachet Complet', amount?: number, currency?: string }
+// Body: { email, product: 'Alfabetul'|'Numere'|'FormeSiCulori'|'CarteDeColorat'|'LabirinturiMagice'|'JocuriSiActivitatiEducationale'|'PachetPromo'|'Pachet Complet', amount?, currency? }
 router.post('/send', ensureEnabled, async (req, res) => {
   const { email, product, amount: overrideAmount, currency: overrideCurrency } = req.body || {};
 
@@ -34,25 +35,37 @@ router.post('/send', ensureEnabled, async (req, res) => {
       if (!sendCompletePackage) {
         return res.status(500).json({ error: 'sendCompletePackage not available' });
       }
-
-      const amount = overrideAmount != null ? overrideAmount : 110;
-      await sendCompletePackage(email, product, amount, currency);
-      return res.json({ ok: true, message: 'Complete package sent (ZIP or individual, depending on size).' });
+      const amount = overrideAmount != null ? overrideAmount : 145;
+      await sendCompletePackage(email, 'Pachet Complet', amount, currency);
+      return res.json({ ok: true, message: 'Complete package sent (ZIP or download link depending on size).' });
     }
 
-    // Map product to filename using products config
+    if (product === 'PachetPromo' || product === 'Pachet Promo') {
+      if (!sendPromoPackage) {
+        return res.status(500).json({ error: 'sendPromoPackage not available' });
+      }
+      const promoFiles = ['LabirinturiMagice.pdf', 'JocuriSiActivitatiEducationale.pdf', 'BonusCertificatDeAbsovire-PachetPromo.pdf'];
+      const amount = overrideAmount != null ? overrideAmount : 99;
+      await sendPromoPackage(email, 'Pachet Promo', amount, currency, promoFiles);
+      return res.json({ ok: true, message: 'Promo package sent (ZIP or download link depending on size).' });
+    }
+
+    // Map product to filename
     let pdfFileName;
     if (product === 'Alfabetul') pdfFileName = 'Alfabetul.pdf';
     else if (product === 'Numere') pdfFileName = 'Numere.pdf';
-    else if (product === 'Forme si culori' || product === 'Forme și Culori' || product === 'FormeSiCulori' || product === 'FormeSICulori') pdfFileName = 'FormeSiCulori.pdf';
+    else if (product === 'FormeSiCulori' || product === 'Forme si culori' || product === 'Forme și Culori') pdfFileName = 'FormeSiCulori.pdf';
+    else if (product === 'CarteDeColorat' || product === 'Carte de Colorat') pdfFileName = 'CarteDeColorat.pdf';
+    else if (product === 'LabirinturiMagice' || product === 'Labirinturi Magice') pdfFileName = 'LabirinturiMagice.pdf';
+    else if (product === 'JocuriSiActivitatiEducationale' || product === 'Jocuri si Activitati') pdfFileName = 'JocuriSiActivitatiEducationale.pdf';
 
     if (!pdfFileName) {
       return res.status(400).json({ error: 'Unknown product' });
     }
 
-    const amount = overrideAmount != null ? overrideAmount : 49;
+    const amount = overrideAmount != null ? overrideAmount : 59;
     await sendPDFWithOptimization(email, pdfFileName, product, amount, currency);
-    return res.json({ ok: true, message: `${product} sent as attachment or notification depending on size.` });
+    return res.json({ ok: true, message: `${product} sent (attachment or download link depending on size).` });
   } catch (error) {
     console.error('Test send error:', error);
     return res.status(500).json({ error: error.message });

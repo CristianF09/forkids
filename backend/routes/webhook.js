@@ -128,7 +128,7 @@ router.post('/', async (req, res) => {
         }
 
         // Determine product
-        let pdfFileName = 'BonusCertificatDeAbsolvire.pdf';
+        let pdfFileName = 'BonusCertificatDeAbsovire-PachetStandard.pdf';
         let productName = 'Pachet Complet';
         let amount = session.amount_total / 100;
         let currency = session.currency?.toUpperCase() || 'RON';
@@ -171,7 +171,7 @@ router.post('/', async (req, res) => {
           }
         } else {
           if (amount === 110 || amount === 89) {
-            pdfFileName = 'BonusCertificatDeAbsolvire.pdf';
+            pdfFileName = 'BonusCertificatDeAbsovire-PachetStandard.pdf';
             productName = 'Pachet Complet';
             isCompletePackage = true;
           } else if (amount === 49) {
@@ -225,7 +225,7 @@ router.post('/', async (req, res) => {
         }
 
         let productName = 'Pachet Complet';
-        let pdfFileName = 'BonusCertificatDeAbsolvire.pdf';
+        let pdfFileName = 'BonusCertificatDeAbsovire-PachetStandard.pdf';
         let isCompletePackage = false;
         if (invoice.lines && invoice.lines.data.length > 0) {
           const line = invoice.lines.data[0];
@@ -307,7 +307,7 @@ async function sendCompletePackage(toEmail, productName, amount, currency) {
     'Numere.pdf',
     'FormeSiCulori.pdf',
     'CarteDeColorat.pdf',
-    'BonusCertificatDeAbsolvire-PachetStandard.pdf'
+    'BonusCertificatDeAbsovire-PachetStandard.pdf'
   ];
 
   // Create ZIP file
@@ -378,7 +378,7 @@ async function sendCompletePackage(toEmail, productName, amount, currency) {
                   <li>🔢 Numere.pdf</li>
                   <li>🎨 Forme și Culori.pdf</li>
                   <li>📖 Carte de Colorat.pdf</li>
-                  <li>🏆 Bonus - Certificat de Absolvire - Pachet Standard.pdf</li>
+                  <li>🏆 BonusCertificatDeAbsovire-PachetStandard.pdf</li>
                 </ul>
                 <p>Pentru întrebări: contact@corcodusa.ro</p>
               `,
@@ -410,7 +410,7 @@ async function sendCompletePackage(toEmail, productName, amount, currency) {
                       <li>🔢 Numere.pdf</li>
                       <li>🎨 Forme și Culori.pdf</li>
                       <li>📖 Carte de Colorat.pdf</li>
-                      <li>🏆 Bonus - Certificat de Absolvire - Pachet Standard.pdf</li>
+                      <li>🏆 BonusCertificatDeAbsovire-PachetStandard.pdf</li>
                     </ul>
                     <p><em>Chitanța de plată a fost trimisă automat de către Stripe.</em></p>
                   </div>
@@ -526,7 +526,7 @@ async function sendIndividualPDFs(toEmail, productName, amount, currency, pdfFil
         else if (pdfFile === 'Numere.pdf') pdfProductName = 'Numere';
         else if (pdfFile === 'FormeSiCulori.pdf') pdfProductName = 'Forme și Culori';
         else if (pdfFile === 'CarteDeColorat.pdf') pdfProductName = 'Carte de Colorat';
-        else if (pdfFile === 'BonusCertificatDeAbsolvire-PachetStandard.pdf') pdfProductName = 'Bonus - Certificat de Absolvire - Pachet Standard';
+        else if (pdfFile === 'BonusCertificatDeAbsovire-PachetStandard.pdf') pdfProductName = 'Bonus - Certificat de Absolvire - Pachet Standard';
         
         if (fileSizeInMB < 10) { // Send if under 10MB
           if (isDryRun) {
@@ -626,7 +626,7 @@ async function sendIndividualPDFs(toEmail, productName, amount, currency, pdfFil
           <li>🔢 Numere.pdf</li>
           <li>🎨 Forme și Culori.pdf</li>
           <li>📖 Carte de Colorat.pdf</li>
-          <li>🏆 Bonus - Certificat de Absolvire - Pachet Standard.pdf</li>
+          <li>🏆 BonusCertificatDeAbsovire-PachetStandard.pdf</li>
         </ul>
         ${largeFilesHtml}
         <hr>
@@ -738,8 +738,8 @@ async function sendPromoPackage(toEmail, productName, amount, currency, pdfFiles
                     <ul>
                       ${pdfFiles.map(file => {
                         if (file === 'LabirinturiMagice.pdf') return '<li>🧩 Labirinturi Magice.pdf</li>';
-                        if (file === 'JocuriSiActivitatiEducative.pdf') return '<li>🎓 Jocuri și Activități Educative.pdf</li>';
-                        if (file === 'BonusCertificatDeAbsolvire.pdf') return '<li>🏆 Bonus - Certificat de Absolvire.pdf</li>';
+                        if (file === 'JocuriSiActivitatiEducationale.pdf') return '<li>🎓 Jocuri și Activități Educationale.pdf</li>';
+                        if (file === 'BonusCertificatDeAbsovire-PachetPromo.pdf') return '<li>🏆 BonusCertificatDeAbsovire-PachetPromo.pdf</li>';
                         return `<li>${file}</li>`;
                       }).join('')}
                     </ul>
@@ -780,8 +780,8 @@ async function sendPromoPackage(toEmail, productName, amount, currency, pdfFiles
                     <ul>
                       ${pdfFiles.map(file => {
                         if (file === 'LabirinturiMagice.pdf') return '<li>🧩 Labirinturi Magice.pdf</li>';
-                        if (file === 'JocuriSiActivitatiEducative.pdf') return '<li>🎓 Jocuri și Activități Educative.pdf</li>';
-                        if (file === 'BonusCertificatDeAbsolvire.pdf') return '<li>🏆 Bonus - Certificat de Absolvire.pdf</li>';
+                        if (file === 'JocuriSiActivitatiEducationale.pdf') return '<li>🎓 Jocuri și Activități Educationale.pdf</li>';
+                        if (file === 'BonusCertificatDeAbsovire-PachetPromo.pdf') return '<li>🏆 BonusCertificatDeAbsovire-PachetPromo.pdf</li>';
                         return `<li>${file}</li>`;
                       }).join('')}
                     </ul>
