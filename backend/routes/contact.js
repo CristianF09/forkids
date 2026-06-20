@@ -21,82 +21,32 @@ router.post('/', async (req, res) => {
   // Process email sending in background
   setImmediate(async () => {
     try {
-      // Check if email credentials are configured
-      if (!process.env.ZMAIL_USER || !process.env.ZMAIL_PASS) {
-        console.log('❌ Email credentials not configured');
-        console.log('📧 Development mode - Email would be sent to: contact@corcodusa.ro');
+      // Check if any email provider is configured
+      if (!process.env.RESEND_API_KEY && (!process.env.ZMAIL_USER || !process.env.ZMAIL_PASS)) {
+        console.log('❌ No email provider configured (RESEND_API_KEY or ZMAIL_USER/PASS required)');
         console.log('📧 Email content:', { name, email, message });
         return;
       }
 
       console.log('📧 Attempting to send email to contact@corcodusa.ro');
       console.log('📧 From:', name, '<' + email + '>');
-      console.log('📧 Message:', message);
-      console.log('📧 Using Zoho credentials:', {
-        user: process.env.ZMAIL_USER,
-        pass: process.env.ZMAIL_PASS ? '***configured***' : '***missing***',
-      });
+      console.log('📧 Provider:', process.env.RESEND_API_KEY ? 'Resend' : 'Zoho');
 
-      // Send the actual email directly without verification
       await sendContactEmail({ name, email, message });
       console.log('✅ Contact email sent successfully');
 
     } catch (error) {
       console.error('❌ Eroare la trimiterea emailului:', error.message);
-      console.error('❌ Full error:', error);
-
-      // Try to send a simple email as fallback
-      try {
-        const nodemailer = require('nodemailer');
-        const transporter = nodemailer.createTransport({
-          host: 'smtp.zoho.eu',
-          port: 587,
-          secure: false,
-          requireTLS: true,
-          auth: {
-            user: process.env.ZMAIL_USER,
-            pass: process.env.ZMAIL_PASS,
-          },
-        });
-
-        await transporter.sendMail({
-          from: `"CorcoDușa Contact Form" <${process.env.ZMAIL_USER}>`,
-          to: 'contact@corcodusa.ro',
-          subject: 'Mesaj nou din formularul de contact',
-          text: `Mesaj de la: ${name} (${email})\n\n${message}`,
-          html: `
-            <h3>Ai primit un mesaj nou de la ${escapeHtml(name)} (${escapeHtml(email)})</h3>
-            <p><strong>Mesaj:</strong></p>
-            <p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>
-            <hr>
-            <p><small>Acest mesaj a fost trimis din formularul de contact de pe site-ul CorcoDușa.</small></p>
-          `,
-          replyTo: email,
-          envelope: {
-            from: process.env.ZMAIL_USER,
-            to: 'contact@corcodusa.ro'
-          },
-          headers: {
-            'X-Corcodusa-Contact': 'true'
-          }
-        });
-
-        console.log('✅ Fallback email sent successfully');
-
-      } catch (fallbackError) {
-        console.error('❌ Fallback email also failed:', fallbackError.message);
-        console.error('❌ Fallback error details:', fallbackError);
-      }
     }
   });
 });
 
-// Test route for email functionality - tries both ports and reports results
+// Test route for email functionality
 router.get('/test-email', async (req, res) => {
-  if (!process.env.ZMAIL_USER || !process.env.ZMAIL_PASS) {
+  if (!process.env.RESEND_API_KEY && (!process.env.ZMAIL_USER || !process.env.ZMAIL_PASS)) {
     return res.json({
       success: false,
-      message: 'Email credentials not configured',
+      message: 'No email provider configured',
       configured: false,
       user: process.env.ZMAIL_USER ? 'set' : 'missing',
       pass: process.env.ZMAIL_PASS ? 'set' : 'missing',
@@ -104,53 +54,40 @@ router.get('/test-email', async (req, res) => {
   }
 
   const nodemailer = require('nodemailer');
-  const host = process.env.ZMAIL_HOST || 'smtp.zoho.eu';
-  const results = {};
+  const useResend = !!process.env.RESEND_API_KEY;
 
-  const configs = [
-    { port: 587, secure: false, label: '587-STARTTLS' },
-    { port: 465, secure: true,  label: '465-SSL' },
-  ];
-
-  let workingTransporter = null;
-  let workingLabel = null;
-
-  for (const cfg of configs) {
-    try {
-      const t = nodemailer.createTransport({
-        host,
-        port: cfg.port,
-        secure: cfg.secure,
-        requireTLS: !cfg.secure,
+  const transporter = useResend
+    ? nodemailer.createTransport({
+        host: 'smtp.resend.com',
+        port: 465,
+        secure: true,
+        auth: { user: 'resend', pass: process.env.RESEND_API_KEY },
+      })
+    : nodemailer.createTransport({
+        host: process.env.ZMAIL_HOST || 'smtp.zoho.eu',
+        port: parseInt(process.env.ZMAIL_PORT || '587'),
+        secure: process.env.ZMAIL_SECURE === 'true',
+        requireTLS: process.env.ZMAIL_SECURE !== 'true',
         auth: { user: process.env.ZMAIL_USER, pass: process.env.ZMAIL_PASS },
         connectionTimeout: 10000,
         greetingTimeout: 10000,
         socketTimeout: 10000,
       });
-      await t.verify();
-      results[cfg.label] = 'connected';
-      workingTransporter = t;
-      workingLabel = cfg.label;
-      break;
-    } catch (err) {
-      results[cfg.label] = err.message;
-    }
-  }
-
-  if (!workingTransporter) {
-    return res.json({ success: false, message: 'All SMTP ports failed', results, host, user: process.env.ZMAIL_USER });
-  }
 
   try {
-    await workingTransporter.sendMail({
-      from: `"CorcoDușa Test" <${process.env.ZMAIL_USER}>`,
-      to: process.env.ZMAIL_USER,
-      subject: `Test SMTP - ${workingLabel} - ${new Date().toISOString()}`,
-      text: `SMTP works on ${host}:${workingLabel}`,
+    await transporter.verify();
+    const from = useResend
+      ? `"CorcoDușa Test" <contact@corcodusa.ro>`
+      : `"CorcoDușa Test" <${process.env.ZMAIL_USER}>`;
+    await transporter.sendMail({
+      from,
+      to: 'contact@corcodusa.ro',
+      subject: `Test SMTP - ${useResend ? 'Resend' : 'Zoho'} - ${new Date().toISOString()}`,
+      text: `SMTP test successful via ${useResend ? 'Resend' : 'Zoho'}`,
     });
-    res.json({ success: true, message: `Email sent via ${workingLabel}`, results, host, user: process.env.ZMAIL_USER });
+    res.json({ success: true, message: `Email sent via ${useResend ? 'Resend' : 'Zoho'}`, provider: useResend ? 'resend' : 'zoho' });
   } catch (err) {
-    res.json({ success: false, message: 'Connected but send failed', error: err.message, results, host });
+    res.json({ success: false, message: 'SMTP failed', error: err.message, provider: useResend ? 'resend' : 'zoho' });
   }
 });
 

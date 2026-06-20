@@ -18,29 +18,35 @@ function escapeHtml(str) {
 /**
  * Creează un transporter SMTP bazat pe setările din .env
  */
-function createTransporter(useFallback = false) {
-  // Primary: use env config (default 587 STARTTLS). Fallback: try 465 SSL.
-  const host = process.env.ZMAIL_HOST || 'smtp.zoho.eu';
-  const port = useFallback ? 465 : parseInt(process.env.ZMAIL_PORT || '587');
-  const secure = useFallback ? true : (process.env.ZMAIL_SECURE === 'true');
+function createTransporter() {
+  if (process.env.RESEND_API_KEY) {
+    log('Creating transporter: Resend SMTP (smtp.resend.com:465)');
+    return nodemailer.createTransport({
+      host: 'smtp.resend.com',
+      port: 465,
+      secure: true,
+      auth: {
+        user: 'resend',
+        pass: process.env.RESEND_API_KEY,
+      },
+    });
+  }
 
-  log(`Creating transporter: ${host}:${port}, secure:${secure}, fallback:${useFallback}`);
-  
-  // SECURITY: nodemailer's debug/logger options print the raw SMTP conversation,
-  // which includes base64-encoded AUTH credentials. Never enable in production.
-  const smtpDebug = process.env.SMTP_DEBUG === 'true' && process.env.NODE_ENV !== 'production';
+  // Zoho fallback (may be blocked on cloud servers)
+  const host = process.env.ZMAIL_HOST || 'smtp.zoho.eu';
+  const port = parseInt(process.env.ZMAIL_PORT || '587');
+  const secure = process.env.ZMAIL_SECURE === 'true';
+  log(`Creating transporter: ${host}:${port}, secure:${secure}`);
 
   return nodemailer.createTransport({
-    host: host,
-    port: port,
-    secure: secure,
-    requireTLS: !secure, // true for port 587 (STARTTLS), false for port 465 (SSL)
+    host,
+    port,
+    secure,
+    requireTLS: !secure,
     auth: {
       user: process.env.ZMAIL_USER,
       pass: process.env.ZMAIL_PASS,
     },
-    logger: smtpDebug,
-    debug: smtpDebug,
   });
 }
 
@@ -72,7 +78,7 @@ async function sendPDF(toEmail, productId) {
   };
 
   try {
-    const transporter = createTransporter(false);
+    const transporter = createTransporter();
     log('Încerc să trimit PDF cu config din .env');
     const info = await transporter.sendMail(mailOptions);
     log('✓ PDF trimis cu succes:', info.messageId);
@@ -82,7 +88,7 @@ async function sendPDF(toEmail, productId) {
     
     try {
       log('Încerc fallback pe portul 587...');
-      const fallbackTransporter = createTransporter(true);
+      const fallbackTransporter = createTransporter();
       const fallbackInfo = await fallbackTransporter.sendMail(mailOptions);
       log('✓ PDF trimis cu fallback:', fallbackInfo.messageId);
       return fallbackInfo;
@@ -120,7 +126,7 @@ async function sendContactEmail({ name, email, message }) {
   };
 
   try {
-    const transporter = createTransporter(false);
+    const transporter = createTransporter();
     log('Încerc să trimit email de contact cu config din .env');
     const info = await transporter.sendMail(mail);
     log('✓ Email de contact trimis cu succes:', info.messageId);
@@ -130,7 +136,7 @@ async function sendContactEmail({ name, email, message }) {
     
     try {
       log('Încerc fallback pe portul 587 pentru contact...');
-      const fallbackTransporter = createTransporter(true);
+      const fallbackTransporter = createTransporter();
       const fallbackInfo = await fallbackTransporter.sendMail(mail);
       log('✓ Email de contact trimis cu fallback:', fallbackInfo.messageId);
       return fallbackInfo;
@@ -162,7 +168,7 @@ async function sendOrderNotification(orderDetails) {
   };
 
   try {
-    const transporter = createTransporter(false);
+    const transporter = createTransporter();
     log('Încerc să trimit notificare comandă cu config din .env');
     const info = await transporter.sendMail(mail);
     log('✓ Notificare comandă trimisă cu succes:', info.messageId);
@@ -172,7 +178,7 @@ async function sendOrderNotification(orderDetails) {
     
     try {
       log('Încerc fallback pe portul 587 pentru notificare...');
-      const fallbackTransporter = createTransporter(true);
+      const fallbackTransporter = createTransporter();
       const fallbackInfo = await fallbackTransporter.sendMail(mail);
       log('✓ Notificare comandă trimisă cu fallback:', fallbackInfo.messageId);
       return fallbackInfo;
@@ -206,7 +212,7 @@ async function sendEmailWithAttachment(to, productName) {
   };
 
   try {
-    const transporter = createTransporter(false);
+    const transporter = createTransporter();
     log(`Încerc să trimit email cu atașament ${productName} către ${to}`);
     const info = await transporter.sendMail(mail);
     log('✓ Email cu atașament trimis cu succes:', info.messageId);
@@ -216,7 +222,7 @@ async function sendEmailWithAttachment(to, productName) {
     
     try {
       log('Încerc fallback pe portul 587 pentru email cu atașament...');
-      const fallbackTransporter = createTransporter(true);
+      const fallbackTransporter = createTransporter();
       const fallbackInfo = await fallbackTransporter.sendMail(mail);
       log('✓ Email cu atașament trimis cu fallback:', fallbackInfo.messageId);
       return fallbackInfo;
@@ -235,7 +241,7 @@ async function testSmtpConnection() {
     log('🧪 Testare conexiune SMTP...');
     log(`Config: ${process.env.ZMAIL_HOST}:${process.env.ZMAIL_PORT}, user: ${process.env.ZMAIL_USER}`);
     
-    const transporter = createTransporter(false);
+    const transporter = createTransporter();
     
     // Testează conexiunea
     await transporter.verify();
