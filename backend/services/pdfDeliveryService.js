@@ -58,7 +58,7 @@ async function sendPDFWithOptimization(toEmail, pdfFileName, productName, amount
           const zipSizeMB = statsZip.size / (1024 * 1024);
           console.log(`📦 ZIP created for ${pdfFileName}: ${zipFileName} (${zipSizeMB.toFixed(2)} MB)`);
 
-          if (zipSizeMB > 25) {
+          if (zipSizeMB > 15) {
             console.log('⚠️ ZIP too large to email, sending download link instead');
 
             // Move ZIP to public/pdfs so it can be downloaded

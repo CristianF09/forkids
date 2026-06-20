@@ -338,8 +338,8 @@ async function sendCompletePackage(toEmail, productName, amount, currency) {
         const serverUrl = process.env.SERVER_URL || 'https://corcodusa.ro';
         const displayProductName = productName === 'PachetComplet' ? 'Pachet Complet' : productName;
         
-        if (fileSizeInMB > 25) { // Zoho limit is around 25MB
-          console.log('⚠️ ZIP file too large to attach. Providing secure download link for complete ZIP.');
+        if (true) { // Package ZIP (~89MB) always too large to attach — always send download link
+          console.log(`📦 Complete Package ZIP (${fileSizeInMB.toFixed(1)}MB) — sending download link.`);
 
           // Move ZIP to public/pdfs so it can be downloaded via /api/download
           const publicZipPath = path.join(__dirname, '..', 'public', 'pdfs', zipFileName);
@@ -700,8 +700,8 @@ async function sendPromoPackage(toEmail, productName, amount, currency, pdfFiles
         const serverUrl = process.env.SERVER_URL || 'https://corcodusa.ro';
         const displayProductName = productName;
 
-        if (fileSizeInMB > 25) { // Zoho limit is around 25MB
-          console.log('⚠️ ZIP file too large to attach. Providing secure download link for promo ZIP.');
+        if (true) { // Promo Package ZIP (~83MB) always too large to attach — always send download link
+          console.log(`📦 Promo Package ZIP (${fileSizeInMB.toFixed(1)}MB) — sending download link.`);
 
           // Move ZIP to public/pdfs so it can be downloaded via /api/download
           const publicZipPath = path.join(__dirname, '..', 'public', 'pdfs', zipFileName);

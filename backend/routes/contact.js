@@ -91,66 +91,66 @@ router.post('/', async (req, res) => {
   });
 });
 
-// Test route for email functionality
+// Test route for email functionality - tries both ports and reports results
 router.get('/test-email', async (req, res) => {
-  try {
-    console.log('🧪 Testing email configuration...');
-
-    if (!process.env.ZMAIL_USER || !process.env.ZMAIL_PASS) {
-      return res.json({
-        success: false,
-        message: 'Email credentials not configured',
-        configured: false,
-        user: process.env.ZMAIL_USER ? 'set' : 'missing',
-        pass: process.env.ZMAIL_PASS ? 'set' : 'missing',
-      });
-    }
-
-    const nodemailer = require('nodemailer');
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.zoho.eu',
-      port: 465,
-      secure: true,
-      auth: {
-        user: process.env.ZMAIL_USER,
-        pass: process.env.ZMAIL_PASS,
-      },
-    });
-
-    // Verify connection
-    await transporter.verify();
-    console.log('✅ Email transporter verified successfully');
-
-    // Send test email
-    await transporter.sendMail({
-      from: `"CorcoDușa Test" <${process.env.ZMAIL_USER}>`,
-      to: 'contact@corcodusa.ro',
-      subject: 'Test Email - Contact Form Configuration',
-      html: `
-        <h3>Test Email Configuration</h3>
-        <p>This is a test email to verify that the contact form email configuration is working correctly.</p>
-        <p><strong>Timestamp:</strong> ${new Date().toISOString()}</p>
-        <hr>
-        <p><small>Test message from CorcoDușa server.</small></p>
-      `,
-    });
-
-    console.log('✅ Test email sent successfully');
-    res.json({
-      success: true,
-      message: 'Test email sent successfully',
-      configured: true,
-      timestamp: new Date().toISOString(),
-    });
-
-  } catch (error) {
-    console.error('❌ Email test failed:', error.message);
-    res.json({
+  if (!process.env.ZMAIL_USER || !process.env.ZMAIL_PASS) {
+    return res.json({
       success: false,
-      message: 'Email test failed',
-      error: error.message,
-      configured: !!(process.env.ZMAIL_USER && process.env.ZMAIL_PASS),
+      message: 'Email credentials not configured',
+      configured: false,
+      user: process.env.ZMAIL_USER ? 'set' : 'missing',
+      pass: process.env.ZMAIL_PASS ? 'set' : 'missing',
     });
+  }
+
+  const nodemailer = require('nodemailer');
+  const host = process.env.ZMAIL_HOST || 'smtp.zoho.eu';
+  const results = {};
+
+  const configs = [
+    { port: 587, secure: false, label: '587-STARTTLS' },
+    { port: 465, secure: true,  label: '465-SSL' },
+  ];
+
+  let workingTransporter = null;
+  let workingLabel = null;
+
+  for (const cfg of configs) {
+    try {
+      const t = nodemailer.createTransport({
+        host,
+        port: cfg.port,
+        secure: cfg.secure,
+        requireTLS: !cfg.secure,
+        auth: { user: process.env.ZMAIL_USER, pass: process.env.ZMAIL_PASS },
+        connectionTimeout: 10000,
+        greetingTimeout: 10000,
+        socketTimeout: 10000,
+      });
+      await t.verify();
+      results[cfg.label] = 'connected';
+      workingTransporter = t;
+      workingLabel = cfg.label;
+      break;
+    } catch (err) {
+      results[cfg.label] = err.message;
+    }
+  }
+
+  if (!workingTransporter) {
+    return res.json({ success: false, message: 'All SMTP ports failed', results, host, user: process.env.ZMAIL_USER });
+  }
+
+  try {
+    await workingTransporter.sendMail({
+      from: `"CorcoDușa Test" <${process.env.ZMAIL_USER}>`,
+      to: process.env.ZMAIL_USER,
+      subject: `Test SMTP - ${workingLabel} - ${new Date().toISOString()}`,
+      text: `SMTP works on ${host}:${workingLabel}`,
+    });
+    res.json({ success: true, message: `Email sent via ${workingLabel}`, results, host, user: process.env.ZMAIL_USER });
+  } catch (err) {
+    res.json({ success: false, message: 'Connected but send failed', error: err.message, results, host });
   }
 });
 

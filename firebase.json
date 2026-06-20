@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "forkids-4f02d",
     "public": "frontend/build",
     "ignore": [
       "firebase.json",
