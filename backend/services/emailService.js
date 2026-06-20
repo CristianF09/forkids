@@ -15,44 +15,50 @@ function escapeHtml(str) {
     "'": '&#39;',
   })[s]);
 }
-/**
- * Creează un transporter SMTP bazat pe setările din .env
- */
-function createTransporter() {
-  if (process.env.RESEND_API_KEY) {
-    log('Creating transporter: Resend SMTP (smtp.resend.com:465)');
-    return nodemailer.createTransport({
-      host: 'smtp.resend.com',
-      port: 465,
-      secure: true,
-      auth: {
-        user: 'resend',
-        pass: process.env.RESEND_API_KEY,
-      },
-    });
+
+// Resend HTTP API — uses port 443, works on all cloud providers
+async function sendViaResend({ from, to, subject, text, html, attachments }) {
+  const { Resend } = require('resend');
+  const resend = new Resend(process.env.RESEND_API_KEY);
+
+  const payload = { from, to, subject, text, html };
+
+  if (attachments && attachments.length > 0) {
+    payload.attachments = attachments.map((a) => ({
+      filename: a.filename,
+      content: a.path ? fs.readFileSync(a.path) : a.content,
+    }));
   }
 
-  // Zoho fallback (may be blocked on cloud servers)
+  const { data, error } = await resend.emails.send(payload);
+  if (error) throw new Error(error.message || JSON.stringify(error));
+  log('✓ Email sent via Resend HTTP API:', data.id);
+  return data;
+}
+
+function createZohoTransporter() {
   const host = process.env.ZMAIL_HOST || 'smtp.zoho.eu';
   const port = parseInt(process.env.ZMAIL_PORT || '587');
   const secure = process.env.ZMAIL_SECURE === 'true';
-  log(`Creating transporter: ${host}:${port}, secure:${secure}`);
-
+  log(`Creating Zoho transporter: ${host}:${port}, secure:${secure}`);
   return nodemailer.createTransport({
-    host,
-    port,
-    secure,
-    requireTLS: !secure,
-    auth: {
-      user: process.env.ZMAIL_USER,
-      pass: process.env.ZMAIL_PASS,
-    },
+    host, port, secure, requireTLS: !secure,
+    auth: { user: process.env.ZMAIL_USER, pass: process.env.ZMAIL_PASS },
   });
 }
 
-/**
- * Trimite un PDF ca atașament email-ului către adresa specificată.
- */
+async function sendMail(mailOptions) {
+  if (process.env.RESEND_API_KEY) {
+    return sendViaResend(mailOptions);
+  }
+  const transporter = createZohoTransporter();
+  const info = await transporter.sendMail(mailOptions);
+  log('✓ Email sent via Zoho:', info.messageId);
+  return info;
+}
+
+const FROM_ADDRESS = 'contact@corcodusa.ro';
+
 async function sendPDF(toEmail, productId) {
   const pdfDir = path.join(__dirname, '..', 'public', 'pdfs');
   const pdfFilename = `${productId}.pdf`;
@@ -62,49 +68,18 @@ async function sendPDF(toEmail, productId) {
     throw new Error(`Fișierul PDF nu a fost găsit: ${pdfPath}`);
   }
 
-  const mailOptions = {
-    from: `"CorcoDușa" <${process.env.ZMAIL_USER}>`,
+  return sendMail({
+    from: `"CorcoDușa" <${FROM_ADDRESS}>`,
     to: toEmail,
     subject: 'Fișele tale educative - CorcoDușa',
-    text:
-      'Mulțumim pentru achiziție! Găsești fișierul educațional atașat acestui email.\n\n' +
-      'Pentru întrebări sau suport, nu ezita să ne contactezi la contact@corcodusa.ro.',
-    attachments: [
-      {
-        filename: pdfFilename,
-        path: pdfPath,
-      },
-    ],
-  };
-
-  try {
-    const transporter = createTransporter();
-    log('Încerc să trimit PDF cu config din .env');
-    const info = await transporter.sendMail(mailOptions);
-    log('✓ PDF trimis cu succes:', info.messageId);
-    return info;
-  } catch (err) {
-    errorLog('✗ Eroare la trimiterea PDF-ului:', err.message);
-    
-    try {
-      log('Încerc fallback pe portul 587...');
-      const fallbackTransporter = createTransporter();
-      const fallbackInfo = await fallbackTransporter.sendMail(mailOptions);
-      log('✓ PDF trimis cu fallback:', fallbackInfo.messageId);
-      return fallbackInfo;
-    } catch (fallbackErr) {
-      errorLog('✗ Eroare și la fallback pentru PDF:', fallbackErr.message);
-      throw new Error(`Nu s-a putut trimite PDF-ul: ${fallbackErr.message}`);
-    }
-  }
+    text: 'Mulțumim pentru achiziție! Găsești fișierul educațional atașat acestui email.\n\nPentru întrebări sau suport, nu ezita să ne contactezi la contact@corcodusa.ro.',
+    attachments: [{ filename: pdfFilename, path: pdfPath }],
+  });
 }
 
-/**
- * Trimite un email de contact către contact@corcodusa.ro
- */
 async function sendContactEmail({ name, email, message }) {
-  const mail = {
-    from: `"CorcoDușa Contact Form" <${process.env.ZMAIL_USER}>`,
+  return sendMail({
+    from: `"CorcoDușa Contact Form" <${FROM_ADDRESS}>`,
     to: 'contact@corcodusa.ro',
     subject: 'Mesaj nou din formularul de contact',
     text: `Mesaj de la: ${name} (${email})\n\n${message}`,
@@ -113,46 +88,15 @@ async function sendContactEmail({ name, email, message }) {
       <p><strong>Mesaj:</strong></p>
       <p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>
       <hr>
-      <p><small>Acest mesaj a fost trimis din formularul de contact de pe site-ul CorcoDușa.</small></p>
+      <p><small>Trimis din formularul de contact CorcoDușa.</small></p>
     `,
     replyTo: email,
-    envelope: {
-      from: process.env.ZMAIL_USER,
-      to: 'contact@corcodusa.ro'
-    },
-    headers: {
-      'X-Corcodusa-Contact': 'true'
-    }
-  };
-
-  try {
-    const transporter = createTransporter();
-    log('Încerc să trimit email de contact cu config din .env');
-    const info = await transporter.sendMail(mail);
-    log('✓ Email de contact trimis cu succes:', info.messageId);
-    return info;
-  } catch (err) {
-    errorLog('✗ Eroare la trimiterea email-ului de contact:', err.message);
-    
-    try {
-      log('Încerc fallback pe portul 587 pentru contact...');
-      const fallbackTransporter = createTransporter();
-      const fallbackInfo = await fallbackTransporter.sendMail(mail);
-      log('✓ Email de contact trimis cu fallback:', fallbackInfo.messageId);
-      return fallbackInfo;
-    } catch (fallbackErr) {
-      errorLog('✗ Eroare și la fallback pentru contact:', fallbackErr.message);
-      throw new Error(`Nu s-a putut trimite email-ul de contact: ${fallbackErr.message}`);
-    }
-  }
+  });
 }
 
-/**
- * Trimite o notificare de comandă către contact@corcodusa.ro
- */
 async function sendOrderNotification(orderDetails) {
-  const mail = {
-    from: `"CorcoDușa Orders" <${process.env.ZMAIL_USER}>`,
+  return sendMail({
+    from: `"CorcoDușa Orders" <${FROM_ADDRESS}>`,
     to: 'contact@corcodusa.ro',
     subject: 'Comandă nouă - CorcoDușa',
     html: `
@@ -163,114 +107,29 @@ async function sendOrderNotification(orderDetails) {
       <p><strong>Data:</strong> ${new Date().toLocaleString('ro-RO')}</p>
       <p><strong>Session ID:</strong> ${orderDetails.sessionId}</p>
       <hr>
-      <p><small>Notificare automată de la sistemul CorcoDușa.</small></p>
+      <p><small>Notificare automată CorcoDușa.</small></p>
     `,
-  };
-
-  try {
-    const transporter = createTransporter();
-    log('Încerc să trimit notificare comandă cu config din .env');
-    const info = await transporter.sendMail(mail);
-    log('✓ Notificare comandă trimisă cu succes:', info.messageId);
-    return info;
-  } catch (err) {
-    errorLog('✗ Eroare la trimiterea notificării comenzii:', err.message);
-    
-    try {
-      log('Încerc fallback pe portul 587 pentru notificare...');
-      const fallbackTransporter = createTransporter();
-      const fallbackInfo = await fallbackTransporter.sendMail(mail);
-      log('✓ Notificare comandă trimisă cu fallback:', fallbackInfo.messageId);
-      return fallbackInfo;
-    } catch (fallbackErr) {
-      errorLog('✗ Eroare și la fallback pentru notificare:', fallbackErr.message);
-      throw new Error(`Nu s-a putut trimite notificarea comenzii: ${fallbackErr.message}`);
-    }
-  }
+  });
 }
 
-/**
- * Trimite un PDF ca atașament după numele produsului
- */
 async function sendEmailWithAttachment(to, productName) {
   const filePath = path.join(__dirname, '..', 'public', 'pdfs', productName);
   if (!fs.existsSync(filePath)) {
     throw new Error(`Fișierul PDF nu a fost găsit: ${filePath}`);
   }
 
-  const mail = {
-    from: `"Corcodușa" <${process.env.ZMAIL_USER}>`,
+  return sendMail({
+    from: `"CorcoDușa" <${FROM_ADDRESS}>`,
     to,
     subject: `Mulțumim pentru achiziția ${productName}`,
     text: 'Găsești atașat materialul digital cumpărat. Îți mulțumim!',
-    attachments: [
-      {
-        filename: productName,
-        path: filePath,
-      },
-    ],
-  };
-
-  try {
-    const transporter = createTransporter();
-    log(`Încerc să trimit email cu atașament ${productName} către ${to}`);
-    const info = await transporter.sendMail(mail);
-    log('✓ Email cu atașament trimis cu succes:', info.messageId);
-    return info;
-  } catch (err) {
-    errorLog('✗ Eroare la trimiterea email-ului cu atașament:', err.message);
-    
-    try {
-      log('Încerc fallback pe portul 587 pentru email cu atașament...');
-      const fallbackTransporter = createTransporter();
-      const fallbackInfo = await fallbackTransporter.sendMail(mail);
-      log('✓ Email cu atașament trimis cu fallback:', fallbackInfo.messageId);
-      return fallbackInfo;
-    } catch (fallbackErr) {
-      errorLog('✗ Eroare și la fallback pentru email cu atașament:', fallbackErr.message);
-      throw new Error(`Nu s-a putut trimite email-ul cu atașament: ${fallbackErr.message}`);
-    }
-  }
+    attachments: [{ filename: productName, path: filePath }],
+  });
 }
 
-/**
- * Funcție de test pentru SMTP configuration
- */
-async function testSmtpConnection() {
-  try {
-    log('🧪 Testare conexiune SMTP...');
-    log(`Config: ${process.env.ZMAIL_HOST}:${process.env.ZMAIL_PORT}, user: ${process.env.ZMAIL_USER}`);
-    
-    const transporter = createTransporter();
-    
-    // Testează conexiunea
-    await transporter.verify();
-    log('✓ Conexiunea SMTP este funcțională!');
-    
-    // Trimite un email de test
-    const testInfo = await transporter.sendMail({
-      from: `"Test SMTP" <${process.env.ZMAIL_USER}>`,
-      to: process.env.ZMAIL_USER,
-      subject: 'Test SMTP Configuration',
-      text: 'Acesta este un email de test pentru a verifica configurația SMTP.',
-      html: '<p>Acesta este un <strong>email de test</strong> pentru a verifica configurația SMTP.</p>'
-    });
-    
-    log('✓ Email de test trimis cu succes! Message ID:', testInfo.messageId);
-    log('⚠ Verifică căsuța de email și folderul SPAM pentru emailul de test.');
-    
-    return { success: true, messageId: testInfo.messageId };
-  } catch (error) {
-    errorLog('✗ Eroare la testarea SMTP:', error.message);
-    errorLog('Eroare detaliată:', error);
-    return { success: false, error: error.message };
-  }
-}
-
-module.exports = { 
-  sendPDF, 
-  sendContactEmail, 
-  sendOrderNotification, 
+module.exports = {
+  sendPDF,
+  sendContactEmail,
+  sendOrderNotification,
   sendEmailWithAttachment,
-  testSmtpConnection 
 };

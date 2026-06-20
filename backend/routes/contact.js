@@ -43,51 +43,22 @@ router.post('/', async (req, res) => {
 
 // Test route for email functionality
 router.get('/test-email', async (req, res) => {
-  if (!process.env.RESEND_API_KEY && (!process.env.ZMAIL_USER || !process.env.ZMAIL_PASS)) {
-    return res.json({
-      success: false,
-      message: 'No email provider configured',
-      configured: false,
-      user: process.env.ZMAIL_USER ? 'set' : 'missing',
-      pass: process.env.ZMAIL_PASS ? 'set' : 'missing',
-    });
-  }
-
-  const nodemailer = require('nodemailer');
   const useResend = !!process.env.RESEND_API_KEY;
 
-  const transporter = useResend
-    ? nodemailer.createTransport({
-        host: 'smtp.resend.com',
-        port: 465,
-        secure: true,
-        auth: { user: 'resend', pass: process.env.RESEND_API_KEY },
-      })
-    : nodemailer.createTransport({
-        host: process.env.ZMAIL_HOST || 'smtp.zoho.eu',
-        port: parseInt(process.env.ZMAIL_PORT || '587'),
-        secure: process.env.ZMAIL_SECURE === 'true',
-        requireTLS: process.env.ZMAIL_SECURE !== 'true',
-        auth: { user: process.env.ZMAIL_USER, pass: process.env.ZMAIL_PASS },
-        connectionTimeout: 10000,
-        greetingTimeout: 10000,
-        socketTimeout: 10000,
-      });
+  if (!useResend && (!process.env.ZMAIL_USER || !process.env.ZMAIL_PASS)) {
+    return res.json({ success: false, message: 'No email provider configured', configured: false });
+  }
 
   try {
-    await transporter.verify();
-    const from = useResend
-      ? `"CorcoDușa Test" <contact@corcodusa.ro>`
-      : `"CorcoDușa Test" <${process.env.ZMAIL_USER}>`;
-    await transporter.sendMail({
-      from,
-      to: 'contact@corcodusa.ro',
-      subject: `Test SMTP - ${useResend ? 'Resend' : 'Zoho'} - ${new Date().toISOString()}`,
-      text: `SMTP test successful via ${useResend ? 'Resend' : 'Zoho'}`,
+    const { sendContactEmail } = require('../services/emailService');
+    await sendContactEmail({
+      name: 'Test',
+      email: 'test@corcodusa.ro',
+      message: `Email test via ${useResend ? 'Resend HTTP API' : 'Zoho SMTP'} - ${new Date().toISOString()}`,
     });
     res.json({ success: true, message: `Email sent via ${useResend ? 'Resend' : 'Zoho'}`, provider: useResend ? 'resend' : 'zoho' });
   } catch (err) {
-    res.json({ success: false, message: 'SMTP failed', error: err.message, provider: useResend ? 'resend' : 'zoho' });
+    res.json({ success: false, message: 'Email failed', error: err.message, provider: useResend ? 'resend' : 'zoho' });
   }
 });
 
