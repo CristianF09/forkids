@@ -1,42 +1,26 @@
-const nodemailer = require('nodemailer');
 const path = require('path');
 const fs = require('fs');
 const archiver = require('archiver');
+const { sendMail } = require('./emailService');
 
-/**
- * Send PDF with size optimization
- */
+const FROM = '"CorcoDușa" <contact@corcodusa.ro>';
+
 async function sendPDFWithOptimization(toEmail, pdfFileName, productName, amount, currency) {
   console.log(`📧 Starting PDF delivery: ${pdfFileName} to ${toEmail}`);
-  
-  // Check environment variables first
+
   const isDryRun = process.env.DRY_RUN === 'true';
-  if (!isDryRun && (!process.env.ZMAIL_USER || !process.env.ZMAIL_PASS)) {
-    throw new Error('ZMAIL_USER and ZMAIL_PASS environment variables are required');
-  }
-  
+
   const filePath = path.join(__dirname, '..', 'public', 'pdfs', pdfFileName);
-  
+
   if (!fs.existsSync(filePath)) {
     throw new Error(`PDF file not found: ${pdfFileName} at path: ${filePath}`);
   }
 
   const stats = fs.statSync(filePath);
   const fileSizeInMB = stats.size / (1024 * 1024);
-  
+
   console.log(`📁 PDF file: ${pdfFileName}, Size: ${fileSizeInMB.toFixed(2)} MB`);
 
-  const transporter = !isDryRun ? nodemailer.createTransport({
-    host: 'smtp.zoho.eu',
-    port: 465,
-    secure: true,
-    auth: {
-      user: process.env.ZMAIL_USER,
-      pass: process.env.ZMAIL_PASS,
-    },
-  }) : null;
-
-  // Always deliver as ZIP (attach if small enough, otherwise provide download link)
   const tempDir = path.join(__dirname, '..', 'temp');
   if (!fs.existsSync(tempDir)) {
     fs.mkdirSync(tempDir, { recursive: true });
@@ -61,7 +45,6 @@ async function sendPDFWithOptimization(toEmail, pdfFileName, productName, amount
           if (zipSizeMB > 15) {
             console.log('⚠️ ZIP too large to email, sending download link instead');
 
-            // Move ZIP to public/pdfs so it can be downloaded
             const publicZipPath = path.join(__dirname, '..', 'public', 'pdfs', zipFileName);
             try {
               fs.renameSync(zipFilePath, publicZipPath);
@@ -72,12 +55,14 @@ async function sendPDFWithOptimization(toEmail, pdfFileName, productName, amount
 
             const serverUrl = process.env.SERVER_URL || 'https://corcodusa.ro';
             const downloadUrl = `${serverUrl}/api/download/${encodeURIComponent(zipFileName)}`;
+
             if (isDryRun) {
               console.log('🧪 DRY_RUN: would send download link email', { toEmail, downloadUrl });
               return resolve();
             }
-            await transporter.sendMail({
-              from: `"CorcoDușa" <${process.env.ZMAIL_USER}>`,
+
+            await sendMail({
+              from: FROM,
               to: toEmail,
               subject: `Materialul digital ${productName} - CorcoDușa`,
               html: `
@@ -85,7 +70,7 @@ async function sendPDFWithOptimization(toEmail, pdfFileName, productName, amount
                   <h2 style="color: #20BF55;">🎉 Mulțumim pentru achiziție!</h2>
 
                   <div style="background: #e8f5e8; padding: 20px; border-radius: 8px; margin: 20px 0;">
-                    <h3 style="margin-top: 0; color: #20BF55;">📦 Materialul digital</h3>
+                    <h3 style="margin-top: 0; color: #20BF55;">📦 ${productName}</h3>
                     <p>Fișierul ZIP cu materialele tale digitale este disponibil pentru descărcare în siguranță:</p>
                     <p style="text-align: center; margin: 20px 0;">
                       <a href="${downloadUrl}" style="background:#20BF55;color:#fff;padding:12px 24px;text-decoration:none;border-radius:6px;display:inline-block;font-weight:bold;">
@@ -105,16 +90,18 @@ async function sendPDFWithOptimization(toEmail, pdfFileName, productName, amount
               `,
             });
             console.log('✅ Download link email sent to:', toEmail);
+
           } else {
-            console.log('✅ ZIP size acceptable, sending ZIP via email');
+            console.log('✅ ZIP size acceptable, attaching ZIP to email');
+
             if (isDryRun) {
               console.log('🧪 DRY_RUN: would send ZIP attachment', { toEmail, zipFileName });
-              // Clean up ZIP
               fs.unlink(zipFilePath, () => {});
               return resolve();
             }
-            await transporter.sendMail({
-              from: `"CorcoDușa" <${process.env.ZMAIL_USER}>`,
+
+            await sendMail({
+              from: FROM,
               to: toEmail,
               subject: `Materialul digital ${productName} - CorcoDușa`,
               html: `
@@ -122,7 +109,7 @@ async function sendPDFWithOptimization(toEmail, pdfFileName, productName, amount
                   <h2 style="color: #20BF55;">🎉 Mulțumim pentru achiziție!</h2>
 
                   <div style="background: #e8f5e8; padding: 20px; border-radius: 8px; margin: 20px 0;">
-                    <h3 style="margin-top: 0; color: #20BF55;">📦 Materialul digital</h3>
+                    <h3 style="margin-top: 0; color: #20BF55;">📦 ${productName}</h3>
                     <p>Găsești atașat fișierul ZIP care conține materialele tale digitale.</p>
                     <p><strong>Fișier atașat:</strong> ${zipFileName}</p>
                     <p><em>Chitanța de plată a fost trimisă automat de către Stripe.</em></p>
@@ -141,7 +128,6 @@ async function sendPDFWithOptimization(toEmail, pdfFileName, productName, amount
             });
             console.log('✅ ZIP sent to:', toEmail);
 
-            // Clean up ZIP
             fs.unlink(zipFilePath, () => {});
           }
 

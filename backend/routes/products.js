@@ -6,6 +6,7 @@ const products = {
   'price_1SNBBrK6Qc2WK3kdE86Rm9w4': {
     pdf: 'Alfabetul.pdf',
     name: 'Alfabetul',
+    displayName: 'Alfabetul',
     price: 59,
     type: 'individual',
     filePath: 'Alfabetul.pdf',
@@ -15,6 +16,7 @@ const products = {
   'price_1SNC1IK6Qc2WK3kdB3AIEUYP': {
     pdf: 'Numere.pdf',
     name: 'Numere',
+    displayName: 'Numere',
     price: 59,
     type: 'individual',
     filePath: 'Numere.pdf',
@@ -24,6 +26,7 @@ const products = {
   'price_1SNC2uK6Qc2WK3kdxNwaWzy9': {
     pdf: 'FormeSiCulori.pdf',
     name: 'FormeSiCulori',
+    displayName: 'Forme și Culori',
     price: 59,
     type: 'individual',
     filePath: 'FormeSiCulori.pdf',
@@ -33,6 +36,7 @@ const products = {
   'price_1SNBAgK6Qc2WK3kdgRGn5eW2': {
     pdf: 'BonusCertificatDeAbsovire-PachetStandard.pdf',
     name: 'PachetStandard',
+    displayName: 'Pachet Standard',
     price: 145,
     type: 'complete',
     filePath: 'BonusCertificatDeAbsovire-PachetStandard.pdf',
@@ -42,6 +46,7 @@ const products = {
   'price_1SNCYSK6Qc2WK3kd1YKIoyo9': {
     pdf: 'JocuriSiActivitatiEducationale.pdf',
     name: 'JocuriSiActivitatiEducationale',
+    displayName: 'Jocuri și Activități Educaționale',
     price: 59,
     type: 'individual',
     filePath: 'JocuriSiActivitatiEducationale.pdf',
@@ -51,6 +56,7 @@ const products = {
   'price_1SNCDvK6Qc2WK3kdR7PskNbO': {
     pdf: 'CarteDeColorat.pdf',
     name: 'CarteDeColorat',
+    displayName: 'Carte de Colorat',
     price: 49,
     type: 'individual',
     filePath: 'CarteDeColorat.pdf',
@@ -60,6 +66,7 @@ const products = {
   'price_1SNCfLK6Qc2WK3kdVbZ9T85H': {
     pdf: 'LabirinturiMagice.pdf',
     name: 'LabirinturiMagice',
+    displayName: 'Labirinturi Magice',
     price: 59,
     type: 'individual',
     filePath: 'LabirinturiMagice.pdf',
@@ -69,6 +76,7 @@ const products = {
   'price_1SNCw4K6Qc2WK3kdOLmO6qpp': {
     files: ['LabirinturiMagice.pdf', 'JocuriSiActivitatiEducationale.pdf', 'BonusCertificatDeAbsovire-PachetPromo.pdf'],
     name: 'PachetPromo',
+    displayName: 'Pachet Promo',
     price: 99,
     type: 'promo',
     productId: 'prod_TJqdmBiCDbNA9I',

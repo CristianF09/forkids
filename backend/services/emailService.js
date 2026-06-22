@@ -128,6 +128,8 @@ async function sendEmailWithAttachment(to, productName) {
 }
 
 module.exports = {
+  sendMail,
+  FROM_ADDRESS,
   sendPDF,
   sendContactEmail,
   sendOrderNotification,
