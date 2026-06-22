@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Mail, Phone, Clock, MapPin, ShoppingCart, CreditCard, MailCheck, BookOpenCheck, Star, Heart } from 'lucide-react';
+import { Mail, Clock, MapPin, ShoppingCart, CreditCard, MailCheck, BookOpenCheck, Star, Heart } from 'lucide-react';
 import { API_ENDPOINTS } from '../config/api';
 
 const Contact = () => {
@@ -79,7 +79,7 @@ const Contact = () => {
         </div>
 
         {/* Contact Information */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           <div className="bg-white rounded-xl p-6 shadow-lg transform hover:scale-105 transition-transform duration-300">
             <div className="bg-[#20BF55]/20 p-3 rounded-full w-16 h-16 flex items-center justify-center mb-4">
               <Mail className="w-8 h-8 text-[#20BF55]" />
@@ -90,21 +90,12 @@ const Contact = () => {
           </div>
 
           <div className="bg-white rounded-xl p-6 shadow-lg transform hover:scale-105 transition-transform duration-300">
-            <div className="bg-[#FF6B00]/20 p-3 rounded-full w-16 h-16 flex items-center justify-center mb-4">
-              <Phone className="w-8 h-8 text-[#FF6B00]" />
-            </div>
-            <h3 className="text-xl font-bold text-gray-800 mb-2">Telefon</h3>
-            <p className="text-gray-800 font-semibold mb-2">+40 755 769 210</p>
-            <p className="text-gray-600">Luni - Vineri: 9:00 - 18:00</p>
-          </div>
-
-          <div className="bg-white rounded-xl p-6 shadow-lg transform hover:scale-105 transition-transform duration-300">
             <div className="bg-[#20BF55]/20 p-3 rounded-full w-16 h-16 flex items-center justify-center mb-4">
               <Clock className="w-8 h-8 text-[#20BF55]" />
             </div>
             <h3 className="text-xl font-bold text-gray-800 mb-2">Program</h3>
             <p className="text-gray-800 font-semibold mb-2">Luni - Vineri: 9:00 - 18:00</p>
-            <p className="text-gray-600">Răspundem și la email in cel mai scurt timp</p>
+            <p className="text-gray-600">Răspundem la email în cel mai scurt timp</p>
           </div>
 
           <div className="bg-white rounded-xl p-6 shadow-lg transform hover:scale-105 transition-transform duration-300">
@@ -143,7 +134,7 @@ const Contact = () => {
             </li>
           </ul>
           <p className="mt-6 text-gray-700 text-center text-lg">
-            Nu ezita să ne contactezi folosind formularul de mai jos sau prin metodele de contact de mai sus.
+            Nu ezita să ne contactezi folosind formularul de mai jos.
           </p>
         </div>
 
@@ -226,10 +217,6 @@ const Contact = () => {
                 <p className="text-gray-800 font-semibold">contact@corcodusa.ro</p>
               </div>
               <div className="bg-gray-50 p-4 rounded-xl">
-                <h4 className="font-bold text-gray-700 mb-2">Telefon</h4>
-                <p className="text-gray-800 font-semibold">+40 755 769 210</p>
-              </div>
-              <div className="bg-gray-50 p-4 rounded-xl">
                 <h4 className="font-bold text-gray-700 mb-2">Program</h4>
                 <p className="text-gray-800 font-semibold">Luni - Vineri: 9:00 - 18:00</p>
               </div>
@@ -237,6 +224,9 @@ const Contact = () => {
                 <h4 className="font-bold text-gray-700 mb-2">Adresă</h4>
                 <p className="text-gray-800 font-semibold">București, România</p>
               </div>
+              <p className="text-xs text-gray-500 mt-4">
+                * În prezent nu dispunem de un call center și nu putem oferi consultanță telefonică. Comunicăm exclusiv în scris, prin email.
+              </p>
             </div>
           </div>
         </div>

@@ -252,6 +252,26 @@ router.post('/', async (req, res) => {
       }
     } catch (error) {
       console.error('❌ Async webhook processing error:', error);
+      try {
+        await sendMail({
+          from: FROM,
+          to: 'contact@corcodusa.ro',
+          subject: '⚠️ Eroare livrare produs - verificare necesară',
+          html: `
+            <h3>⚠️ Eroare la livrarea unui produs</h3>
+            <p>A apărut o eroare la procesarea unei plăți. Clientul este posibil să nu fi primit materialul cumpărat.</p>
+            <p><strong>Stripe Event ID:</strong> ${event.id}</p>
+            <p><strong>Tip eveniment:</strong> ${event.type}</p>
+            <p><strong>Eroare:</strong> ${error.message}</p>
+            <hr>
+            <p>Verifică <a href="https://dashboard.stripe.com/events/${event.id}">Stripe Dashboard</a> pentru detalii despre client și trimite manual materialul dacă este necesar.</p>
+            <p><em>Notificare automată - sistem CorcoDușa</em></p>
+          `,
+        });
+        console.log('📧 Admin delivery-error alert sent');
+      } catch (notifyErr) {
+        console.error('❌ Failed to send admin alert:', notifyErr.message);
+      }
     }
   });
 });
