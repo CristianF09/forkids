@@ -439,25 +439,25 @@ const Home = () => {
                       <div className="bg-[#FF6B00] rounded-full p-1 mr-3 mt-0.5">
                         <Check className="w-3 h-3 text-white" />
                       </div>
-                      <span className="text-sm font-medium">Alfabetul în Joacă - activități de alfabetizare</span>
+                      <span className="text-sm font-medium">Alfabetul - activități de alfabetizare</span>
                     </li>
                     <li className="flex items-start text-gray-700">
                       <div className="bg-[#FF6B00] rounded-full p-1 mr-3 mt-0.5">
                         <Check className="w-3 h-3 text-white" />
                       </div>
-                      <span className="text-sm font-medium">Matematică Distractivă - activități matematice</span>
+                      <span className="text-sm font-medium">Numere - activități matematice</span>
                     </li>
                     <li className="flex items-start text-gray-700">
                       <div className="bg-[#FF6B00] rounded-full p-1 mr-3 mt-0.5">
                         <Check className="w-3 h-3 text-white" />
                       </div>
-                      <span className="text-sm font-medium">Aventuri în Culori - activități artistice</span>
+                      <span className="text-sm font-medium">Forme și Culori - activități artistice</span>
                     </li>
                     <li className="flex items-start text-gray-700">
                       <div className="bg-[#FF6B00] rounded-full p-1 mr-3 mt-0.5">
                         <Check className="w-3 h-3 text-white" />
                       </div>
-                      <span className="text-sm font-medium">🎨 BONUS: 40 de pagini de colorat interactive</span>
+                      <span className="text-sm font-medium">Carte de Colorat - activități de colorat</span>
                     </li>
                     <li className="flex items-start text-gray-700">
                       <div className="bg-[#FF6B00] rounded-full p-1 mr-3 mt-0.5">

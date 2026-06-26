@@ -81,9 +81,9 @@ const DespreNoi = () => {
             </div>
 
             <div className="bg-white rounded-2xl p-8 shadow-xl border border-yellow-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">📖 Povestea Noastră</h3>
+              <h3 className="text-2xl font-bold text-gray-800 mb-4">🌱 Creștere Continuă</h3>
               <p className="text-gray-600 text-lg leading-relaxed">
-                Corcodușa.ro s-a născut din dorința sinceră de a aduce un plus de valoare în educația timpurie.
+                Colecția noastră se îmbogățește constant cu materiale noi, create pe baza feedback-ului primit de la părinți și educatori.
               </p>
             </div>
           </div>
@@ -134,7 +134,7 @@ const DespreNoi = () => {
         </div>
 
         {/* Why Choose Us */}
-        <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white rounded-3xl p-8 md:p-12 mb-16 shadow-2xl">
+        <div className="bg-gradient-to-r from-[#25B838] to-[#0A4D68] text-white rounded-3xl p-8 md:p-12 mb-16 shadow-2xl">
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">De ce să ne alegi?</h2>
             <p className="text-xl opacity-90">Avantajele care ne fac diferiți</p>
@@ -188,7 +188,7 @@ const DespreNoi = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link
                 to="/produse"
-                className="inline-flex items-center px-8 py-4 bg-white text-purple-600 font-bold rounded-2xl text-xl hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                className="inline-flex items-center px-8 py-4 bg-white text-[#FF6B00] font-bold rounded-2xl text-xl hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg"
               >
                 Descoperă Materialele
                 <ArrowRight className="ml-3 w-6 h-6" />

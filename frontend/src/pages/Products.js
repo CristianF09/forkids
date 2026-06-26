@@ -159,7 +159,7 @@ const productsData = [
     title: 'Carte de Colorat',
     pdfFile: 'CarteDeColorat.pdf',
     price: 49,
-    image: '/images/Carte de Colorat.png',
+    image: '/images/Carte De Colorat.png',
     priceId: 'price_1SNCDvK6Qc2WK3kdR7PskNbO',
     productId: 'prod_TJpts2v6oxXec2',
     stripeLink: 'https://buy.stripe.com/8x2cN6c3c8QbeFt9yceZ207',
